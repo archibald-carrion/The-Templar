@@ -1,0 +1,5 @@
+window 800 600 250 235 235
+font ./assets/fonts/highway_gothic.ttf 255 255 255 12
+entity calavera ./assets/images/skull.png 32 32 100 100 -50 94 0
+entity anillo ./assets/images/ring.png 32 32 600 400 45 -100 0
+entity carta ./assets/images/letter.png 32 32 500 250 -84 14 0
