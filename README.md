@@ -292,8 +292,8 @@ classDiagram
 
 ## Ressources used for the game
 - [arcade classic font](https://www.1001fonts.com/arcadeclassic-font.html)
-- [background generator](https://deep-fold.itch.io/space-background-generator)
-- Music made by game developer [Namlin] (https://github.com/namlin)
+- [tileset de ruinas](https://bdragon1727.itch.io/platform-asset-part-4)
+- Music made by game developer [Namlin](https://github.com/namlin)
 
 
 ## TODO
