@@ -51,7 +51,7 @@ function update_animation_state()
   if -0.001 < x_vel and x_vel < 0.001 then
       if player_state ~= player_states["idle"] then
           player_state = player_states["idle"]
-          change_animation(this, "player_frog_idle")
+          change_animation(this, "player_knight_idle")
       end
   end
   
@@ -60,7 +60,7 @@ function update_animation_state()
     flip_sprite(this, false)
       if player_state ~= player_states["run"] then
           player_state = player_states["run"]
-          change_animation(this, "player_frog_run")
+          change_animation(this, "player_knight_run")
       end
   end
   
@@ -69,7 +69,7 @@ function update_animation_state()
     flip_sprite(this, true)
       if player_state ~= player_states["run"] then
           player_state = player_states["run"]
-          change_animation(this, "player_frog_run")
+          change_animation(this, "player_knight_run")
       end
   end
 
@@ -77,7 +77,7 @@ function update_animation_state()
   if y_vel >= 0.001 then
     if player_state ~= player_states["fall"] then
         player_state = player_states["fall"]
-        change_animation(this, "player_frog_fall")
+        change_animation(this, "player_knight_fall")
     end
   end
 
@@ -85,7 +85,7 @@ function update_animation_state()
   if y_vel <= -0.001 then
     if player_state ~= player_states["jump"] then
         player_state = player_states["jump"]
-        change_animation(this, "player_frog_jump")
+        change_animation(this, "player_knight_jump")
     end
   end
 end

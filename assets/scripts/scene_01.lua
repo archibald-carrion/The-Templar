@@ -2,19 +2,19 @@ scene = {
     -- sprites table 
     sprites = {
         [0] =
-            {asset_id = "frog_idle", file_path = "./assets/images/frog_idle.png"},
-            {asset_id = "frog_jump", file_path = "./assets/images/frog_jump.png"},
-            {asset_id = "frog_fall", file_path = "./assets/images/frog_fall.png"},
-            {asset_id = "frog_run", file_path = "./assets/images/frog_run.png"},
+            {asset_id = "knight_idle", file_path = "./assets/images/knight_idle.png"},
+            {asset_id = "knight_jump", file_path = "./assets/images/knight_jump.png"},
+            {asset_id = "knight_fall", file_path = "./assets/images/knight_fall.png"},
+            {asset_id = "knight_run", file_path = "./assets/images/knight_run.png"},
             {asset_id = "terrain", file_path = "./assets/images/terrain.png"},
     },
     
     animations = {
         [0] =
-            {animation_id = "player_frog_idle", texture_id = "frog_idle", w = 32, h = 32, num_frames = 11, speed_rate = 15, is_loop = true},
-            {animation_id = "player_frog_jump", texture_id = "frog_jump", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true},
-            {animation_id = "player_frog_fall", texture_id = "frog_fall", w = 32, h = 32, num_frames = 01, speed_rate = 01, is_loop = true},
-            {animation_id = "player_frog_run", texture_id = "frog_run", w = 32, h = 32, num_frames = 12, speed_rate = 15, is_loop = true},
+            {animation_id = "player_knight_idle", texture_id = "knight_idle", w = 32, h = 38, num_frames = 10, speed_rate = 15, is_loop = true},
+            {animation_id = "player_knight_jump", texture_id = "knight_jump", w = 120, h = 80, num_frames = 03, speed_rate = 01, is_loop = true},
+            {animation_id = "player_knight_fall", texture_id = "knight_fall", w = 120, h = 80, num_frames = 03, speed_rate = 01, is_loop = true},
+            {animation_id = "player_knight_run", texture_id = "knight_run", w = 120, h = 80, num_frames = 10, speed_rate = 15, is_loop = true},
     },
 
     -- sounds table
@@ -94,8 +94,8 @@ scene = {
                     tag = "player",
                 },
                 box_collider = {
-                    width = 32,
-                    height = 32,
+                    width = 32*2,
+                    height = 38*2,
                     offset = {x = 0, y= 0},
                 },
                 rigid_body = {
@@ -104,17 +104,17 @@ scene = {
                     mass = 10,
                 },
                 script = {
-                    path = "./assets/scripts/player_frog.lua"
+                    path = "./assets/scripts/player_knight.lua"
                 },
                 sprite = {
-                    asset_id = "frog_idle",
+                    asset_id = "knight_idle",
                     width = 32,
-                    height = 32,
+                    height = 38,
                     src_rect = {x = 0, y = 0},
                 },
                 transform = {
                     position = { x = 100, y = 100},
-                    scale = { x = 1.0, y =1.0},
+                    scale = { x = 2.0, y = 2.0},
                     rotation = 0.0
                 },
                 player_velocity = {
