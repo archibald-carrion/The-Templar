@@ -6,7 +6,7 @@ scene = {
             {asset_id = "knight_jump", file_path = "./assets/images/knight_jump.png"},
             {asset_id = "knight_fall", file_path = "./assets/images/knight_fall.png"},
             {asset_id = "knight_run", file_path = "./assets/images/knight_run.png"},
-            {asset_id = "terrain", file_path = "./assets/images/terrain.png"},
+            {asset_id = "terrain", file_path = "./assets/images/dungeon_tileset.png"},
     },
     
     animations = {
@@ -56,8 +56,8 @@ scene = {
     maps = {
         width = 3000,
         height = 3000,
-        map_path = "./assets/maps/level_01.tmx",
-        tile_path = "./assets/maps/terrain.tsx",
+        map_path = "./assets/maps/library.tmx",
+        tile_path = "./assets/maps/dungeon_tileset.tsx",
         tile_name = "terrain",
     },
 
