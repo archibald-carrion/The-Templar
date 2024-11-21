@@ -400,52 +400,6 @@ void SceneLoader::load_buttons(const sol::table& buttons, std::unique_ptr<Contro
     }
 }
 
-void SceneLoader::LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *layerElement,
-                            int tWidth, int tHeight, int mWidth, const std::string &tileSet, int columns)
-{
-  tinyxml2::XMLElement *xmlData = layerElement->FirstChildElement("data");
-  const char *data = xmlData->GetText();
-
-  std::stringstream tmpNumber;
-  int pos = 0;
-  int tileNumber = 0;
-
-  while (true)
-  {
-    if (data[pos] == '\0')
-    {
-      break;
-    }
-    if (isdigit(data[pos]))
-    {
-      tmpNumber << data[pos];
-    }
-    else if (!isdigit(data[pos]) && tmpNumber.str().length() != 0)
-    {
-      int tileId = std::stoi(tmpNumber.str());
-      if (tileId > 0)
-      {
-        Entity tile = registry->create_entity();
-        tile.add_component<TransformComponent>(
-            glm::vec2((tileNumber % mWidth) * tWidth,
-                      (tileNumber / mWidth) * tHeight) //
-        );
-        tile.add_component<SpriteComponent>(
-            tileSet,
-            tWidth,
-            tHeight,
-            ((tileId - 1) % columns) * tWidth,
-            ((tileId - 1) / columns) * tHeight //
-        );
-      }
-
-      tileNumber++;
-      tmpNumber.str("");
-    }
-    pos++;
-  }
-}
-
 
 void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &registry)
 {
@@ -532,9 +486,62 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
   }
 }
 
+void SceneLoader::LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *layerElement,
+                            int tWidth, int tHeight, int mWidth, const std::string &tileSet, int columns)
+{
+  tinyxml2::XMLElement *xmlData = layerElement->FirstChildElement("data");
+  const char *data = xmlData->GetText();
+
+  std::stringstream tmpNumber;
+  int pos = 0;
+  int tileNumber = 0;
+  
+  // Define scale factor
+  const float SCALE = 2.0f;
+
+  while (true)
+  {
+    if (data[pos] == '\0')
+    {
+      break;
+    }
+    if (isdigit(data[pos]))
+    {
+      tmpNumber << data[pos];
+    }
+    else if (!isdigit(data[pos]) && tmpNumber.str().length() != 0)
+    {
+      int tileId = std::stoi(tmpNumber.str());
+      if (tileId > 0)
+      {
+        Entity tile = registry->create_entity();
+        tile.add_component<TransformComponent>(
+            glm::vec2((tileNumber % mWidth) * tWidth * SCALE,
+                      (tileNumber / mWidth) * tHeight * SCALE), //Position scaled
+            glm::vec2(SCALE, SCALE) // Add scale vector
+        );
+        tile.add_component<SpriteComponent>(
+            tileSet,
+            tWidth,
+            tHeight,
+            ((tileId - 1) % columns) * tWidth,
+            ((tileId - 1) / columns) * tHeight
+        );
+      }
+
+      tileNumber++;
+      tmpNumber.str("");
+    }
+    pos++;
+  }
+}
+
 void SceneLoader::LoadColliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup)
 {
   tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
+  
+  // Define scale factor
+  const float SCALE = 2.0f;
 
   while (object != nullptr)
   {
@@ -555,12 +562,14 @@ void SceneLoader::LoadColliders(std::unique_ptr<Registry> &registry, tinyxml2::X
     object->QueryIntAttribute("width", &w);
     object->QueryIntAttribute("height", &h);
 
-    // Crear entidad
+    // Crear entidad con posición y dimensiones escaladas
     Entity collider = registry->create_entity();
     collider.add_component<TagComponent>(tag);
     collider.add_component<TransformComponent>(
-        glm::vec2(x, y));
-    collider.add_component<BoxColliderComponent>(w, h);
+        glm::vec2(x * SCALE, y * SCALE), // Scale position
+        glm::vec2(SCALE, SCALE) // Add scale vector
+    );
+    collider.add_component<BoxColliderComponent>(w * SCALE, h * SCALE); // Scale collider dimensions
     collider.add_component<RigidBodyComponent>(false, true, 9999999999.0f);
 
     object = object->NextSiblingElement("object");
