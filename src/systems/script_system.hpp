@@ -45,7 +45,10 @@ public:
 
         lua.set_function("add_force", add_force);
         lua.set_function("flip_sprite", flip_sprite);
+
+        // animation related functions
         lua.set_function("change_animation", change_animation);
+        lua.set_function("get_animation_frame", get_animation_frame);
 
 
         // general entity related functions

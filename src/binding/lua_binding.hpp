@@ -39,6 +39,11 @@ void change_animation(Entity entity, const std::string& animationId) {
     animation.start_time = SDL_GetTicks();
 }
 
+int get_animation_frame(Entity entity) {
+    auto& animation = entity.get_component<AnimationComponent>();
+    return animation.current_frame;
+}
+
 
 // Audio related functions
 
