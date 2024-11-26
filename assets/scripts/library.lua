@@ -48,6 +48,7 @@ scene = {
         {name = "right", key = 100}, 
         {name = "jump", key = 32},
         {name = "attack", key = 101}, -- e
+        {name= "interact", key = 105}, -- i
     },
 
     -- actions and mouse button table
@@ -153,7 +154,107 @@ scene = {
                 --     src_rect = {x = 0, y = 0},
                 -- },
                 transform = {
-                    position = { x = 1345, y = 410},
+                    position = { x = 770, y = 410},
+                    scale = { x = 1.0, y = 1.0},
+                    rotation = 0.0
+                },
+            }
+        },
+
+        -- door second level
+        {
+            components = {
+                tag = {
+                    tag = "door",
+                },
+                box_collider = {
+                    width = 64,
+                    height = 100,
+                    offset = {x = 0, y= 0},
+                },
+                rigid_body = {
+                    is_dynamic = false,
+                    is_solid = false,
+                    mass = 10,
+                },
+                script = {
+                    path = "./assets/scripts/door_goto_level_2.lua"
+                },
+                -- sprite = {
+                --     asset_id = "knight_idle",
+                --     width = 32,
+                --     height = 38,
+                --     src_rect = {x = 0, y = 0},
+                -- },
+                transform = {
+                    position = { x = 1085, y = 410},
+                    scale = { x = 1.0, y = 1.0},
+                    rotation = 0.0
+                },
+            }
+        },
+
+        -- third level door
+        {
+            components = {
+                tag = {
+                    tag = "door",
+                },
+                box_collider = {
+                    width = 64,
+                    height = 100,
+                    offset = {x = 0, y= 0},
+                },
+                rigid_body = {
+                    is_dynamic = false,
+                    is_solid = false,
+                    mass = 10,
+                },
+                script = {
+                    path = "./assets/scripts/door_goto_level_3.lua"
+                },
+                -- sprite = {
+                --     asset_id = "knight_idle",
+                --     width = 32,
+                --     height = 38,
+                --     src_rect = {x = 0, y = 0},
+                -- },
+                transform = {
+                    position = { x = 1410, y = 410},
+                    scale = { x = 1.0, y = 1.0},
+                    rotation = 0.0
+                },
+            }
+        },
+        
+
+        -- final door
+        {
+            components = {
+                tag = {
+                    tag = "door",
+                },
+                box_collider = {
+                    width = 64,
+                    height = 100,
+                    offset = {x = 0, y= 0},
+                },
+                rigid_body = {
+                    is_dynamic = false,
+                    is_solid = false,
+                    mass = 10,
+                },
+                script = {
+                    path = "./assets/scripts/door_goto_level_4.lua"
+                },
+                -- sprite = {
+                --     asset_id = "knight_idle",
+                --     width = 32,
+                --     height = 38,
+                --     src_rect = {x = 0, y = 0},
+                -- },
+                transform = {
+                    position = { x = 1735, y = 410},
                     scale = { x = 1.0, y = 1.0},
                     rotation = 0.0
                 },
