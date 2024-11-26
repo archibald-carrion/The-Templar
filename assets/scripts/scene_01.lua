@@ -6,6 +6,7 @@ scene = {
             {asset_id = "knight_jump", file_path = "./assets/images/knight_jump.png"},
             {asset_id = "knight_fall", file_path = "./assets/images/knight_fall.png"},
             {asset_id = "knight_run", file_path = "./assets/images/knight_run.png"},
+            {asset_id = "knight_attack", file_path = "./assets/images/knight_attack.png"},
             {asset_id = "terrain", file_path = "./assets/images/dungeon_tileset.png"},
     },
     
@@ -15,6 +16,8 @@ scene = {
             {animation_id = "player_knight_jump", texture_id = "knight_jump", w = 32, h = 38, num_frames = 03, speed_rate = 01, is_loop = true},
             {animation_id = "player_knight_fall", texture_id = "knight_fall", w = 32, h = 38, num_frames = 03, speed_rate = 01, is_loop = true},
             {animation_id = "player_knight_run", texture_id = "knight_run", w = 32, h = 38, num_frames = 10, speed_rate = 15, is_loop = true},
+            {animation_id = "player_knight_attack", texture_id = "knight_attack", w = 32, h = 38, num_frames = 4, speed_rate = 15, is_loop = false},
+
     },
 
     -- sounds table
@@ -42,8 +45,9 @@ scene = {
         [0] = {name = "up", key = 119},
         {name = "left", key = 97},
         {name = "down", key = 115},
-        {name = "right", key = 100},
+        {name = "right", key = 100}, 
         {name = "jump", key = 32},
+        {name = "attack", key = 101}, -- e
     },
 
     -- actions and mouse button table

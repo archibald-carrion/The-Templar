@@ -58,8 +58,8 @@ scene = {
             components = {
                 sprite = {
                     asset_id = "background",
-                    width = 3000,
-                    height = 3000,
+                    width = 1280,
+                    height = 720,
                     src_rect = {x = 0, y = 0},
                 },
                 transform = {

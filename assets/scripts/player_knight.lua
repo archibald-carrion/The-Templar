@@ -11,6 +11,7 @@ player_state = player_states["idle"]
 player_can_jump = false
 player_speed = 3.0 * 64.0
 player_jump_force = -3000.0 * 64.0
+player_attacking = false
 
 
 function update()
@@ -27,6 +28,15 @@ function update()
     end
     if is_action_activated("right") then
       vel_x = vel_x + player_speed
+    end
+    
+    if is_action_activated("attack") then
+      if not player_attacking then
+        player_attacking = true
+        change_animation(this, "player_knight_attack")
+      end
+    else
+      player_attacking = false
     end
   
     set_velocity(this, vel_x, vel_y)
