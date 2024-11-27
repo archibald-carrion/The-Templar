@@ -63,8 +63,8 @@ scene = {
                     src_rect = {x = 0, y = 0},
                 },
                 transform = {
-                    position = { x = 0, y = 0},
-                    scale = { x = 1.0, y = 1.0},
+                    position = { x = -100.0, y = 0},
+                    scale = { x = 1.1, y = 1.1},
                     rotation = 0.0
                 },
                 script = {
@@ -76,7 +76,7 @@ scene = {
         {
             components = {
                 text = {
-                    text = "Another cool game",
+                    text = "Game over",
                     font_id = "arcade_classic_large",
                     r = 255, g = 215, b = 0, a = 255  -- Golden color
                 },
@@ -93,7 +93,7 @@ scene = {
                 clickable = {
                 },
                 text = {
-                    text = "Level  01: Entering the dungeon",
+                    text = "Level  01",
                     font_id = "arcade_classic_font",
                     r = 255, g = 255, b = 255, a = 255  -- White color
                 },
@@ -103,7 +103,7 @@ scene = {
                     rotation = 0.0
                 },
                 script = {
-                    path = "./assets/scripts/goto_level_01.lua",
+                    path = "./assets/scripts/door_goto_level_1.lua",
                 },
             },
         },
@@ -122,6 +122,9 @@ scene = {
                     scale = { x = 1.2, y = 1.2},
                     rotation = 0.0
                 },
+                script = {
+                    path = "./assets/scripts/door_goto_level_2.lua",
+                },
             },
         },
         -- level 03
@@ -138,6 +141,9 @@ scene = {
                     position = { x = 100, y = 450},
                     scale = { x = 1.2, y = 1.2},
                     rotation = 0.0
+                },
+                script = {
+                    path = "./assets/scripts/door_goto_level_3.lua",
                 },
             },
         },
