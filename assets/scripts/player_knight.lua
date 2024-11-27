@@ -64,6 +64,10 @@ function on_collision(other)
             player_can_jump = true
         end
     end
+
+    if get_tag(other) == "trap" then
+        go_to_scene("game_over")
+    end
 end
 
 
@@ -114,3 +118,4 @@ function update_animation_state()
     end
   end
 end
+

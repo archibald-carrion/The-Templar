@@ -2,7 +2,7 @@ scene = {
     -- sprites table
     sprites = {
         [0] = 
-        {asset_id = "background", file_path = "./assets/images/bearer_of_winter.png"},
+        {asset_id = "background", file_path = "./assets/images/game_over.png"},
     },
 
     -- animations table
@@ -58,8 +58,8 @@ scene = {
             components = {
                 sprite = {
                     asset_id = "background",
-                    width = 1280,
-                    height = 720,
+                    width = 2048,
+                    height = 736,
                     src_rect = {x = 0, y = 0},
                 },
                 transform = {
@@ -93,7 +93,7 @@ scene = {
                 clickable = {
                 },
                 text = {
-                    text = "Level  01",
+                    text = "Level  01: Entering the dungeon",
                     font_id = "arcade_classic_font",
                     r = 255, g = 255, b = 255, a = 255  -- White color
                 },
@@ -103,7 +103,7 @@ scene = {
                     rotation = 0.0
                 },
                 script = {
-                    path = "./assets/scripts/door_goto_level_1.lua",
+                    path = "./assets/scripts/goto_level_01.lua",
                 },
             },
         },
@@ -113,7 +113,7 @@ scene = {
                 clickable = {
                 },
                 text = {
-                    text = "Level  02",
+                    text = "Level  02: Monsters, I guess",
                     font_id = "arcade_classic_font",
                     r = 200, g = 200, b = 200, a = 255  -- Light gray color
                 },
@@ -121,9 +121,6 @@ scene = {
                     position = { x = 100, y = 350},
                     scale = { x = 1.2, y = 1.2},
                     rotation = 0.0
-                },
-                script = {
-                    path = "./assets/scripts/door_goto_level_2.lua",
                 },
             },
         },
@@ -141,9 +138,6 @@ scene = {
                     position = { x = 100, y = 450},
                     scale = { x = 1.2, y = 1.2},
                     rotation = 0.0
-                },
-                script = {
-                    path = "./assets/scripts/door_goto_level_3.lua",
                 },
             },
         },

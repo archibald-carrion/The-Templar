@@ -1,3 +1,3 @@
-function on_collision(other)
+function on_click()
     print("Collision with door 3")
 end
