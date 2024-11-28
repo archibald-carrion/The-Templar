@@ -10,8 +10,8 @@ player_states = {
 
 player_state = player_states["idle"]
 player_can_jump = false
-player_speed = 3.0 * 64.0
-player_jump_force = -3000.0 * 64.0
+player_speed = 3.0 * 64.0 * 1.5
+player_jump_force = -3000.0 * 64.0 *1.5
 player_attacking = false
 
 
