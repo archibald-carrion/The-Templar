@@ -127,5 +127,38 @@ scene = {
             }
         },
 
+        -- door second level
+        {
+            components = {
+                tag = {
+                    tag = "door",
+                },
+                box_collider = {
+                    width = 64,
+                    height = 100,
+                    offset = {x = 0, y= 0},
+                },
+                rigid_body = {
+                    is_dynamic = false,
+                    is_solid = false,
+                    mass = 10,
+                },
+                script = {
+                    path = "./assets/scripts/door_goto_level_2.lua"
+                },
+                -- sprite = {
+                --     asset_id = "knight_idle",
+                --     width = 32,
+                --     height = 38,
+                --     src_rect = {x = 0, y = 0},
+                -- },
+                transform = {
+                    position = { x = 196*2*16, y = 30*2*16},
+                    scale = { x = 1.0, y = 1.0},
+                    rotation = 0.0
+                },
+            }
+        },
+
     }
 }
