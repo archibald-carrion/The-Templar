@@ -17,26 +17,23 @@
 
 #include "../events/click_event.hpp"
 
-Game::Game() {
+Game::Game() :
+sdl_manager(SDLManager::getInstance())
+, registry(std::make_unique<Registry>())
+, scene_manager(std::make_unique<SceneManager>())
+, assets_manager(std::make_unique<AssetsManager>())
+, events_manager(std::make_unique<EventManager>())
+, controller_manager(std::make_unique<ControllerManager>())
+, audio_manager(std::make_unique<AudioManager>())
+, animation_manager(std::make_unique<AnimationManager>()) {
     //std::cout << "[GAME] Constructor" << std::endl;
-    registry = std::make_unique<Registry>();
-    assets_manager = std::make_unique<AssetsManager>();
-    events_manager = std::make_unique<EventManager>();
-    controller_manager = std::make_unique<ControllerManager>();
-    scene_manager = std::make_unique<SceneManager>();
-    audio_manager = std::make_unique<AudioManager>();
-    animation_manager = std::make_unique<AnimationManager>();
+    if (!sdl_manager.isValid()) {
+        throw std::runtime_error("Failed to initialize SDL");
+    }
 }
 
 Game::~Game() {
     //std::cout << "[GAME] Destructor" << std::endl;
-    animation_manager.reset();
-    audio_manager.reset();
-    scene_manager.reset();
-    assets_manager.reset();
-    events_manager.reset();
-    controller_manager.reset();
-    registry.reset();
 }
 
 void Game::setup() {
@@ -68,21 +65,6 @@ Game& Game::get_instance() {
 void Game::init() {
     //std::cout << "[GAME] Init" << std::endl;
 
-    // initialize SDL
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-        std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
-        return;
-    }
-
-    // Initialize SDL_mixer
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-        std::cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
-        return;
-    }
-
-    // Set number of channels, like layers in gimp in a way
-    Mix_AllocateChannels(16); // might need to lower this, I don't this I will use more than a few channels
-
     // create the window
     this->window = SDL_CreateWindow(
         "De Astra, Ad Terra",
@@ -108,11 +90,6 @@ void Game::init() {
     camera.h = WINDOW_HEIGHT;
 
     this->isRunning = true;
-
-    if (TTF_Init() != 0) {
-        std::cout << "TTF_Init Error: " << TTF_GetError() << std::endl;
-        return;
-    }
 }
 
 void Game::run() {
@@ -143,22 +120,13 @@ void Game::run_scene() {
 
 void Game::destroy() {
     // std::cout << "[GAME] Destroy" << std::endl;
-
-    audio_manager->clear_audio();
-    assets_manager->clear_assets();    
+    lua = sol::state();
 
     // stop all currently playing sounds
     Mix_HaltChannel(-1);  // -1 means all channels
 
-    // Close the audio device and quit SDL_mixer
-    Mix_CloseAudio();
-
     SDL_DestroyWindow(this->window);
     SDL_DestroyRenderer(this->renderer);
-    
-    TTF_Quit();
-    SDL_Quit();
-    Mix_Quit();
 }
 
 void Game::processInput() {

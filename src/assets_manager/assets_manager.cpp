@@ -8,6 +8,7 @@ AssetsManager::AssetsManager() {
 
 AssetsManager::~AssetsManager() {
     // std::cout << "[ASSETSMANAGER] Destructor" << std::endl;
+    clear_assets();
 }
 
 void AssetsManager::clear_assets() {

@@ -6,11 +6,25 @@
 
 #include <map> // std::map used to store music and sound effects
 #include <string> // std::string used for music_id and sound_id
+#include <memory>
+
+inline auto sdlMusicDeleter = [](Mix_Music* music) {
+    if (music == nullptr) return;
+    Mix_FreeMusic(music);
+};
+
+inline auto sdlMixDeleter = [](Mix_Chunk* music) {
+    if (music == nullptr) return;
+    Mix_FreeChunk(music);
+};
+
+using Music = std::shared_ptr<Mix_Music>;
+using Mix = std::shared_ptr<Mix_Chunk>;
 
 class AudioManager {
 private:
-    std::map<std::string, Mix_Music*> music_tracks;   // For long music tracks (streamed)
-    std::map<std::string, Mix_Chunk*> sound_effects;  // For short sound effects (pre-loaded)
+    std::map<std::string, Music> music_tracks;   // For long music tracks (streamed)
+    std::map<std::string, Mix> sound_effects;  // For short sound effects (pre-loaded)
 
 public:
     /**
@@ -35,7 +49,7 @@ public:
      * @param music_id The unique identifier for the music
      * @return Mix_Music* The music track
      */
-    Mix_Music* get_music(const std::string& music_id);
+    Music get_music(const std::string& music_id);
 
     /**
      * @brief Add sound effect to the audio manager
@@ -49,7 +63,7 @@ public:
      * @param sound_id The unique identifier for the sound effect
      * @return Mix_Chunk* The sound effect
      */
-    Mix_Chunk* get_sound_effect(const std::string& sound_id);
+    Mix get_sound_effect(const std::string& sound_id);
 
     /**
      * @brief Play music

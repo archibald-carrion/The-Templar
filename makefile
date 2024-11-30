@@ -1,28 +1,44 @@
-CC=g++
-STD=-std=c++17
-CFLAGS=-Wall $(GAME_FLAG)
-INC_PATH=$(shell find ./libs -type d -exec echo -I{} \;)
-SRC=src/main.cpp \
-	src/game/game.cpp \
-	src/game/Pseudo3DGame.cpp \
-	src/ECS/*.cpp \
-	src/assets_manager/assets_manager.cpp \
-	src/controller_manager/*.cpp \
-	src/scene_manager/*.cpp \
-	src/audio_manager/*.cpp \
-	src/animation_manager/*.cpp
-LFLAGS=-lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -llua5.3 -ltinyxml2
-EXEC=game_engine
+MAKEFLAGS += -j$(shell nproc)
 
-# Default GAME_FLAG (set to -DGAME if not specified)
+CC = g++
+STD = -std=c++20
+DEBUG_FLAGS = -g -Wall -pipe -O0
+OPTIMIZATION_FLAGS = -O3 -pipe
 GAME_FLAG ?= -DGAME
 
+INC_PATH = $(shell find ./libs -type d -exec echo -I{} \;)
+SRC = $(shell find src -name '*.cpp')
+OBJ = $(patsubst src/%.cpp, build/%.o, $(SRC))
 
-build:
-	$(CC) $(CFLAGS) $(STD) $(INC_PATH) $(SRC) $(LFLAGS) -o $(EXEC)
+LFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -llua5.3 -ltinyxml2
+ASAN_CFLAGS = -fsanitize=address -fno-omit-frame-pointer -pipe
+ASAN_LFLAGS = -fsanitize=address
+ASAN_OPTIONS=halt_on_error=1:detect_leaks=1 ./your_program
 
-run:
+EXEC = build/game_engine
+
+.PHONY: all build release asan clean run
+
+all: build
+
+build: $(EXEC)
+
+$(EXEC): $(OBJ)
+	$(CC) $(DEBUG_FLAGS) $(GAME_FLAG) $(STD) $(INC_PATH) $(OBJ) $(LFLAGS) -o $(EXEC)
+
+build/%.o: src/%.cpp
+	@mkdir -p $(dir $@)
+	$(CC) $(DEBUG_FLAGS) $(GAME_FLAG) $(STD) $(INC_PATH) -c $< -o $@
+
+asan: CFLAGS += $(ASAN_CFLAGS)
+asan: LFLAGS += $(ASAN_LFLAGS)
+asan: build
+
+release: CFLAGS += $(OPTIMIZATION_FLAGS)
+release: build
+
+run: $(EXEC)
 	./$(EXEC)
 
 clean:
-	rm $(EXEC)
+	rm -rf build
