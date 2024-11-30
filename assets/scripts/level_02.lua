@@ -60,7 +60,7 @@ scene = {
     maps = {
         width = 3000,
         height = 3000,
-        map_path = "./assets/maps/first_level.tmx",
+        map_path = "./assets/maps/second_level.tmx",
         tile_path = "./assets/maps/dungeon_tileset.tsx",
         tile_name = "terrain",
     },
