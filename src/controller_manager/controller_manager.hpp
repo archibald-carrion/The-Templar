@@ -1,7 +1,7 @@
 #ifndef CONTROLLER_MANAGER_HPP
 #define CONTROLLER_MANAGER_HPP
 
-#include<SDL2/SDL.h> // SDL library for window creation and rendering
+#include <SDL2/SDL.h> // SDL library for window creation and rendering
 #include <map> // std::map
 #include <tuple> // std::tuple
 #include <string> // std::string

@@ -23,7 +23,7 @@
 #include "../scene_manager/scene_manager.hpp" // Scene manager for handling scenes
 #include "../animation_manager/animation_manager.hpp" // Animation manager for handling animations
 
-
+#include "../utils/SdlManager.hpp"
 
 /** @brief Target frames per second for the game. */
 const int FPS = 60;
@@ -81,6 +81,8 @@ private:
     int mPreviousFrame = 0; /**< Time of the previous frame. */
     bool isPaused = false; /**< Flag to indicate if the game is paused. */
     bool is_debug_mode_activated = false;
+
+    SDLManager& sdl_manager;
  
 public:
     int map_height = 800; /**< Height of the game map. */
