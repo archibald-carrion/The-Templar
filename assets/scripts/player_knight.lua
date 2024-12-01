@@ -58,6 +58,7 @@ end
 
 
 function on_collision(other)
+  if get_tag(other) ~= "enemy_wall_1" or get_tag(other) ~= "enemy_wall_2" then
     if get_tag(other) == "floor" then
         local vel_x, vel_y = get_velocity(this)
         if vel_y == 0 then
@@ -68,6 +69,7 @@ function on_collision(other)
     if get_tag(other) == "trap" then
         go_to_scene("game_over")
     end
+  end
 end
 
 
