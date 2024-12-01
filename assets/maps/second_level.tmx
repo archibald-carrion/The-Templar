@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="326">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="330">
  <tileset firstgid="1" source="dungeon_tileset.tsx"/>
  <layer id="8" name="bricks" width="200" height="60">
   <data encoding="csv">
@@ -534,10 +534,12 @@
   <object id="322" name="wall" x="1424" y="512" width="16" height="16"/>
   <object id="325" name="wall" x="80" y="592" width="80" height="16"/>
  </objectgroup>
- <objectgroup id="9" name="Object Layer 3"/>
  <objectgroup id="7" name="spawn">
   <object id="143" name="enemy_2" x="1712" y="480" width="16" height="16"/>
   <object id="144" name="enemy_1" x="2128" y="480" width="16" height="16"/>
   <object id="145" name="enemy_1" x="2160" y="320" width="16" height="16"/>
+  <object id="327" name="enemy_1" x="416" y="208" width="16" height="16"/>
+  <object id="328" name="enemy_2" x="720" y="64" width="16" height="16"/>
+  <object id="329" name="enemy_3" x="112" y="192" width="16" height="16"/>
  </objectgroup>
 </map>
