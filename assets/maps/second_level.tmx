@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="208">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="323">
  <tileset firstgid="1" source="dungeon_tileset.tsx"/>
  <layer id="1" name="main_structures" width="200" height="60">
   <data encoding="csv">
@@ -363,7 +363,6 @@
   <object id="191" name="wall" x="1984" y="512" width="16" height="48"/>
   <object id="192" name="wall" x="1936" y="512" width="16" height="48"/>
   <object id="193" name="floor" x="1584" y="496" width="368" height="16"/>
-  <object id="194" name="wall" x="1888" y="400" width="16" height="16"/>
   <object id="195" name="wall" x="2032" y="400" width="464" height="16"/>
   <object id="196" name="floor" x="2496" y="400" width="16" height="16"/>
   <object id="197" name="floor" x="16" y="624" width="16" height="16"/>
@@ -377,6 +376,102 @@
   <object id="205" name="floor" x="640" y="752" width="80" height="16"/>
   <object id="206" name="trap" x="720" y="816" width="48" height="16"/>
   <object id="207" name="wall" x="704" y="768" width="16" height="48"/>
+  <object id="208" name="floor" x="688" y="640" width="768" height="16"/>
+  <object id="209" name="wall" x="688" y="656" width="912" height="16"/>
+  <object id="210" name="wall" x="1600" y="640" width="16" height="16"/>
+  <object id="211" name="wall" x="1648" y="592" width="16" height="16"/>
+  <object id="212" name="wall" x="1632" y="608" width="16" height="16"/>
+  <object id="213" name="wall" x="1616" y="624" width="16" height="16"/>
+  <object id="214" name="floor" x="1456" y="624" width="16" height="16"/>
+  <object id="215" name="floor" x="1472" y="608" width="16" height="16"/>
+  <object id="216" name="floor" x="1488" y="592" width="16" height="16"/>
+  <object id="217" name="floor" x="1504" y="576" width="16" height="16"/>
+  <object id="219" name="floor" x="1520" y="560" width="16" height="16"/>
+  <object id="220" name="floor" x="1536" y="544" width="16" height="16"/>
+  <object id="221" name="floor" x="1552" y="528" width="16" height="16"/>
+  <object id="222" name="floor" x="1568" y="512" width="16" height="16"/>
+  <object id="224" name="wall" x="1536" y="400" width="368" height="16"/>
+  <object id="225" name="floor" x="2480" y="688" width="192" height="16"/>
+  <object id="226" name="wall" x="2688" y="720" width="368" height="16"/>
+  <object id="227" name="wall" x="3152" y="608" width="32" height="16"/>
+  <object id="228" name="floor" x="3120" y="752" width="64" height="16"/>
+  <object id="229" name="floor" x="2880" y="816" width="304" height="16"/>
+  <object id="230" name="wall" x="3056" y="704" width="16" height="16"/>
+  <object id="231" name="wall" x="3136" y="624" width="16" height="16"/>
+  <object id="232" name="wall" x="3120" y="640" width="16" height="16"/>
+  <object id="233" name="wall" x="3104" y="656" width="16" height="16"/>
+  <object id="234" name="wall" x="3088" y="672" width="16" height="16"/>
+  <object id="235" name="wall" x="3072" y="688" width="16" height="16"/>
+  <object id="238" name="floor" x="2688" y="864" width="48" height="16"/>
+  <object id="239" name="floor" x="2800" y="832" width="48" height="16"/>
+  <object id="240" name="wall" x="2720" y="880" width="16" height="32"/>
+  <object id="241" name="wall" x="2688" y="880" width="16" height="32"/>
+  <object id="242" name="floor" x="2512" y="912" width="672" height="16"/>
+  <object id="243" name="floor" x="2496" y="896" width="16" height="16"/>
+  <object id="244" name="floor" x="2480" y="880" width="16" height="16"/>
+  <object id="245" name="floor" x="2464" y="864" width="16" height="16"/>
+  <object id="246" name="floor" x="2448" y="848" width="16" height="16"/>
+  <object id="247" name="floor" x="2432" y="832" width="16" height="16"/>
+  <object id="248" name="trap" x="2304" y="800" width="64" height="16"/>
+  <object id="249" name="floor" x="2224" y="816" width="208" height="16"/>
+  <object id="250" name="floor" x="2224" y="656" width="80" height="16"/>
+  <object id="251" name="floor" x="2368" y="656" width="62.5" height="11"/>
+  <object id="253" name="wall" x="2528" y="752" width="144" height="16"/>
+  <object id="254" name="wall" x="2672" y="736" width="16" height="16"/>
+  <object id="255" name="wall" x="2480" y="704" width="16" height="16"/>
+  <object id="256" name="wall" x="2496" y="720" width="16" height="16"/>
+  <object id="257" name="wall" x="2512" y="736" width="16" height="16"/>
+  <object id="258" name="floor" x="2208" y="832" width="16" height="16"/>
+  <object id="260" name="floor" x="2192" y="848" width="16" height="16"/>
+  <object id="261" name="floor" x="2176" y="864" width="16" height="16"/>
+  <object id="262" name="floor" x="2160" y="880" width="16" height="16"/>
+  <object id="263" name="floor" x="2144" y="896" width="16" height="16"/>
+  <object id="266" name="floor" x="1824" y="864" width="32" height="16"/>
+  <object id="268" name="wall" x="1824" y="880" width="32" height="32"/>
+  <object id="269" name="floor" x="1344" y="912" width="800" height="16"/>
+  <object id="270" name="floor" x="1728" y="832" width="32" height="16"/>
+  <object id="271" name="floor" x="2096" y="656" width="96" height="16"/>
+  <object id="272" name="floor" x="1760" y="688" width="336" height="16"/>
+  <object id="273" name="wall" x="2096" y="672" width="16" height="16"/>
+  <object id="274" name="wall" x="2176" y="672" width="16" height="48"/>
+  <object id="282" name="floor" x="1744" y="704" width="16" height="16"/>
+  <object id="284" name="floor" x="1728" y="720" width="16" height="16"/>
+  <object id="287" name="wall" x="1728" y="736" width="432" height="16"/>
+  <object id="288" name="wall" x="2160" y="720" width="16" height="16"/>
+  <object id="289" name="floor" x="1696" y="816" width="16" height="16"/>
+  <object id="290" name="floor" x="1680" y="800" width="16" height="16"/>
+  <object id="291" name="floor" x="1648" y="784" width="32" height="16"/>
+  <object id="292" name="floor" x="1632" y="768" width="16" height="16"/>
+  <object id="293" name="floor" x="768" y="752" width="864" height="16"/>
+  <object id="294" name="wall" x="1376" y="816" width="320" height="16"/>
+  <object id="295" name="wall" x="1360" y="800" width="16" height="16"/>
+  <object id="296" name="wall" x="816" y="784" width="544" height="16"/>
+  <object id="297" name="wall" x="800" y="800" width="16" height="64"/>
+  <object id="298" name="wall" x="688" y="848" width="112" height="16"/>
+  <object id="299" name="wall" x="688" y="784" width="16" height="64"/>
+  <object id="300" name="wall" x="624" y="768" width="64" height="16"/>
+  <object id="301" name="wall" x="608" y="752" width="16" height="16"/>
+  <object id="302" name="wall" x="16" y="736" width="592" height="16"/>
+  <object id="303" name="wall" x="0" y="752" width="16" height="80"/>
+  <object id="304" name="floor" x="16" y="832" width="400" height="16"/>
+  <object id="305" name="floor" x="416" y="848" width="16" height="16"/>
+  <object id="306" name="floor" x="432" y="864" width="32" height="16"/>
+  <object id="307" name="floor" x="528" y="896" width="32" height="16"/>
+  <object id="308" name="wall" x="528" y="912" width="32" height="32"/>
+  <object id="309" name="floor" x="1008" y="896" width="336" height="16"/>
+  <object id="310" name="wall" x="1008" y="912" width="13.5" height="18.5"/>
+  <object id="311" name="floor" x="880" y="928" width="128" height="16"/>
+  <object id="312" name="wall" x="0" y="864" width="16" height="80"/>
+  <object id="313" name="wall" x="16" y="848" width="400" height="16"/>
+  <object id="314" name="floor" x="16" y="944" width="864" height="16"/>
+  <object id="315" name="wall" x="1408" y="528" width="16" height="16"/>
+  <object id="316" name="wall" x="1520" y="416" width="16" height="16"/>
+  <object id="317" name="wall" x="1504" y="432" width="16" height="16"/>
+  <object id="318" name="wall" x="1488" y="448" width="16" height="16"/>
+  <object id="319" name="wall" x="1472" y="464" width="16" height="16"/>
+  <object id="320" name="wall" x="1456" y="480" width="16" height="16"/>
+  <object id="321" name="wall" x="1440" y="496" width="16" height="16"/>
+  <object id="322" name="wall" x="1424" y="512" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="7" name="spawn">
   <object id="143" name="enemy_2" x="1712" y="480" width="16" height="16"/>
