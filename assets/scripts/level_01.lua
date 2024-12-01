@@ -17,7 +17,6 @@ scene = {
             {animation_id = "player_knight_fall", texture_id = "knight_fall", w = 32, h = 38, num_frames = 03, speed_rate = 01, is_loop = true},
             {animation_id = "player_knight_run", texture_id = "knight_run", w = 32, h = 38, num_frames = 10, speed_rate = 15, is_loop = true},
             {animation_id = "player_knight_attack", texture_id = "knight_attack", w = 32, h = 38, num_frames = 4, speed_rate = 15, is_loop = false},
-
     },
 
     -- sounds table

@@ -12,10 +12,10 @@ Entity Registry::create_entity(){
     std::size_t entity_id;
 
     // if there are free ids, use one of them
-    if(!free_ids.empty()){
+    if (!free_ids.empty()){
         entity_id = free_ids.front();
         free_ids.pop_front();
-    }else{
+    } else {
         // otherwise, create a new id
         entity_id = num_entities++;
         bool is_resize_needed = entity_id >= entityComponentSignatures.size();

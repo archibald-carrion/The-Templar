@@ -1,5 +1,6 @@
 #include "scene_loader.hpp"
 
+#include <filesystem>
 #include <iostream>
 #include <glm/glm.hpp>
 #include "../game/game.hpp"
@@ -74,8 +75,9 @@ void SceneLoader::load_scene(const std::string& scene_path,
     // load the map
     std::cout <<"before loading map" << std::endl;
     sol::table map = scene["maps"];
-    LoadMap(map, registry);
+    LoadMap(map, registry, scene_path);
     std::cout <<"after loading map" << std::endl;
+
 
     // load the entities
     std::cout <<"before loading entities" << std::endl;
@@ -160,6 +162,178 @@ void SceneLoader::load_keys_actions(const sol::table& keys, std::unique_ptr<Cont
     }
 }
 
+void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
+{
+    if(sol::optional<sol::table> has_components = entityTable["components"];
+        has_components != sol::nullopt) {
+        sol::table components = entityTable["components"];
+
+        // Animation component
+        sol::optional<sol::table> has_animation = components["animation"];
+        if(has_animation != sol::nullopt) {
+            sol::table animation = components["animation"];
+
+            // add explicit conversions
+            int num_frames = animation["num_frames"].get<int>();
+            float frame_speed_rate = static_cast<float>(animation["frame_speed_rate"].get<double>());
+            bool is_loop = animation["is_loop"].get<bool>();
+
+            entity.add_component<AnimationComponent>(
+                num_frames,
+                frame_speed_rate,
+                is_loop
+            );
+        }
+
+        // Box collider component
+        sol::optional<sol::table> has_box_collider = components["box_collider"];
+        if(has_box_collider != sol::nullopt) {
+            entity.add_component<BoxColliderComponent>(
+                components["box_collider"]["width"],
+                components["box_collider"]["height"],
+                glm::vec2(components["box_collider"]["offset"]["x"], components["box_collider"]["offset"]["y"])
+            );
+        }
+
+        // camera follow component
+        sol::optional<sol::table> has_camera_follow_component = components["camera_follow"];
+        if(has_camera_follow_component != sol::nullopt) {
+            entity.add_component<CameraFollowComponent>(); // has not parameters
+        }
+
+        // Circle collider component
+        sol::optional<sol::table> has_circle_collider = components["circular_collider"];
+
+        if(has_circle_collider != sol::nullopt) {
+            entity.add_component<CircleColliderComponent>(
+                components["circular_collider"]["radius"],
+                components["circular_collider"]["width"],
+                components["circular_collider"]["height"]
+            );
+        }
+
+        // Rigid body component
+        sol::optional<sol::table> has_rigid_body = components["rigid_body"];
+        if(has_rigid_body != sol::nullopt) {
+            entity.add_component<RigidBodyComponent>(
+                components["rigid_body"]["is_dynamic"],
+                components["rigid_body"]["is_solid"],
+                components["rigid_body"]["mass"]
+            );
+        }
+
+        // Clickable component
+        sol::optional<sol::table> has_clickable = components["clickable"];
+        if(has_clickable != sol::nullopt) {
+            entity.add_component<ClickableComponent>();
+        }
+
+        // script component
+        sol::optional<sol::table> has_script = components["script"];
+        if( has_script != sol::nullopt) {
+            lua["on_collision"] = sol::nil;
+            lua["on_click"] = sol::nil;
+            lua["update"] = sol::nil;
+            lua["on_init"] = sol::nil;
+
+            std::string path = components["script"]["path"];
+
+            lua.script_file(path);
+
+            sol::optional<sol::function> has_on_collision = lua["on_collision"];
+            sol::function on_collision = sol::nil;
+            if(has_on_collision != sol::nullopt) {
+                on_collision = lua["on_collision"];
+            }
+
+            sol::optional<sol::function> has_on_click = lua["on_click"];
+            sol::function on_click = sol::nil;
+            if(has_on_click != sol::nullopt) {
+                on_click = lua["on_click"];
+            }
+
+            sol::optional<sol::function> has_update = lua["update"];
+            sol::function update = sol::nil;
+            if(has_update != sol::nullopt) {
+                update = lua["update"];
+            }
+
+            sol::optional<sol::function> has_on_init = lua["on_init"];
+            sol::function on_init = sol::nil;
+            if(has_on_init != sol::nullopt) {
+                on_init = lua["on_init"];
+            }
+
+            entity.add_component<ScriptComponent>(on_collision, update, on_click, on_init);
+        }
+
+        // Sprite component
+        sol::optional<sol::table> has_sprite = components["sprite"];
+        if(has_sprite != sol::nullopt) {
+            entity.add_component<SpriteComponent>(
+                components["sprite"]["asset_id"],
+                components["sprite"]["width"],
+                components["sprite"]["height"],
+                components["sprite"]["src_rect"]["x"],
+                components["sprite"]["src_rect"]["y"]
+            );
+        }
+
+        // Text component
+        sol::optional<sol::table> has_text = components["text"];
+        if(has_text != sol::nullopt) {
+            entity.add_component<TextComponent>(
+                components["text"]["text"],
+                components["text"]["font_id"],
+                components["text"]["r"],
+                components["text"]["g"],
+                components["text"]["b"],
+                components["text"]["a"]
+            );
+        }
+
+        // tag component
+        sol::optional<sol::table> has_tag = components["tag"];
+        if(has_tag != sol::nullopt) {
+            entity.add_component<TagComponent>(static_cast<std::string>(components["tag"]["tag"]));
+        }
+
+         // transform component
+        sol::optional<sol::table> has_transform = components["transform"];
+        if(has_transform != sol::nullopt) {
+            entity.add_component<TransformComponent>(
+                glm::vec2(
+                    components["transform"]["position"]["x"],
+                    components["transform"]["position"]["y"]
+                ),
+                glm::vec2(
+                    components["transform"]["scale"]["x"],
+                    components["transform"]["scale"]["y"]
+                ),
+                components["transform"]["rotation"]
+            );
+        }
+
+        // player velocity component
+        sol::optional<sol::table> has_player_velocity = components["player_velocity"];
+        if(has_player_velocity != sol::nullopt) {
+
+            // add static cast to avoid warning
+            entity.add_component<PlayerVelocity>(
+                static_cast<int>(components["player_velocity"]["player_velocity"])
+            );
+        }
+
+        // player score component
+        sol::optional<sol::table> has_player_score = components["player_score"];
+        if(has_player_score != sol::nullopt) {
+            entity.add_component<PlayerScore>(
+                static_cast<int>(components["player_score"]["player_score"])
+            );
+        }
+    }
+}
+
 void SceneLoader::load_entities(sol::state& lua, const sol::table& entities, std::unique_ptr<Registry>& registry) {
     int index = 0;
 
@@ -187,176 +361,7 @@ void SceneLoader::load_entities(sol::state& lua, const sol::table& entities, std
         new_entity.remove_component<BoxColliderComponent>();
         new_entity.remove_component<TagComponent>();
         
-
-        sol::optional<sol::table> has_components = entity["components"];
-
-        if(has_components != sol::nullopt) {
-            sol::table components = entity["components"];
-
-            // Animation component
-            sol::optional<sol::table> has_animation = components["animation"];
-            if(has_animation != sol::nullopt) {
-                sol::table animation = components["animation"];
-                
-                // add explicit conversions
-                int num_frames = animation["num_frames"].get<int>();
-                float frame_speed_rate = static_cast<float>(animation["frame_speed_rate"].get<double>());
-                bool is_loop = animation["is_loop"].get<bool>();
-                
-                new_entity.add_component<AnimationComponent>(
-                    num_frames,
-                    frame_speed_rate,
-                    is_loop
-                );
-            }
-
-            // Box collider component
-            sol::optional<sol::table> has_box_collider = components["box_collider"];
-            if(has_box_collider != sol::nullopt) {
-                new_entity.add_component<BoxColliderComponent>(
-                    components["box_collider"]["width"],
-                    components["box_collider"]["height"],
-                    glm::vec2(components["box_collider"]["offset"]["x"], components["box_collider"]["offset"]["y"])
-                );
-            }
-
-            // camera follow component
-            sol::optional<sol::table> has_camera_follow_component = components["camera_follow"];
-            if(has_camera_follow_component != sol::nullopt) {
-                new_entity.add_component<CameraFollowComponent>(); // has not parameters
-            }
-
-            // Circle collider component
-            sol::optional<sol::table> has_circle_collider = components["circular_collider"];
-
-            if(has_circle_collider != sol::nullopt) {
-                new_entity.add_component<CircleColliderComponent>(
-                    components["circular_collider"]["radius"],
-                    components["circular_collider"]["width"],
-                    components["circular_collider"]["height"]
-                );
-            }
-
-            // Rigid body component
-            sol::optional<sol::table> has_rigid_body = components["rigid_body"];
-            if(has_rigid_body != sol::nullopt) {
-                new_entity.add_component<RigidBodyComponent>(
-                    components["rigid_body"]["is_dynamic"],
-                    components["rigid_body"]["is_solid"],
-                    components["rigid_body"]["mass"]
-                );
-            }
-
-            // Clickable component
-            sol::optional<sol::table> has_clickable = components["clickable"];
-            if(has_clickable != sol::nullopt) {
-                new_entity.add_component<ClickableComponent>();
-            }
-
-            // script component
-            sol::optional<sol::table> has_script = components["script"];
-            if( has_script != sol::nullopt) {
-                lua["on_collision"] = sol::nil;
-                lua["on_click"] = sol::nil;
-                lua["update"] = sol::nil;
-                lua["on_init"] = sol::nil;
-
-                std::string path = components["script"]["path"];
-
-                lua.script_file(path);
-
-                sol::optional<sol::function> has_on_collision = lua["on_collision"];
-                sol::function on_collision = sol::nil;
-                if(has_on_collision != sol::nullopt) {
-                    on_collision = lua["on_collision"];
-                }
-
-                sol::optional<sol::function> has_on_click = lua["on_click"];
-                sol::function on_click = sol::nil;
-                if(has_on_click != sol::nullopt) {
-                    on_click = lua["on_click"];
-                }
-
-                sol::optional<sol::function> has_update = lua["update"];
-                sol::function update = sol::nil;
-                if(has_update != sol::nullopt) {
-                    update = lua["update"];
-                }
-
-                sol::optional<sol::function> has_on_init = lua["on_init"];
-                sol::function on_init = sol::nil;
-                if(has_on_init != sol::nullopt) {
-                    on_init = lua["on_init"];
-                }
-
-                new_entity.add_component<ScriptComponent>(on_collision, update, on_click, on_init);
-            }
-
-            // Sprite component
-            sol::optional<sol::table> has_sprite = components["sprite"];
-            if(has_sprite != sol::nullopt) {
-                new_entity.add_component<SpriteComponent>(
-                    components["sprite"]["asset_id"],
-                    components["sprite"]["width"],
-                    components["sprite"]["height"],
-                    components["sprite"]["src_rect"]["x"],
-                    components["sprite"]["src_rect"]["y"]
-                );
-            }
-
-            // Text component
-            sol::optional<sol::table> has_text = components["text"];
-            if(has_text != sol::nullopt) {
-                new_entity.add_component<TextComponent>(
-                    components["text"]["text"],
-                    components["text"]["font_id"],
-                    components["text"]["r"],
-                    components["text"]["g"],
-                    components["text"]["b"],
-                    components["text"]["a"]
-                );
-            }
-
-            // tag component
-            sol::optional<sol::table> has_tag = components["tag"];
-            if(has_tag != sol::nullopt) {
-                new_entity.add_component<TagComponent>(static_cast<std::string>(components["tag"]["tag"]));
-            }
-
-             // transform component
-            sol::optional<sol::table> has_transform = components["transform"];
-            if(has_transform != sol::nullopt) {
-                new_entity.add_component<TransformComponent>(
-                    glm::vec2(
-                        components["transform"]["position"]["x"],
-                        components["transform"]["position"]["y"]
-                    ),
-                    glm::vec2(
-                        components["transform"]["scale"]["x"],
-                        components["transform"]["scale"]["y"]
-                    ),
-                    components["transform"]["rotation"]
-                );
-            }
-
-            // player velocity component
-            sol::optional<sol::table> has_player_velocity = components["player_velocity"];
-            if(has_player_velocity != sol::nullopt) {
-
-                // add static cast to avoid warning
-                new_entity.add_component<PlayerVelocity>(
-                    static_cast<int>(components["player_velocity"]["player_velocity"])
-                );
-            }
-
-            // player score component
-            sol::optional<sol::table> has_player_score = components["player_score"];
-            if(has_player_score != sol::nullopt) {
-                new_entity.add_component<PlayerScore>(
-                    static_cast<int>(components["player_score"]["player_score"])
-                );
-            }
-        }
+        load_entity(lua, new_entity, entity);
 
         index++;
     }
@@ -401,9 +406,8 @@ void SceneLoader::load_buttons(const sol::table& buttons, std::unique_ptr<Contro
 }
 
 
-void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &registry)
+void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &registry, const std::string& script_path)
 {
-
     // Define scale factor
     const float SCALE = 2.0f;
     
@@ -429,8 +433,8 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
 
         if (xmlmap.LoadFile(path.c_str()) != tinyxml2::XML_SUCCESS)
         {
-        std::cerr << "[SceneLoader] Error loading map XML file" << std::endl;
-        return;
+            std::cerr << "[SceneLoader] Error loading map XML file" << std::endl;
+            return;
         }
 
         // Extraer la raiz del documento xml
@@ -466,8 +470,8 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
         while (layerElement)
         {
             std::cout << "loading layer" << std::endl;
-        LoadLayer(registry, layerElement, tWidth, tHeight, mWidth, tileName, columns);
-        layerElement = layerElement->NextSiblingElement("layer");
+            LoadLayer(registry, layerElement, tWidth, tHeight, mWidth, tileName, columns);
+            layerElement = layerElement->NextSiblingElement("layer");
         }
 
         // Se obtiene la lista de object groups
@@ -475,17 +479,20 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
 
         while (objectGroup)
         {
-        const char *objectGroupName;
-        std::string name;
-        objectGroup->QueryStringAttribute("name", &objectGroupName);
-        name = objectGroupName;
+            const char *objectGroupName;
+            std::string name;
+            objectGroup->QueryStringAttribute("name", &objectGroupName);
+            name = objectGroupName;
 
-        if (name.compare("colliders") == 0)
-        {
-            LoadColliders(registry, objectGroup);
-        }
+            if (name.compare("colliders") == 0)
+            {
+                LoadColliders(registry, objectGroup);
+            } else if (name.compare("spawn") == 0)
+            {
+                load_enemies(*registry, script_path, objectGroup);
+            }
 
-        objectGroup = objectGroup->NextSiblingElement("objectgroup");
+            objectGroup = objectGroup->NextSiblingElement("objectgroup");
         }
     }
 }
@@ -493,92 +500,96 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
 void SceneLoader::LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *layerElement,
                             int tWidth, int tHeight, int mWidth, const std::string &tileSet, int columns)
 {
-  tinyxml2::XMLElement *xmlData = layerElement->FirstChildElement("data");
-  const char *data = xmlData->GetText();
+    tinyxml2::XMLElement *xmlData = layerElement->FirstChildElement("data");
+    const char *data = xmlData->GetText();
 
-  std::stringstream tmpNumber;
-  int pos = 0;
-  int tileNumber = 0;
-  
-  // Define scale factor
-  const float SCALE = 2.0f;
+    std::stringstream tmpNumber;
+    int pos = 0;
+    int tileNumber = 0;
 
-  while (true)
-  {
-    if (data[pos] == '\0')
-    {
-      break;
-    }
-    if (isdigit(data[pos]))
-    {
-      tmpNumber << data[pos];
-    }
-    else if (!isdigit(data[pos]) && tmpNumber.str().length() != 0)
-    {
-      int tileId = std::stoi(tmpNumber.str());
-      if (tileId > 0)
-      {
-        Entity tile = registry->create_entity();
-        tile.add_component<TransformComponent>(
-            glm::vec2((tileNumber % mWidth) * tWidth * SCALE,
-                      (tileNumber / mWidth) * tHeight * SCALE), //Position scaled
-            glm::vec2(SCALE, SCALE) // Add scale vector
-        );
-        tile.add_component<SpriteComponent>(
-            tileSet,
-            tWidth,
-            tHeight,
-            ((tileId - 1) % columns) * tWidth,
-            ((tileId - 1) / columns) * tHeight
-        );
-      }
+    // Define scale factor
+    const float SCALE = 2.0f;
 
-      tileNumber++;
-      tmpNumber.str("");
+    while (true)
+    {
+        if (data[pos] == '\0')
+        {
+            break;
+        }
+
+        if (isdigit(data[pos]))
+        {
+            tmpNumber << data[pos];
+        }
+        else if (!isdigit(data[pos]) && tmpNumber.str().length() != 0)
+        {
+            int tileId = std::stoi(tmpNumber.str());
+
+            if (tileId > 0)
+            {
+                Entity tile = registry->create_entity();
+                tile.add_component<TransformComponent>(
+                    glm::vec2((tileNumber % mWidth) * tWidth * SCALE,
+                              (tileNumber / mWidth) * tHeight * SCALE), //Position scaled
+                    glm::vec2(SCALE, SCALE) // Add scale vector
+                );
+                tile.add_component<SpriteComponent>(
+                    tileSet,
+                    tWidth,
+                    tHeight,
+                    ((tileId - 1) % columns) * tWidth,
+                    ((tileId - 1) / columns) * tHeight
+                );
+            }
+
+            tileNumber++;
+            tmpNumber.str("");
+        }
+        pos++;
     }
-    pos++;
-  }
 }
 
 void SceneLoader::LoadColliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup)
 {
-  tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
-  
-  // Define scale factor
-  const float SCALE = 2.0f;
+    tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
 
-  while (object != nullptr)
-  {
-    // Declarar variables
-    const char *name;
-    std::string tag;
-    int x, y, w, h;
+    // Define scale factor
+    const float SCALE = 2.0f;
 
-    // Extraer atributos
-    object->QueryStringAttribute("name", &name);
-    tag = name;
+    while (object != nullptr)
+    {
+        // Declarar variables
+        const char *name;
+        std::string tag;
+        int x, y, w, h;
 
-    // Extraer posición
-    object->QueryIntAttribute("x", &x);
-    object->QueryIntAttribute("y", &y);
+        // Extraer atributos
+        object->QueryStringAttribute("name", &name);
+        tag = name;
 
-    // Extraer dimensiones
-    object->QueryIntAttribute("width", &w);
-    object->QueryIntAttribute("height", &h);
+        // Extraer posición
+        object->QueryIntAttribute("x", &x);
+        object->QueryIntAttribute("y", &y);
 
-    // Crear entidad con posición y dimensiones escaladas
-    Entity collider = registry->create_entity();
-    collider.add_component<TagComponent>(tag);
-    collider.add_component<TransformComponent>(
-        glm::vec2(x * SCALE, y * SCALE), // Scale position
-        glm::vec2(SCALE, SCALE) // Add scale vector
-    );
-    collider.add_component<BoxColliderComponent>(w * SCALE, h * SCALE); // Scale collider dimensions
-    collider.add_component<RigidBodyComponent>(false, true, 9999999999.0f);
+        // Extraer dimensiones
+        object->QueryIntAttribute("width", &w);
+        object->QueryIntAttribute("height", &h);
 
-    object = object->NextSiblingElement("object");
-  }
+        // Crear entidad con posición y dimensiones escaladas
+        Entity collider = registry->create_entity();
+        collider.add_component<TagComponent>(tag);
+        collider.add_component<TransformComponent>(
+            glm::vec2(x * SCALE, y * SCALE), // Scale position
+            glm::vec2(SCALE, SCALE) // Add scale vector
+        );
+        collider.add_component<BoxColliderComponent>(w * SCALE, h * SCALE); // Scale collider dimensions
+        collider.add_component<RigidBodyComponent>(false, true, 9999999999.0f);
+
+        object = object->NextSiblingElement("object");
+    }
 }
+
+
 
 void SceneLoader::load_animations(const sol::table& animations, std::unique_ptr<AnimationManager>& animation_manager) {
     int index = 0;
@@ -601,5 +612,66 @@ void SceneLoader::load_animations(const sol::table& animations, std::unique_ptr<
             , numFrames, speedRate, isLoop);
         
         index++;
+    }
+}
+
+void SceneLoader::load_enemies(Registry& registry, const std::string& path, tinyxml2::XMLElement *objectGroup)
+{
+    tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
+
+    static constexpr float SCALE = 2.0f;
+
+    std::vector<Entity> enemies;
+
+    while (object != nullptr)
+    {
+        const char *name;
+        std::string tag;
+        int x, y;
+
+        object->QueryStringAttribute("name", &name);
+        tag = name;
+
+        object->QueryIntAttribute("x", &x);
+        object->QueryIntAttribute("y", &y);
+
+        Entity collider = registry.create_entity();
+        collider.add_component<TagComponent>(tag);
+        collider.add_component<TransformComponent>(
+            glm::vec2(x * SCALE, y * SCALE),
+            glm::vec2(SCALE, SCALE)
+        );
+
+        object = object->NextSiblingElement("object");
+        enemies.push_back(collider);
+    }
+
+    if (enemies.empty())
+    {
+        return;
+    }
+
+    sol::state lua;
+
+    std::filesystem::path file_path(path);
+    file_path = file_path.parent_path();
+    const std::string enemies_path = file_path.string() + "/enemies.lua";
+
+    if (const sol::load_result script_result = lua.load_file(enemies_path); !script_result.valid())
+    {
+        throw std::runtime_error(std::string("Failed to load ") + enemies_path);
+    }
+
+    lua.script_file(enemies_path);
+    sol::table enemiesTable = lua["enemies"];
+
+    // sugondis Caenid
+    for ( Entity& enemy : enemies )
+    {
+        const auto tag = enemy.get_component<TagComponent>();
+        std::string name = tag.tag;
+        sol::table enemyTable = enemiesTable[name];
+
+        load_entity(lua, enemy, enemyTable);
     }
 }

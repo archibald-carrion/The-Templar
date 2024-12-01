@@ -15,7 +15,6 @@
 
 class SceneLoader {
 private:
-    
     /**
      * @brief Load the sounds from the Lua table.
      * @param sounds The Lua table containing the sounds.
@@ -69,9 +68,11 @@ private:
 
     void load_animations(const sol::table& animations, std::unique_ptr<AnimationManager>& animation_manager);
 
-    void LoadMap(const sol::table map, std::unique_ptr<Registry> &registry);
+    void LoadMap(const sol::table map, std::unique_ptr<Registry> &registry, const std::string& script_path);
     void LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *layerElement, int tWidth, int tHeight, int mWidth, const std::string &tileSet, int columns);
     void LoadColliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup);
+    void load_enemies(Registry& registry, const std::string& path, tinyxml2::XMLElement *objectGroup);
+
 public:
     /**
      * @brief Default constructor for the SceneLoader class.
