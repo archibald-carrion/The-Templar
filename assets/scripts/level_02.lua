@@ -32,6 +32,8 @@ scene = {
     music = {
         [0] =
         {music_id = "menu_music",file_path ="./assets/sounds/GAL_v1.mp3"},
+        {music_id = "level_2_song",file_path ="./assets/sounds/Falsebound_v1.mp3"},
+
     },
 
     -- font table
