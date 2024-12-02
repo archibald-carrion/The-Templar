@@ -70,23 +70,6 @@ scene = {
     -- entities table
     entities = {
         [0] =
-        -- -- Background
-        -- {
-        --     components = {
-        --         sprite = {
-        --             asset_id = "background",
-        --             width = 3000,
-        --             height = 3000,
-        --             src_rect = {x = 0, y = 0},
-        --         },
-        --         transform = {
-        --             position = { x = 0, y = 0},
-        --             scale = { x = 1.0, y = 1.0},
-        --             rotation = 0.0
-        --         },
-        --     }
-        -- },
-
         -- player
         {
             components = {
