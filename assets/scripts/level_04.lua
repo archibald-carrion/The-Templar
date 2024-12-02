@@ -8,6 +8,7 @@ scene = {
             {asset_id = "knight_run", file_path = "./assets/images/knight_run.png"},
             {asset_id = "knight_attack", file_path = "./assets/images/knight_attack.png"},
             {asset_id = "terrain", file_path = "./assets/images/dungeon_tileset.png"},
+            {asset_id = "frost_t_idle", file_path = "./assets/images/frost_t_idle.png"},
     },
     
     animations = {
@@ -17,6 +18,7 @@ scene = {
             {animation_id = "player_knight_fall", texture_id = "knight_fall", w = 32, h = 38, num_frames = 03, speed_rate = 01, is_loop = true},
             {animation_id = "player_knight_run", texture_id = "knight_run", w = 32, h = 38, num_frames = 10, speed_rate = 15, is_loop = true},
             {animation_id = "player_knight_attack", texture_id = "knight_attack", w = 32, h = 38, num_frames = 4, speed_rate = 15, is_loop = false},
+            {animation_id = "enemy1_idle", texture_id = "frost_t_idle", w = 128, h = 128, num_frames = 6, speed_rate = 15, is_loop = false},
 
     },
 
@@ -60,7 +62,7 @@ scene = {
     maps = {
         width = 3000,
         height = 3000,
-        map_path = "./assets/maps/library.tmx",
+        map_path = "./assets/maps/third_level.tmx",
         tile_path = "./assets/maps/dungeon_tileset.tsx",
         tile_name = "terrain",
     },
@@ -68,7 +70,6 @@ scene = {
     -- entities table
     entities = {
         [0] =
-
         -- player
         {
             components = {
@@ -82,7 +83,7 @@ scene = {
                     tag = "player",
                 },
                 box_collider = {
-                    width = 32*2,
+                    width = 30*2,
                     height = 38*2,
                     offset = {x = 0, y= 0},
                 },
@@ -111,112 +112,5 @@ scene = {
             }
         },
 
-        -- door to first level
-        {
-            components = {
-                tag = {
-                    tag = "door",
-                },
-                box_collider = {
-                    width = 64,
-                    height = 100,
-                    offset = {x = 0, y= 0},
-                },
-                rigid_body = {
-                    is_dynamic = false,
-                    is_solid = false,
-                    mass = 10,
-                },
-                script = {
-                    path = "./assets/scripts/door_goto_level_1.lua"
-                },
-                transform = {
-                    position = { x = 1345, y = 410},
-                    scale = { x = 1.0, y = 1.0},
-                    rotation = 0.0
-                },
-            }
-        },
-
-        -- -- door to second level
-        -- {
-        --     components = {
-        --         tag = {
-        --             tag = "door",
-        --         },
-        --         box_collider = {
-        --             width = 64,
-        --             height = 100,
-        --             offset = {x = 0, y= 0},
-        --         },
-        --         rigid_body = {
-        --             is_dynamic = false,
-        --             is_solid = false,
-        --             mass = 10,
-        --         },
-        --         script = {
-        --             path = "./assets/scripts/door_goto_level_2.lua"
-        --         },
-        --         transform = {
-        --             position = { x = 1345, y = 410},
-        --             scale = { x = 1.0, y = 1.0},
-        --             rotation = 0.0
-        --         },
-        --     }
-        -- },
-
-        -- -- door to third level
-        -- {
-        --     components = {
-        --         tag = {
-        --             tag = "door",
-        --         },
-        --         box_collider = {
-        --             width = 64,
-        --             height = 100,
-        --             offset = {x = 0, y= 0},
-        --         },
-        --         rigid_body = {
-        --             is_dynamic = false,
-        --             is_solid = false,
-        --             mass = 10,
-        --         },
-        --         script = {
-        --             path = "./assets/scripts/door_goto_level_3.lua"
-        --         },
-        --         transform = {
-        --             position = { x = 1345, y = 410},
-        --             scale = { x = 1.0, y = 1.0},
-        --             rotation = 0.0
-        --         },
-        --     }
-        -- },
-
-        -- -- door to final level
-        -- {
-        --     components = {
-        --         tag = {
-        --             tag = "door",
-        --         },
-        --         box_collider = {
-        --             width = 64,
-        --             height = 100,
-        --             offset = {x = 0, y= 0},
-        --         },
-        --         rigid_body = {
-        --             is_dynamic = false,
-        --             is_solid = false,
-        --             mass = 10,
-        --         },
-        --         script = {
-        --             path = "./assets/scripts/door_goto_level_4.lua"
-        --         },
-        --         transform = {
-        --             position = { x = 1345, y = 410},
-        --             scale = { x = 1.0, y = 1.0},
-        --             rotation = 0.0
-        --         },
-        --     }
-        -- },
     }
 }

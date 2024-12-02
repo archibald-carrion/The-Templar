@@ -98,12 +98,12 @@ scene = {
                     r = 255, g = 255, b = 255, a = 255  -- White color
                 },
                 transform = {
-                    position = { x = 100, y = 250},
+                    position = { x = 100, y = 200},
                     scale = { x = 1.2, y = 1.2},
                     rotation = 0.0
                 },
                 script = {
-                    path = "./assets/scripts/door_goto_level_1.lua",
+                    path = "./assets/scripts/goto_level_01.lua",
                 },
             },
         },
@@ -118,12 +118,12 @@ scene = {
                     r = 200, g = 200, b = 200, a = 255  -- Light gray color
                 },
                 transform = {
-                    position = { x = 100, y = 350},
+                    position = { x = 100, y = 300},
                     scale = { x = 1.2, y = 1.2},
                     rotation = 0.0
                 },
                 script = {
-                    path = "./assets/scripts/door_goto_level_2.lua",
+                    path = "./assets/scripts/goto_level_02.lua",
                 },
             },
         },
@@ -133,21 +133,40 @@ scene = {
                 clickable = {
                 },
                 text = {
-                    text = "Level  03: Dinosaur (definitely not a dragon)",
+                    text = "Level  03",
                     font_id = "arcade_classic_font",
                     r = 150, g = 150, b = 150, a = 255  -- Darker gray color
                 },
                 transform = {
-                    position = { x = 100, y = 450},
+                    position = { x = 100, y = 400},
                     scale = { x = 1.2, y = 1.2},
                     rotation = 0.0
                 },
                 script = {
-                    path = "./assets/scripts/door_goto_level_3.lua",
+                    path = "./assets/scripts/goto_level_03.lua",
+                },
+            },
+        },
+        -- level 04
+        {
+            components = {
+                clickable = {
+                },
+                text = {
+                    text = "Level  04",
+                    font_id = "arcade_classic_font",
+                    r = 100, g = 100, b = 100, a = 255  -- Darker gray color
+                },
+                transform = {
+                    position = { x = 100, y = 500},
+                    scale = { x = 1.2, y = 1.2},
+                    rotation = 0.0
+                },
+                script = {
+                    path = "./assets/scripts/goto_level_04.lua",
                 },
             },
         },
     }
 
-    -- music and sound effect table
 }

@@ -111,7 +111,7 @@ scene = {
                 }
             }
         },
-        
+
         -- door to third level
         {
             components = {
@@ -129,7 +129,7 @@ scene = {
                     mass = 10,
                 },
                 script = {
-                    path = "./assets/scripts/door_goto_level_3.lua"
+                    path = "./assets/scripts/goto_level_03_door.lua"
                 },
                 transform = {
                     position = { x = 196*2*16, y = 30*2*16 +50},
