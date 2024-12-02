@@ -1,23 +1,24 @@
 #ifndef SCRIPT_SYSTEM_HPP
 #define SCRIPT_SYSTEM_HPP
 
-#include <sol/sol.hpp> // Lua scripting
-#include <memory> // std::unique_ptr
-#include "../binding/lua_binding.hpp" // Lua bindings   
+#include <sol/sol.hpp>                        // Lua scripting
+#include <memory>                             // std::unique_ptr
+#include "../binding/lua_binding.hpp"         // Lua bindings
 #include "../components/script_component.hpp" // ScriptComponent
-#include "../ECS/ECS.hpp" // System
+#include "../ECS/ECS.hpp"                     // System
 
 /**
  * @brief Script System class
  * The ScriptSystem class is a class for managing scripts.
  */
-class ScriptSystem : public System {
+class ScriptSystem : public System
+{
 public:
-
     /**
      * @brief Construct a new Script System object
      */
-    ScriptSystem() {
+    ScriptSystem()
+    {
         RequireComponent<ScriptComponent>();
     }
 
@@ -25,7 +26,8 @@ public:
      * @brief Create a lua binding object
      * @param lua sol lua state
      */
-    void create_lua_binding(sol::state& lua) {
+    void create_lua_binding(sol::state &lua)
+    {
         // classes
         lua.new_usertype<Entity>("entity");
 
@@ -34,7 +36,7 @@ public:
         lua.set_function("is_mouse_button_pressed", is_mouse_button_pressed);
         lua.set_function("get_mouse_position", get_mouse_position);
 
-        // movement, rotation and position related functions 
+        // movement, rotation and position related functions
         lua.set_function("set_velocity", set_velocity);
         lua.set_function("get_velocity", get_velocity);
         lua.set_function("get_buffered_velocity", get_buffered_velocity);
@@ -51,7 +53,6 @@ public:
         lua.set_function("change_animation", change_animation);
         lua.set_function("get_animation_frame", get_animation_frame);
 
-
         // general entity related functions
         lua.set_function("get_tag", get_tag);
         // lua.set_function("reset_bullet", reset_bullet);
@@ -60,7 +61,7 @@ public:
         lua.set_function("increment_player_velocity", increment_player_velocity);
         lua.set_function("get_player_velocity", get_player_velocity);
         lua.set_function("increase_score", increase_score);
-        //lua.set_function("shoot_bullet", shoot_bullet);
+        // lua.set_function("shoot_bullet", shoot_bullet);
 
         // scene related functions
         lua.set_function("go_to_scene", go_to_scene);
@@ -75,17 +76,23 @@ public:
         lua.set_function("play_sound", play_sound);
         lua.set_function("play_music", play_music);
         lua.set_function("stop_all_sounds", stop_all_sounds);
+
+        // camera
+        lua.set_function("reset_camera", reset_camera);
     }
 
     /**
      * @brief Update the script system
      * @param lua sol lua state
      */
-    void update(sol::state& lua) {
-        for (auto& entity : get_entities()) {
-            const auto& script = entity.get_component<ScriptComponent>();
+    void update(sol::state &lua)
+    {
+        for (auto &entity : get_entities())
+        {
+            const auto &script = entity.get_component<ScriptComponent>();
 
-            if (script.update != sol::lua_nil) {
+            if (script.update != sol::lua_nil)
+            {
                 lua["this"] = entity;
                 script.update();
             }
@@ -96,12 +103,15 @@ public:
      * @brief init function that calls the on_init function from the script component
      * @param lua sol lua state
      */
-    void init_from_script(sol::state& lua) {
+    void init_from_script(sol::state &lua)
+    {
         // loop through all entities and call the on_init function
-        for (auto& entity : get_entities()) {
-            const auto& script = entity.get_component<ScriptComponent>();
+        for (auto &entity : get_entities())
+        {
+            const auto &script = entity.get_component<ScriptComponent>();
             // check if the on_init function exists
-            if (script.on_init != sol::lua_nil) {
+            if (script.on_init != sol::lua_nil)
+            {
                 lua["this"] = entity;
                 script.on_init();
             }
