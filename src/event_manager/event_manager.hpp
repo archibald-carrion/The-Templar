@@ -70,7 +70,7 @@ public:
 };
 
 
-typedef std::list<std::unique_ptr<IEventCallback>> handler_list; // handler list
+typedef std::list<std::shared_ptr<IEventCallback>> handler_list; // handler list
 
 /**
  * @class EventManager
@@ -78,7 +78,7 @@ typedef std::list<std::unique_ptr<IEventCallback>> handler_list; // handler list
  */
 class EventManager {
 private:
-    std::map<std::type_index, std::unique_ptr<handler_list>> subscribers; // subscribers
+    std::map<std::type_index, std::shared_ptr<handler_list>> subscribers; // subscribers
 public:
     /**
      * @brief Construct a new EventManager object
@@ -111,7 +111,7 @@ public:
         if(!subscribers[typeid(TEvent)].get()) {
             subscribers[typeid(TEvent)] = std::make_unique<handler_list>();
         }
-        auto subscriber = std::make_unique<EventCallback<TOwner, TEvent>>(owner_instance, callbackFunction);
+        auto subscriber = std::make_shared<EventCallback<TOwner, TEvent>>(owner_instance, callbackFunction);
         subscribers[typeid(TEvent)]->push_back(std::move(subscriber));
     }
 
@@ -122,6 +122,7 @@ public:
     template <typename TEvent, typename... TArgs>
     void emit_event(TArgs&&... args){
         auto handlers = subscribers[typeid(TEvent)].get();
+
         if(handlers) {
             // loop through all the handlers
             for (auto it = handlers->begin(); it != handlers->end(); it++) {

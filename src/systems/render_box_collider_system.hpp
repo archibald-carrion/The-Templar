@@ -21,8 +21,8 @@ public:
             SDL_Rect box = {
                 static_cast<int>(transform.position.x - camera.x),
                 static_cast<int>(transform.position.y - camera.y),
-                static_cast<int>(collider.width * transform.scale.x),
-                static_cast<int>(collider.height * transform.scale.y)
+                static_cast<int>(collider.width),
+                static_cast<int>(collider.height)
             };
 
             SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);

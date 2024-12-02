@@ -192,6 +192,8 @@ void set_velocity(Entity e, float x, float y) {
     rigid_body.velocity.y = y;
 }
 
+
+
 /**
  * @brief Set the rotation of an entity.
  * @param e The entity to set the rotation for.
@@ -229,6 +231,13 @@ std::tuple<int, int> get_position(Entity e) {
 std::tuple<int, int> get_velocity(Entity e) {
     const auto& rigid_body = e.get_component<RigidBodyComponent>();
     return {static_cast<int>(rigid_body.velocity.x), static_cast<int>(rigid_body.velocity.y)};
+}
+
+std::tuple<int, int> get_buffered_velocity(Entity e)
+{
+    const auto& rigid_body = e.get_component<RigidBodyComponent>();
+    auto velocity = rigid_body.velocity_buffer;
+    return {static_cast<int>(velocity.x), static_cast<int>(velocity.y)};
 }
 
 /**

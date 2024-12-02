@@ -537,9 +537,9 @@
  <objectgroup id="7" name="spawn">
   <object id="143" name="enemy_2" x="1712" y="480" width="16" height="16"/>
   <object id="144" name="enemy_1" x="2128" y="480" width="16" height="16"/>
-  <object id="145" name="enemy_1" x="2160" y="320" width="16" height="16"/>
-  <object id="327" name="enemy_1" x="416" y="208" width="16" height="16"/>
-  <object id="328" name="enemy_2" x="720" y="64" width="16" height="16"/>
-  <object id="329" name="enemy_3" x="112" y="192" width="16" height="16"/>
+  <object id="145" name="enemy_1" x="2160.67" y="273.333" width="16" height="16"/>
+  <object id="327" name="enemy_1" x="335.334" y="175.334" width="16" height="16"/>
+  <object id="328" name="enemy_2" x="719.333" y="32" width="16" height="16"/>
+  <object id="329" name="enemy_3" x="110" y="176.667" width="16" height="16"/>
  </objectgroup>
 </map>

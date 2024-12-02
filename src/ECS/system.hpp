@@ -55,6 +55,8 @@ public:
      */
     template<typename TComponent>
     void RequireComponent();
+
+    void clear_system();
 };
 
 

@@ -113,13 +113,12 @@ void Game::run_scene() {
         update();
         render();
     }
-    
+
     assets_manager->clear_assets();
     registry->clear_all_entities();
 }
 
 void Game::destroy() {
-    // std::cout << "[GAME] Destroy" << std::endl;
     lua = sol::state();
 
     // stop all currently playing sounds
@@ -171,7 +170,6 @@ void Game::processInput() {
             case SDL_MOUSEBUTTONDOWN:
                 controller_manager->set_mouse_position(event.button.x, event.button.y);
                 controller_manager->set_mouse_button_to_pressed(static_cast<int>(event.button.button));
-                //std::cout << (int)event.button.button << std::endl;
                 events_manager->emit_event<ClickEvent>(static_cast<int>(event.button.button), event.button.x, event.button.y);
                 break;
 

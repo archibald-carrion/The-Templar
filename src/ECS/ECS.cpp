@@ -71,17 +71,13 @@ void Registry::update(){
 }
 
 void Registry::clear_all_entities() {
-    // Remove all entities from systems
-    for(int i = 0; i < num_entities; i++) {
-        Entity entity(i);
-        remove_entity_from_system(entity);
+    for (auto [index, system] : systems) {
+        if (system) system->clear_system();
     }
 
     // Clear the component pools
     for (auto& pool : componentsPools) {
-        if (pool) {
-            pool->clear();
-        }
+        if (pool) pool->clear();
     }
 
     // Resize and reset all signatures

@@ -100,7 +100,7 @@ scene = {
                     tag = "player",
                 },
                 box_collider = {
-                    width = 32*2,
+                    width = 30*2,
                     height = 38*2,
                     offset = {x = 0, y= 0},
                 },

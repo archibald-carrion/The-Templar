@@ -4,6 +4,7 @@
 #include "../ECS/ECS.hpp" // System
 #include "../components/RigidBodyComponent.hpp" // RigidBodyComponent
 #include "../components/transform_component.hpp" // TransformComponent
+#include "../components/tag_component.hpp"
 
 /**
  * @brief The MovementSystem class is a class for managing movement.
@@ -36,11 +37,13 @@ public:
                 rigid_body.velocity += rigid_body.acceleration * static_cast<float>(dt);
                 transform.position += rigid_body.velocity * static_cast<float>(dt);
                 rigid_body.sum_forces = glm::vec2(0, 0);
-            } else {
-                transform.position.x += rigid_body.velocity.x * dt;
-                transform.position.y += rigid_body.velocity.y * dt;
             }
 
+            if (rigid_body.default_movement) {
+                transform.position.x += rigid_body.velocity.x * dt;
+                transform.position.y += rigid_body.velocity.y * dt;
+                rigid_body.bufferVelocity();
+            }
         }
     }
 

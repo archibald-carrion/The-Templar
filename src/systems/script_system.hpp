@@ -37,6 +37,7 @@ public:
         // movement, rotation and position related functions 
         lua.set_function("set_velocity", set_velocity);
         lua.set_function("get_velocity", get_velocity);
+        lua.set_function("get_buffered_velocity", get_buffered_velocity);
         lua.set_function("set_rotation", set_rotation);
         lua.set_function("get_rotation", get_rotation);
         lua.set_function("set_position", set_position);

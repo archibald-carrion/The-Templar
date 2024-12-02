@@ -10,10 +10,12 @@
 struct RigidBodyComponent {
   bool is_dynamic; // Whether the object is dynamic or not
   bool is_solid; // Whether the object is solid or not
+  bool default_movement { false };
 
   glm::vec2 sum_forces = glm::vec2(0, 0); // Sum of all forces acting on the object
   glm::vec2 velocity = glm::vec2(0, 0); // Velocity of the object
   glm::vec2 acceleration = glm::vec2(0, 0); // Acceleration of the object
+  glm::vec2 velocity_buffer = glm::vec2(0, 0);
 
   float mass; // Mass of the object
   float inverse_mass; // Inverse mass of the object
@@ -31,6 +33,19 @@ struct RigidBodyComponent {
     this->mass = mass;
     this->inverse_mass = 1 / mass;
   };
+
+  void bufferVelocity()
+  {
+    if (velocity.x != 0)
+    {
+      velocity_buffer.x = velocity.x;
+    }
+
+    if (velocity.y != 0)
+    {
+      velocity_buffer.y = velocity.y;
+    }
+  }
 };
 
 #endif // RIGIDBODYCOMPONENT_HPP

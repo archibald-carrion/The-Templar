@@ -80,7 +80,7 @@ public:
                     static_cast<float>(b_collider.width),
                     static_cast<float>(b_collider.height)
                 );
-                
+
                 // check if there is a collision
                 if(there_is_collision) {
                     eventManager->emit_event<CollisionEvent>(a, b);
@@ -91,7 +91,6 @@ public:
                             lua["this"] = a;
                             script.on_collision(b);
                         }
-
                     }
 
                     if(b.has_component<ScriptComponent>()) {
@@ -100,7 +99,6 @@ public:
                             lua["this"] = b;
                             script.on_collision(a);
                         }
-
                     }
                 }
             }

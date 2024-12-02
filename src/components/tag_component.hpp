@@ -15,7 +15,7 @@ struct TagComponent {
     * @param tag The tag for the entity
     */
    TagComponent(const std::string& tag = "") {
-    this->tag = tag;
+        this->tag = tag;
    }
 };
 

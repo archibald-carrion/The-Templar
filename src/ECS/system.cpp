@@ -20,3 +20,8 @@ std::vector<Entity> System::get_entities() const {
 const Signature& System::get_signature() const {
     return componentSignature;
 }
+
+void System::clear_system()
+{
+    entities.clear();
+}

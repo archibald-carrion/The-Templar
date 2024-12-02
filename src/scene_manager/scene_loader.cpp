@@ -75,9 +75,8 @@ void SceneLoader::load_scene(const std::string& scene_path,
     // load the map
     std::cout <<"before loading map" << std::endl;
     sol::table map = scene["maps"];
-    LoadMap(map, registry, scene_path);
+    LoadMap(map, registry, scene_path, lua);
     std::cout <<"after loading map" << std::endl;
-
 
     // load the entities
     std::cout <<"before loading entities" << std::endl;
@@ -220,6 +219,15 @@ void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
                 components["rigid_body"]["is_solid"],
                 components["rigid_body"]["mass"]
             );
+
+            const sol::optional<sol::table> hasVelocity = components["rigid_body"]["velocity"];
+            if(hasVelocity != sol::nullopt)
+            {
+                auto& rigidBody = entity.get_component<RigidBodyComponent>();
+                rigidBody.velocity.x = components["rigid_body"]["velocity"]["x"];
+                rigidBody.velocity.y = components["rigid_body"]["velocity"]["y"];
+                rigidBody.default_movement = true;
+            }
         }
 
         // Clickable component
@@ -243,25 +251,25 @@ void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
             sol::optional<sol::function> has_on_collision = lua["on_collision"];
             sol::function on_collision = sol::nil;
             if(has_on_collision != sol::nullopt) {
-                on_collision = lua["on_collision"];
+                on_collision = lua["on_collision"].get<sol::protected_function>();
             }
 
             sol::optional<sol::function> has_on_click = lua["on_click"];
             sol::function on_click = sol::nil;
             if(has_on_click != sol::nullopt) {
-                on_click = lua["on_click"];
+                on_click = lua["on_click"].get<sol::protected_function>();
             }
 
             sol::optional<sol::function> has_update = lua["update"];
             sol::function update = sol::nil;
             if(has_update != sol::nullopt) {
-                update = lua["update"];
+                update = lua["update"].get<sol::protected_function>();
             }
 
             sol::optional<sol::function> has_on_init = lua["on_init"];
             sol::function on_init = sol::nil;
             if(has_on_init != sol::nullopt) {
-                on_init = lua["on_init"];
+                on_init = lua["on_init"].get<sol::protected_function>();
             }
 
             entity.add_component<ScriptComponent>(on_collision, update, on_click, on_init);
@@ -406,7 +414,7 @@ void SceneLoader::load_buttons(const sol::table& buttons, std::unique_ptr<Contro
 }
 
 
-void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &registry, const std::string& script_path)
+void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &registry, const std::string& script_path, sol::state& lua)
 {
     // Define scale factor
     const float SCALE = 2.0f;
@@ -489,7 +497,7 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
                 LoadColliders(registry, objectGroup);
             } else if (name.compare("spawn") == 0)
             {
-                load_enemies(*registry, script_path, objectGroup);
+                load_enemies(*registry, script_path, objectGroup, lua);
             }
 
             objectGroup = objectGroup->NextSiblingElement("objectgroup");
@@ -615,7 +623,7 @@ void SceneLoader::load_animations(const sol::table& animations, std::unique_ptr<
     }
 }
 
-void SceneLoader::load_enemies(Registry& registry, const std::string& path, tinyxml2::XMLElement *objectGroup)
+void SceneLoader::load_enemies(Registry& registry, const std::string& path, tinyxml2::XMLElement *objectGroup, sol::state& lua)
 {
     tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
 
@@ -650,8 +658,6 @@ void SceneLoader::load_enemies(Registry& registry, const std::string& path, tiny
     {
         return;
     }
-
-    sol::state lua;
 
     std::filesystem::path file_path(path);
     file_path = file_path.parent_path();
