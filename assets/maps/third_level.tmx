@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="47">
  <tileset firstgid="1" source="dungeon_tileset.tsx"/>
  <layer id="1" name="background" width="200" height="60">
   <data encoding="csv">
@@ -129,4 +129,48 @@
 53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,38,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,37,53,54,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,38,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,37,53,53,53,53,53,53,53,53,53,53,53,53,38,36,36,36,36,36,36,37,53,53,53,53,53,53,53,53,53,53
 </data>
  </layer>
+ <objectgroup id="3" name="colliders">
+  <object id="1" name="wall" x="0" y="16" width="16" height="880"/>
+  <object id="2" name="floor" x="16" y="896" width="320" height="16"/>
+  <object id="3" name="floor" x="336" y="864" width="32" height="16"/>
+  <object id="4" name="wall" x="336" y="880" width="16" height="16"/>
+  <object id="5" name="floor" x="368" y="816" width="80" height="16"/>
+  <object id="6" name="wall" x="368" y="832" width="16" height="32"/>
+  <object id="7" name="floor" x="448" y="864" width="16" height="16"/>
+  <object id="8" name="floor" x="464" y="880" width="16" height="16"/>
+  <object id="9" name="wall" x="432" y="832" width="16" height="32"/>
+  <object id="10" name="floor" x="480" y="896" width="208" height="16"/>
+  <object id="11" name="wall" x="672" y="912" width="16" height="32"/>
+  <object id="12" name="floor" x="784" y="848" width="124.5" height="8.5"/>
+  <object id="16" name="floor" x="688" y="944" width="304" height="16"/>
+  <object id="17" name="floor" x="992" y="928" width="32" height="16"/>
+  <object id="18" name="floor" x="1024" y="912" width="32" height="16"/>
+  <object id="19" name="floor" x="1056" y="896" width="640" height="16"/>
+  <object id="20" name="floor" x="1168" y="752" width="384" height="16"/>
+  <object id="21" name="wall" x="1168" y="768" width="384" height="16"/>
+  <object id="22" name="floor" x="1600" y="816" width="32" height="16"/>
+  <object id="23" name="floor" x="1728" y="768" width="32" height="16"/>
+  <object id="24" name="floor" x="1696" y="912" width="16" height="16"/>
+  <object id="25" name="floor" x="1712" y="928" width="16" height="16"/>
+  <object id="26" name="floor" x="1728" y="944" width="736" height="16"/>
+  <object id="27" name="floor" x="2464" y="896" width="48" height="16"/>
+  <object id="28" name="wall" x="2464" y="912" width="16" height="32"/>
+  <object id="29" name="wall" x="2496" y="912" width="16" height="32"/>
+  <object id="30" name="floor" x="2512" y="944" width="192" height="16"/>
+  <object id="31" name="floor" x="2704" y="864" width="16" height="16"/>
+  <object id="32" name="wall" x="2704" y="880" width="16" height="64"/>
+  <object id="33" name="floor" x="2720" y="848" width="16" height="16"/>
+  <object id="34" name="trap" x="2736" y="816" width="16" height="16"/>
+  <object id="35" name="wall" x="2736" y="832" width="16" height="16"/>
+  <object id="36" name="trap" x="2752" y="800" width="16" height="16"/>
+  <object id="37" name="floor" x="2752" y="816" width="176" height="16"/>
+  <object id="38" name="trap" x="2944" y="832" width="16" height="16"/>
+  <object id="39" name="floor" x="2944" y="848" width="16" height="16"/>
+  <object id="40" name="trap" x="2928" y="928" width="96" height="16"/>
+  <object id="41" name="wall" x="2912" y="832" width="16" height="112"/>
+  <object id="42" name="floor" x="3024" y="816" width="160" height="16"/>
+  <object id="43" name="wall" x="3024" y="832" width="16" height="96"/>
+  <object id="44" name="wall" x="3184" y="16" width="16" height="800"/>
+  <object id="46" name="wall" x="16" y="0" width="3168" height="16"/>
+ </objectgroup>
 </map>
