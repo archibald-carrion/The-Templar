@@ -100,7 +100,7 @@ scene = {
                     src_rect = {x = 0, y = 0},
                 },
                 transform = {
-                    position = { x = 100, y = 100},
+                    position = { x = 100, y = 1650},
                     scale = { x = 2.0, y = 2.0},
                     rotation = 0.0
                 },
@@ -130,7 +130,7 @@ scene = {
                     path = "./assets/scripts/goto_level_02_door.lua"
                 },
                 transform = {
-                    position = { x = 196*2*16, y = 30*2*16},
+                    position = { x = 3008*2, y = 160*2},
                     scale = { x = 1.0, y = 1.0},
                     rotation = 0.0
                 },
