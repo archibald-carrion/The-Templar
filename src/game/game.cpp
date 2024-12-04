@@ -11,11 +11,12 @@
 #include "../systems/camera_movement_system.hpp"
 #include "../systems/box_collision_system.hpp"
 #include "../systems/render_box_collider_system.hpp"
+#include "../systems/render_damage_collider_system.hpp"
 #include "../systems/player_score_system.hpp"
 #include "../systems/PhysicsSystem.hpp"
 #include "../systems/overlap_system.hpp"
 #include "../systems/cooldowns_system.hpp"
-#include "../systems/attack_system.hpp"
+#include "../systems/damage_collision_system.hpp"
 
 #include "../events/click_event.hpp"
 
@@ -53,7 +54,8 @@ void Game::setup() {
     registry->add_system<PhysicsSystem>();
     registry->add_system<OverlapSystem>();
     registry->add_system<CooldownsSystem>();
-    registry->add_system<AttackSystem>();
+    registry->add_system<DamageCollisionSystem>();
+    registry->add_system<RenderDamageColliderSystem>();
 
     scene_manager->load_scene_from_script("assets/scripts/scenes.lua", lua);
 
@@ -220,9 +222,9 @@ void Game::update() {
 
     registry->get_system<BoxCollisionSystem>().update(this->events_manager, lua);
     registry->get_system<CircleCollisionSystem>().update(events_manager);
+    registry->get_system<DamageCollisionSystem>().update(*events_manager, lua);
 
     registry->get_system<CooldownsSystem>().update(deltaTime);
-    registry->get_system<AttackSystem>().update(*events_manager);
 
     registry->get_system<CameraMovementSystem>().update(this->camera);
 }
@@ -237,6 +239,7 @@ void Game::render() {
 
     if (is_debug_mode_activated){
         registry->get_system<RenderBoxColliderSystem>().update(renderer, this->camera);
+        registry->get_system<RenderDamageColliderSystem>().update(renderer, this->camera);
     }
 
     SDL_RenderPresent(this->renderer);

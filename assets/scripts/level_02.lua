@@ -2,29 +2,35 @@ scene = {
     -- sprites table 
     sprites = {
         [0] =
-            {asset_id = "knight_idle", file_path = "./assets/images/knight_idle.png"},
-            {asset_id = "knight_jump", file_path = "./assets/images/knight_jump.png"},
-            {asset_id = "knight_fall", file_path = "./assets/images/knight_fall.png"},
-            {asset_id = "knight_run", file_path = "./assets/images/knight_run.png"},
-            {asset_id = "knight_attack", file_path = "./assets/images/knight_attack.png"},
-            {asset_id = "terrain", file_path = "./assets/images/dungeon_tileset.png"},
-            {asset_id = "frost_t_idle", file_path = "./assets/images/frost_t_idle.png"},
-            {asset_id = "frost_t_walk", file_path = "./assets/images/frost_t_walk.png"},
-            {asset_id = "shadow_idle", file_path = "./assets/images/shadow_idle.png"},
-            {asset_id = "shadow_walk", file_path = "./assets/images/shadow_walk.png"},
+        {asset_id = "knight_idle", file_path = "./assets/images/knight_idle.png"},
+        {asset_id = "knight_jump", file_path = "./assets/images/knight_jump.png"},
+        {asset_id = "knight_fall", file_path = "./assets/images/knight_fall.png"},
+        {asset_id = "knight_run", file_path = "./assets/images/knight_run.png"},
+        {asset_id = "knight_attack", file_path = "./assets/images/knight_attack.png"},
+        {asset_id = "terrain", file_path = "./assets/images/dungeon_tileset.png"},
+        {asset_id = "frost_t_idle", file_path = "./assets/images/frost_t_idle.png"},
+        {asset_id = "frost_t_walk", file_path = "./assets/images/frost_t_walk.png"},
+        {asset_id = "shadow_idle", file_path = "./assets/images/shadow_idle.png"},
+        {asset_id = "shadow_walk", file_path = "./assets/images/shadow_walk.png"},
     },
     
     animations = {
         [0] =
-            {animation_id = "player_knight_idle", texture_id = "knight_idle", w = 32, h = 38, num_frames = 10, speed_rate = 15, is_loop = true},
-            {animation_id = "player_knight_jump", texture_id = "knight_jump", w = 32, h = 38, num_frames = 03, speed_rate = 01, is_loop = true},
-            {animation_id = "player_knight_fall", texture_id = "knight_fall", w = 32, h = 38, num_frames = 03, speed_rate = 01, is_loop = true},
-            {animation_id = "player_knight_run", texture_id = "knight_run", w = 32, h = 38, num_frames = 10, speed_rate = 15, is_loop = true},
-            {animation_id = "player_knight_attack", texture_id = "knight_attack", w = 93, h = 38, num_frames = 6, speed_rate = 15, is_loop = false},
-            {animation_id = "enemy1_idle", texture_id = "frost_t_idle", w = 52, h = 58, num_frames = 6, speed_rate = 15, is_loop = true},
-            {animation_id = "enemy1_walk", texture_id = "frost_t_walk", w = 62, h = 58, num_frames = 10, speed_rate = 12, is_loop = true},
-            {animation_id = "enemy2_idle", texture_id = "shadow_idle", w = 24, h = 23, num_frames = 8, speed_rate = 15, is_loop = true},
-            {animation_id = "enemy2_walk", texture_id = "shadow_walk", w = 24, h = 23, num_frames = 8, speed_rate = 12, is_loop = true},
+        {animation_id = "player_knight_idle", texture_id = "knight_idle", w = 32, h = 38, num_frames = 10, speed_rate = 15, is_loop = true},
+        {animation_id = "player_knight_jump", texture_id = "knight_jump", w = 32, h = 38, num_frames = 03, speed_rate = 01, is_loop = true},
+        {animation_id = "player_knight_fall", texture_id = "knight_fall", w = 32, h = 38, num_frames = 03, speed_rate = 01, is_loop = true},
+        {animation_id = "player_knight_run", texture_id = "knight_run", w = 32, h = 38, num_frames = 10, speed_rate = 15, is_loop = true},
+        {animation_id = "player_knight_attack", texture_id = "knight_attack", w = 93, h = 38, num_frames = 6, speed_rate = 15, is_loop = false},
+        {animation_id = "enemy1_idle", texture_id = "frost_t_idle", w = 52, h = 58, num_frames = 6, speed_rate = 15, is_loop = true},
+        {animation_id = "enemy1_walk", texture_id = "frost_t_walk", w = 62, h = 58, num_frames = 10, speed_rate = 12, is_loop = true},
+        {animation_id = "enemy2_idle", texture_id = "shadow_idle", w = 24, h = 23, num_frames = 8, speed_rate = 15, is_loop = true},
+        {animation_id = "enemy2_walk", texture_id = "shadow_walk", w = 24, h = 23, num_frames = 8, speed_rate = 12, is_loop = true},
+    },
+
+    damage_colliders = {
+        [0] =
+        { class = "player" },
+        { class = "enemy"}
     },
 
     -- sounds table
@@ -86,8 +92,8 @@ scene = {
                 },
                 camera_follow = {},
                 tag = {
+                    class = "player",
                     tag = "player",
-                    class = "player"
                 },
                 box_collider = {
                     width = 20*2,
@@ -124,11 +130,11 @@ scene = {
             }
         },
 
-        -- door to third level
         {
             components = {
                 tag = {
                     tag = "door",
+                    class = "map"
                 },
                 box_collider = {
                     width = 64,

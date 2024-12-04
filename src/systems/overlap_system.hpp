@@ -19,8 +19,6 @@ enum Direction
 };
 
 class OverlapSystem : public System {
-private:
-
     bool check_collision(Entity a, Entity b, Direction dir) {
        auto &aCollider = a.get_component<BoxColliderComponent>();
         auto &bCollider = b.get_component<BoxColliderComponent>();
@@ -38,39 +36,32 @@ private:
         float bH = static_cast<float>(bCollider.height);
 
         if (Direction::TOP == dir)
-        {
-        return (
-            aX < bX + bW &&
-            aX + aW > bX &&
-            aY > bY //
-        );
-        }
+            return (
+                aX < bX + bW &&
+                aX + aW > bX &&
+                aY > bY //
+            );
+
         if (Direction::BOTTOM == dir)
-        {
-        return (
-            aX < bX + bW &&
-            aX + aW > bX &&
-            aY < bY //
-        );
-        }
+            return (
+                aX < bX + bW &&
+                aX + aW > bX &&
+                aY < bY //
+            );
 
         if (Direction::LEFT == dir)
-        {
-        return (
-            aY < bY + bH &&
-            aY + aH > bY &&
-            aX > bX //
-        );
-        }
+            return (
+                aY < bY + bH &&
+                aY + aH > bY &&
+                aX > bX //
+            );
 
         if (Direction::RIGHT == dir)
-        {
-        return (
-            aY < bY + bH &&
-            aY + aH > bY &&
-            aX < bX //
-        );
-        }
+            return (
+                aY < bY + bH &&
+                aY + aH > bY &&
+                aX < bX //
+            );
 
         return false;
     }
@@ -104,7 +95,6 @@ private:
         bTransform.position = glm::vec2(aTransform.position.x + aCollider.width, bTransform.position.y);
         bRigidBody.velocity = glm::vec2(0.0f, bRigidBody.velocity.y);
         }
-
     }
 
 public:

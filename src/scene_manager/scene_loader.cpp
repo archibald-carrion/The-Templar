@@ -21,6 +21,7 @@
 #include "../components/player_score_component.hpp"
 #include "../components/state_component.hpp"
 #include "../components/cooldown_component.hpp"
+#include "../components/damage_collider_component.hpp"
 
 SceneLoader::SceneLoader() {
     //std::cout << "[SCENELOADER] scene loader constructor" << std::endl;
@@ -58,6 +59,11 @@ void SceneLoader::load_scene(const std::string& scene_path,
     // load the animations
     sol::table animations = scene["animations"];
     load_animations(animations, animation_manager);
+
+    if (const sol::optional<sol::table> hasDamageColliders = scene["damage_colliders"]) {
+        const sol::table damage_colliders = *hasDamageColliders;
+        load_damage_colliders(damage_colliders);
+    }
 
     // load the sounds
     sol::table sounds = scene["sounds"];
@@ -163,7 +169,7 @@ void SceneLoader::load_keys_actions(const sol::table& keys, std::unique_ptr<Cont
     }
 }
 
-void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
+void SceneLoader::load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
 {
     if(sol::optional<sol::table> has_components = entityTable["components"];
         has_components != sol::nullopt) {
@@ -183,16 +189,6 @@ void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
                 num_frames,
                 frame_speed_rate,
                 is_loop
-            );
-        }
-
-        // Box collider component
-        sol::optional<sol::table> has_box_collider = components["box_collider"];
-        if(has_box_collider != sol::nullopt) {
-            entity.add_component<BoxColliderComponent>(
-                components["box_collider"]["width"],
-                components["box_collider"]["height"],
-                glm::vec2(components["box_collider"]["offset"]["x"], components["box_collider"]["offset"]["y"])
             );
         }
 
@@ -273,11 +269,10 @@ void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
                 on_init = lua["on_init"].get<sol::protected_function>();
             }
 
-            sol::optional<sol::function> has_perform = lua["perform"];
-            sol::function perform = sol::nil;
-            if(has_perform != sol::nullopt)
-            {
-                perform = lua["perform"].get<sol::protected_function>();
+            sol::optional<sol::function> has_damage = lua["on_damage"];
+            sol::function damage = sol::nil;
+            if(has_damage != sol::nullopt) {
+                damage = lua["on_damage"].get<sol::protected_function>();
             }
 
             entity.add_component<ScriptComponent>(
@@ -285,7 +280,7 @@ void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
                 , update
                 , on_click
                 , on_init
-                , perform);
+                , damage);
         }
 
         // Sprite component
@@ -316,11 +311,28 @@ void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
         // tag component
         sol::optional<sol::table> has_tag = components["tag"];
         if(has_tag != sol::nullopt) {
-            entity.add_component<TagComponent>(static_cast<std::string>(components["tag"]["tag"]));
-            sol::optional<sol::table> hasClass = components["tag"]["class"];
-            if(hasClass != sol::nullopt)
-            {
-                entity.get_component<TagComponent>().e_class = components["tag"]["class"];
+            std::string class_e = components["tag"]["class"];
+            std::string tag = components["tag"]["tag"];
+
+            entity.add_component<TagComponent>(tag, class_e);
+        }
+
+        // Box collider component
+        sol::optional<sol::table> has_box_collider = components["box_collider"];
+        if(has_box_collider != sol::nullopt) {
+            entity.add_component<BoxColliderComponent>(
+                components["box_collider"]["width"],
+                components["box_collider"]["height"],
+                glm::vec2(components["box_collider"]["offset"]["x"], components["box_collider"]["offset"]["y"])
+            );
+
+            if (entity.has_component<TagComponent>()) {
+                auto& tag = entity.get_component<TagComponent>();
+                if (tags_with_damage_colliders.contains(tag.e_class))
+                    entity.add_component<DamageColliderComponent>(
+                        components["box_collider"]["width"],
+                        components["box_collider"]["height"]
+                    );
             }
         }
 
@@ -689,7 +701,7 @@ void SceneLoader::load_enemies(Registry& registry, const std::string& path, tiny
         object->QueryIntAttribute("y", &y);
 
         Entity collider = registry.create_entity();
-        collider.add_component<TagComponent>(tag);
+        collider.add_component<TagComponent>(tag, "enemy");
         collider.add_component<TransformComponent>(
             glm::vec2(x * SCALE, y * SCALE),
             glm::vec2(SCALE, SCALE)
@@ -713,7 +725,7 @@ void SceneLoader::load_enemies(Registry& registry, const std::string& path, tiny
 
     // sugondis Caenid
     for ( Entity& enemy : enemies ) {
-        const auto tag = enemy.get_component<TagComponent>();
+        auto& tag = enemy.get_component<TagComponent>();
         const auto positionBuffer = enemy.get_component<TransformComponent>().position;
         std::string name = tag.tag;
         sol::table enemyTable = enemiesTable[name];
@@ -723,6 +735,23 @@ void SceneLoader::load_enemies(Registry& registry, const std::string& path, tiny
         auto& transform = enemy.get_component<TransformComponent>();
         transform.position = positionBuffer;
         enemy.add_component<StateComponent>();
-        enemy.get_component<TagComponent>().e_class = "enemy";
+    }
+}
+
+void SceneLoader::load_damage_colliders(const sol::table& colliders)
+{
+    size_t index = 0;
+
+    // loop through all the music
+    while(true) {
+        sol::optional<sol::table> has_collider = colliders[index];
+        if(has_collider == sol::nullopt) {
+            break;
+        }
+
+        std::string tag = colliders[index]["class"];
+        tags_with_damage_colliders.insert(tag);
+
+        index++;
     }
 }

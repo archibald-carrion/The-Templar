@@ -79,6 +79,7 @@ scene = {
                 camera_follow = {},
                 tag = {
                     tag = "player",
+                    class = "player"
                 },
                 box_collider = {
                     width = 32*2,
@@ -120,6 +121,7 @@ scene = {
             components = {
                 tag = {
                     tag = "door",
+                    class = "map"
                 },
                 box_collider = {
                     width = 64,

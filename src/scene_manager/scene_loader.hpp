@@ -14,7 +14,8 @@
 #include "../ECS/ECS.hpp" // ECS library for entity-component-system
 
 class SceneLoader {
-private:
+    std::set<std::string> tags_with_damage_colliders;
+
     /**
      * @brief Load the sounds from the Lua table.
      * @param sounds The Lua table containing the sounds.
@@ -66,6 +67,8 @@ private:
      */
     void load_entities(sol::state& lua, const sol::table& entities, std::unique_ptr<Registry>& registry);
 
+    void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable);
+
     void load_animations(const sol::table& animations, std::unique_ptr<AnimationManager>& animation_manager);
 
     void LoadMap(const sol::table map, std::unique_ptr<Registry> &registry, const std::string& script_path, sol::state& lua);
@@ -73,6 +76,7 @@ private:
     void LoadColliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup);
     void load_enemies(Registry& registry, const std::string& path, tinyxml2::XMLElement *objectGroup, sol::state& lua);
 
+    void load_damage_colliders(const sol::table& colliders);
 public:
     /**
      * @brief Default constructor for the SceneLoader class.

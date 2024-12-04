@@ -15,8 +15,8 @@ struct TagComponent {
     * @brief Construct a new TagComponent object
     * @param tag The tag for the entity
     */
-   explicit TagComponent(const std::string& tag = "") {
-        this->tag = tag;
+   explicit TagComponent(const std::string& tag = "", const std::string& e_class = "") :
+        tag(tag), e_class(e_class){
    }
 };
 
