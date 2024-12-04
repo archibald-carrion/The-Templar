@@ -13,6 +13,8 @@ struct TransformComponent {
     glm::vec2 scale; // scale of the entity
     double rotation; // rotation of the entity
 
+    int32_t sprite_h_offset { 0 };
+
     /**
      * @brief Construct a new Transform Component object
      * @param position The position of the entity

@@ -14,6 +14,8 @@
 #include "../systems/player_score_system.hpp"
 #include "../systems/PhysicsSystem.hpp"
 #include "../systems/overlap_system.hpp"
+#include "../systems/cooldowns_system.hpp"
+#include "../systems/attack_system.hpp"
 
 #include "../events/click_event.hpp"
 
@@ -50,6 +52,8 @@ void Game::setup() {
     registry->add_system<RenderBoxColliderSystem>();
     registry->add_system<PhysicsSystem>();
     registry->add_system<OverlapSystem>();
+    registry->add_system<CooldownsSystem>();
+    registry->add_system<AttackSystem>();
 
     scene_manager->load_scene_from_script("assets/scripts/scenes.lua", lua);
 
@@ -167,7 +171,7 @@ void Game::processInput() {
                 controller_manager->set_mouse_position(x, y);
                 break;
 
-            case SDL_MOUSEBUTTONDOWN:
+        case SDL_MOUSEBUTTONDOWN:
                 controller_manager->set_mouse_position(event.button.x, event.button.y);
                 controller_manager->set_mouse_button_to_pressed(static_cast<int>(event.button.button));
                 events_manager->emit_event<ClickEvent>(static_cast<int>(event.button.button), event.button.x, event.button.y);
@@ -191,34 +195,36 @@ void Game::update() {
         return;
     }
 
-    int time_to_wait = MILLISECS_PER_FRAME - (SDL_GetTicks() - this->mPreviousFrame);
-
-    if (time_to_wait > 0 && time_to_wait <= MILLISECS_PER_FRAME) {
+    if (const uint32_t time_to_wait = MILLISECS_PER_FRAME - (SDL_GetTicks() - this->mPreviousFrame);
+        time_to_wait > 0 && time_to_wait <= MILLISECS_PER_FRAME) {
         SDL_Delay(time_to_wait);
     }
 
     // calculate the time between frames
-    double deltaTime = (SDL_GetTicks() - this->mPreviousFrame) / 1000.0;
-
+    const double deltaTime = (SDL_GetTicks() - this->mPreviousFrame) / 1000.0;
     this->mPreviousFrame = SDL_GetTicks();
 
     // re-initialize subscriptions
     events_manager->reset();
+
     registry->get_system<OverlapSystem>().SubscribeToCollisionEvent(events_manager);
     registry->get_system<UISystem>().suscribe_to_click_event(events_manager);
 
     registry->update();
     registry->get_system<ScriptSystem>().update(lua);
+    registry->get_system<AnimationSystem>().update();
 
     registry->get_system<PhysicsSystem>().update();
+
     registry->get_system<MovementSystem>().update(deltaTime);
 
     registry->get_system<BoxCollisionSystem>().update(this->events_manager, lua);
     registry->get_system<CircleCollisionSystem>().update(events_manager);
-    
-    registry->get_system<AnimationSystem>().update();
-    registry->get_system<CameraMovementSystem>().update(this->camera);
 
+    registry->get_system<CooldownsSystem>().update(deltaTime);
+    registry->get_system<AttackSystem>().update(*events_manager);
+
+    registry->get_system<CameraMovementSystem>().update(this->camera);
 }
 
 void Game::render() {

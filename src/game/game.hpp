@@ -76,7 +76,7 @@ private:
     SDL_Window *window = nullptr; /**< Pointer to the SDL window. */
 
     bool isRunning;         /**< Flag to indicate if the game is running. */
-    int mPreviousFrame = 0; /**< Time of the previous frame. */
+    uint32_t mPreviousFrame = 0; /**< Time of the previous frame. */
     bool isPaused = false;  /**< Flag to indicate if the game is paused. */
     bool is_debug_mode_activated = false;
 

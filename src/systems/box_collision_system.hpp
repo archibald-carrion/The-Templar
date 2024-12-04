@@ -45,6 +45,7 @@ public:
     BoxCollisionSystem() {
         RequireComponent<BoxColliderComponent>();
         RequireComponent<TransformComponent>();
+        RequireComponent<TagComponent>();
     }
 
     /**
@@ -57,6 +58,7 @@ public:
             Entity a = *i;
             const auto& a_collider = a.get_component<BoxColliderComponent>();
             const auto& a_transform = a.get_component<TransformComponent>();
+            const auto a_tag = a.get_component<TagComponent>();
 
             // loop through all the entities
             for(auto j =i; j != entities.end(); j++) {
@@ -68,6 +70,9 @@ public:
 
                 const auto& b_collider = b.get_component<BoxColliderComponent>();
                 const auto& b_transform = b.get_component<TransformComponent>();
+                const auto& b_tag = b.get_component<TagComponent>();
+
+                if (!a_tag.e_class.empty() && !b_tag.e_class.empty() &&  a_tag.e_class == b_tag.e_class) continue;
                 
                 // check if there is a collision
                 bool there_is_collision = check_AABB_collision(

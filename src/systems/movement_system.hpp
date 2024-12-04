@@ -18,6 +18,9 @@ public:
     MovementSystem() {
         RequireComponent<RigidBodyComponent>();
         RequireComponent<TransformComponent>();
+        RequireComponent<BoxColliderComponent>();
+        RequireComponent<SpriteComponent>();
+        RequireComponent<TagComponent>();
     }
 
     /**
@@ -29,7 +32,10 @@ public:
         for(auto entity: get_entities()) {
             auto& rigid_body = entity.get_component<RigidBodyComponent>();
             auto& transform = entity.get_component<TransformComponent>();
+            auto& collider = entity.get_component<BoxColliderComponent>();
+            auto& sprite = entity.get_component<SpriteComponent>();
 
+            transform.sprite_h_offset = sprite.width / 2 * transform.scale.x - collider.width / 2;
             transform.previous_position = transform.position;
 
             if(rigid_body.is_dynamic) {

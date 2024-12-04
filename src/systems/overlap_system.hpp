@@ -75,7 +75,7 @@ private:
         return false;
     }
 
-    void avoid_overlad(Entity a, Entity b) {
+    void avoid_overlap(Entity a, Entity b) {
         auto &aCollider = a.get_component<BoxColliderComponent>();
         auto &aTransform = a.get_component<TransformComponent>();
 
@@ -112,6 +112,7 @@ public:
         RequireComponent<BoxColliderComponent>();
         RequireComponent<RigidBodyComponent>();
         RequireComponent<TransformComponent>();
+        RequireComponent<TagComponent>();
     }
 
     void SubscribeToCollisionEvent(const std::unique_ptr<EventManager>& event_manager) {
@@ -124,9 +125,9 @@ public:
 
         if (a_rigidbody.is_solid && b_rigidbody.is_solid) {
             if(a_rigidbody.mass >= b_rigidbody.mass) {
-                avoid_overlad(e.a, e.b);
+                avoid_overlap(e.a, e.b);
             } else {
-                avoid_overlad(e.b, e.a);
+                avoid_overlap(e.b, e.a);
             }
        }
    }

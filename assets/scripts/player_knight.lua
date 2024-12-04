@@ -24,15 +24,18 @@ function update()
         add_force(this, 0, player_jump_force)
       end
     end
+
     if is_action_activated("left") then
       vel_x = vel_x - player_speed
     end
+
     if is_action_activated("right") then
       vel_x = vel_x + player_speed
     end
     
-    if is_action_activated("attack") then
+    if is_action_activated("attack") and can_perform_action(this, "attack") then
       if not player_attacking then
+        perform_action(this, "attack")
         player_attacking = true
         change_animation(this, "player_knight_attack")
         player_state = player_states["attack"]
@@ -41,10 +44,8 @@ function update()
   
     set_velocity(this, vel_x, vel_y)
 
-    -- first check if the current animation is attack
     if player_state == player_states["attack"] then
-      -- if the current frame is the last frame of the attack animation
-      if get_animation_frame(this) == 3 then
+      if get_animation_frame(this) == 5 then
         player_attacking = false
         update_animation_state()
       end
@@ -54,7 +55,6 @@ function update()
 
     player_can_jump = false
 end
-
 
 
 function on_collision(other)
@@ -72,11 +72,14 @@ function on_collision(other)
   end
 end
 
-
-
-
 function update_animation_state()
   local x_vel, y_vel = get_velocity(this)
+
+  if player_attacking then
+    print("animation: attack")
+    change_animation(this, "player_knight_attack")
+    return
+  end
   
   -- player does not move (player idle)
   if -0.001 < x_vel and x_vel < 0.001 then
@@ -119,5 +122,13 @@ function update_animation_state()
         change_animation(this, "player_knight_jump")
     end
   end
+
+
 end
 
+function perform()
+    --player_attacking = true
+    --if player_state ~= player_states["attack"] then
+    --    player_state = player_states["attack"]
+    --end
+end
