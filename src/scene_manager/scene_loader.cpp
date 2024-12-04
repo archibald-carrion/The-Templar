@@ -19,6 +19,8 @@
 #include "../components/tag_component.hpp"
 #include "../components/player_velocity.hpp"
 #include "../components/player_score_component.hpp"
+#include "../components/state_component.hpp"
+#include "../components/cooldown_component.hpp"
 
 SceneLoader::SceneLoader() {
     //std::cout << "[SCENELOADER] scene loader constructor" << std::endl;
@@ -245,7 +247,6 @@ void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
             lua["on_init"] = sol::nil;
 
             std::string path = components["script"]["path"];
-
             lua.script_file(path);
 
             sol::optional<sol::function> has_on_collision = lua["on_collision"];
@@ -272,7 +273,19 @@ void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
                 on_init = lua["on_init"].get<sol::protected_function>();
             }
 
-            entity.add_component<ScriptComponent>(on_collision, update, on_click, on_init);
+            sol::optional<sol::function> has_perform = lua["perform"];
+            sol::function perform = sol::nil;
+            if(has_perform != sol::nullopt)
+            {
+                perform = lua["perform"].get<sol::protected_function>();
+            }
+
+            entity.add_component<ScriptComponent>(
+                on_collision
+                , update
+                , on_click
+                , on_init
+                , perform);
         }
 
         // Sprite component
@@ -304,6 +317,11 @@ void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
         sol::optional<sol::table> has_tag = components["tag"];
         if(has_tag != sol::nullopt) {
             entity.add_component<TagComponent>(static_cast<std::string>(components["tag"]["tag"]));
+            sol::optional<sol::table> hasClass = components["tag"]["class"];
+            if(hasClass != sol::nullopt)
+            {
+                entity.get_component<TagComponent>().e_class = components["tag"]["class"];
+            }
         }
 
          // transform component
@@ -338,6 +356,36 @@ void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable)
             entity.add_component<PlayerScore>(
                 static_cast<int>(components["player_score"]["player_score"])
             );
+        }
+
+        sol::optional<sol::table> hasCooldowns = components["cooldowns"];
+        if (hasCooldowns != sol::nullopt)
+        {
+            entity.add_component<CooldownsComponent>();
+            uint32_t index = 0;
+
+            auto& component = entity.get_component<CooldownsComponent>();
+
+            while (true) {
+                sol::optional<sol::table> cooldown = components["cooldowns"][index++];
+                if (!cooldown) {
+                    break;
+                }
+
+                const std::string name = cooldown.value()["name"];
+
+                if (name == "global") {
+                    component.Global.TimeLimit = cooldown.value()["seconds"];
+                } else {
+                    component.PlayerActions.insert({
+                        name,
+                        TimingTracer{
+                            cooldown.value()["seconds"]
+                            ,cooldown.value()["seconds"]
+                        }
+                    });
+                }
+            }
         }
     }
 }
@@ -626,13 +674,10 @@ void SceneLoader::load_animations(const sol::table& animations, std::unique_ptr<
 void SceneLoader::load_enemies(Registry& registry, const std::string& path, tinyxml2::XMLElement *objectGroup, sol::state& lua)
 {
     tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
-
     static constexpr float SCALE = 2.0f;
-
     std::vector<Entity> enemies;
 
-    while (object != nullptr)
-    {
+    while (object != nullptr) {
         const char *name;
         std::string tag;
         int x, y;
@@ -654,30 +699,30 @@ void SceneLoader::load_enemies(Registry& registry, const std::string& path, tiny
         enemies.push_back(collider);
     }
 
-    if (enemies.empty())
-    {
-        return;
-    }
+    if (enemies.empty()) return;
 
     std::filesystem::path file_path(path);
     file_path = file_path.parent_path();
     const std::string enemies_path = file_path.string() + "/enemies.lua";
 
     if (const sol::load_result script_result = lua.load_file(enemies_path); !script_result.valid())
-    {
         throw std::runtime_error(std::string("Failed to load ") + enemies_path);
-    }
 
     lua.script_file(enemies_path);
     sol::table enemiesTable = lua["enemies"];
 
     // sugondis Caenid
-    for ( Entity& enemy : enemies )
-    {
+    for ( Entity& enemy : enemies ) {
         const auto tag = enemy.get_component<TagComponent>();
+        const auto positionBuffer = enemy.get_component<TransformComponent>().position;
         std::string name = tag.tag;
         sol::table enemyTable = enemiesTable[name];
 
         load_entity(lua, enemy, enemyTable);
+
+        auto& transform = enemy.get_component<TransformComponent>();
+        transform.position = positionBuffer;
+        enemy.add_component<StateComponent>();
+        enemy.get_component<TagComponent>().e_class = "enemy";
     }
 }

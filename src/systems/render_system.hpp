@@ -4,6 +4,7 @@
 #include <iostream> // std::cout
 #include "SDL2/SDL.h" // SDL library for window creation and rendering
 #include "../assets_manager/assets_manager.hpp" // AssetsManager
+#include "../components/box_collider_component.hpp"
 #include "../components/sprite_component.hpp" // SpriteComponent
 #include "../components/transform_component.hpp" // TransformComponent
 #include "../ECS/ECS.hpp" // System
@@ -42,7 +43,7 @@ public:
 
             SDL_Rect src_rect = sprite.src_rect;
             SDL_Rect dst_rect = {
-                static_cast<int>(transform.position.x - camera.x),
+                static_cast<int>(transform.position.x - camera.x - transform.sprite_h_offset),
                 static_cast<int>(transform.position.y - camera.y),
                 static_cast<int>(sprite.width * transform.scale.x),
                 static_cast<int>(sprite.height * transform.scale.y)

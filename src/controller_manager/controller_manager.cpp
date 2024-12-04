@@ -68,6 +68,7 @@ bool ControllerManager::is_key_pressed(const std::string& key_name) {
         int key_code = action_key_name[key_name];
         return key_state[key_code];
     }
+
     return false;
 }
 

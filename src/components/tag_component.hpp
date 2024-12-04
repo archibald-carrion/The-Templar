@@ -8,13 +8,14 @@
  * @brief The TagComponent struct represents a tag for an entity.
  */
 struct TagComponent {
-   std::string tag; /**< The tag for the entity. */
+    std::string tag; /**< The tag for the entity. */
+    std::string e_class;
 
    /**
     * @brief Construct a new TagComponent object
     * @param tag The tag for the entity
     */
-   TagComponent(const std::string& tag = "") {
+   explicit TagComponent(const std::string& tag = "") {
         this->tag = tag;
    }
 };

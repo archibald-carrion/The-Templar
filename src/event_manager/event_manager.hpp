@@ -123,7 +123,7 @@ public:
     void emit_event(TArgs&&... args){
         auto handlers = subscribers[typeid(TEvent)].get();
 
-        if(handlers) {
+        if (handlers) {
             // loop through all the handlers
             for (auto it = handlers->begin(); it != handlers->end(); it++) {
                 auto handler = it->get();

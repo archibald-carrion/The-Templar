@@ -106,6 +106,11 @@ scene = {
                 },
                 player_velocity = {
                     player_velocity = 150
+                },
+                cooldowns = {
+                    [0] =
+                    { name = "global", seconds = 0.4},
+                    { name = "sword_forward", seconds = 0.2}
                 }
             }
         },

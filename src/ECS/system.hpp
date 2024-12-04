@@ -2,13 +2,13 @@
 #define SYSTEM_HPP
 
 #include <bitset> // std::bitset
+#include <iostream>
+#include <ostream>
 #include <vector> // std::vector
 #include "entity.hpp" // Entity
 
 const unsigned int MAX_COMPONENTS = 64; // Maximum number of components an entity can have
 typedef std::bitset<MAX_COMPONENTS> Signature; // Signature is a bitset that represents the components an entity has
-
-
 
 /**
  * @class System
