@@ -43,7 +43,7 @@ scene = {
     music = {
         [0] =
         {music_id = "menu_music",file_path ="./assets/sounds/GAL_v1.mp3"},
-        {music_id = "level_2_song",file_path ="./assets/sounds/Falsebound_v1.mp3"},
+        {music_id = "level_02_music",file_path ="./assets/sounds/Falsebound_v1.mp3"},
     },
 
     -- font table
@@ -82,6 +82,15 @@ scene = {
     -- entities table
     entities = {
         [0] =
+        -- music player
+        {
+            components = {
+                script = {
+                    path = "./assets/scripts/music_level_02.lua"
+                },
+            }
+        },
+
         -- player
         {
             components = {
