@@ -32,7 +32,15 @@ struct RigidBodyComponent {
     this->is_dynamic = is_dynamic;
     this->is_solid = is_solid;
     this->mass = mass;
-    this->inverse_mass = 1 / mass;
+    // if mass is 0 or negative, set inverse_mass to 0
+    if (mass <= 0)
+    {
+      this->inverse_mass = 0;
+    }
+    else
+    {
+      this->inverse_mass = 1 / mass;
+    }
   };
 
   void bufferVelocity()
