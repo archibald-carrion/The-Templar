@@ -88,6 +88,7 @@ public:
         lua.set_function("perform_action", perform_action);
 
         lua.set_function("set_box_collider", set_box_collider);
+        lua.set_function("get_box_collider", get_box_collider);
     }
 
     /**

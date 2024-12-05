@@ -540,4 +540,10 @@ void set_box_collider(Entity entity, int width, int height, int offset_x, int of
     box_collider = BoxColliderComponent(width, height, glm::vec2(offset_x, offset_y));
 }
 
+std::tuple<int, int> get_box_collider(Entity entity)
+{
+    auto &box_collider = entity.get_component<BoxColliderComponent>();
+    return {box_collider.width, box_collider.height};
+}
+
 #endif // LUA_BINDING_HPP
