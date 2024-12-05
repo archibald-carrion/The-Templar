@@ -28,7 +28,7 @@ scene = {
     -- music table
     music = {
         [0] =
-        {music_id = "menu_music",file_path ="./assets/sounds/GAL_v1.mp3"},
+        {music_id = "level_01_music",file_path ="./assets/sounds/Grimoire_v2.mp3"},
     },
 
     -- font table
@@ -67,6 +67,14 @@ scene = {
     -- entities table
     entities = {
         [0] =
+        -- music player
+        {
+            components = {
+                script = {
+                    path = "./assets/scripts/music_level_01.lua"
+                },
+            }
+        },
 
         -- player
         {

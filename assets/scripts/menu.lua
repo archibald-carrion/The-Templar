@@ -17,7 +17,7 @@ scene = {
     -- music table
     music = {
         [0] =
-        {music_id = "menu_music",file_path ="./assets/sounds/main_menu.mp3"},
+        {music_id = "menu_music",file_path ="./assets/sounds/Title_v1.mp3"},
     },
 
     -- font table
@@ -53,6 +53,16 @@ scene = {
     -- entities table
     entities = {
         [0] =
+
+        -- music player
+        {
+            components = {
+                script = {
+                    path = "./assets/scripts/music_main_menu.lua"
+                },
+            }
+        },
+
         -- Background
         {
             components = {
@@ -66,9 +76,6 @@ scene = {
                     position = { x = 0, y = 0},
                     scale = { x = 1.0, y = 1.0},
                     rotation = 0.0
-                },
-                script = {
-                    path = "./assets/scripts/main_menu_song.lua",
                 },
             }
         },

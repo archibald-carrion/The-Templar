@@ -53,6 +53,15 @@ scene = {
     -- entities table
     entities = {
         [0] =
+        -- music player
+        {
+            components = {
+                script = {
+                    path = "./assets/scripts/music_main_menu.lua"
+                },
+            }
+        },
+        
         -- Background
         {
             components = {
@@ -66,9 +75,6 @@ scene = {
                     position = { x = -100.0, y = 0},
                     scale = { x = 1.1, y = 1.1},
                     rotation = 0.0
-                },
-                script = {
-                    path = "./assets/scripts/main_menu_song.lua",
                 },
             }
         },
