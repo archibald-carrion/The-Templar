@@ -57,6 +57,8 @@ public:
     void RequireComponent();
 
     void clear_system();
+
+    bool has_entity(const Entity& entity) const;
 };
 
 

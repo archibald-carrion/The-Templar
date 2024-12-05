@@ -18,9 +18,6 @@ public:
     MovementSystem() {
         RequireComponent<RigidBodyComponent>();
         RequireComponent<TransformComponent>();
-        RequireComponent<BoxColliderComponent>();
-        RequireComponent<SpriteComponent>();
-        RequireComponent<TagComponent>();
     }
 
     /**
@@ -32,17 +29,25 @@ public:
         for(auto entity: get_entities()) {
             auto& rigid_body = entity.get_component<RigidBodyComponent>();
             auto& transform = entity.get_component<TransformComponent>();
-            auto& collider = entity.get_component<BoxColliderComponent>();
-            auto& sprite = entity.get_component<SpriteComponent>();
 
-            transform.sprite_h_offset = sprite.width / 2 * transform.scale.x - collider.width / 2;
+            if (entity.has_component<SpriteComponent>() && entity.has_component<BoxColliderComponent>()) {
+                auto& sprite = entity.get_component<SpriteComponent>();
+                auto& collider = entity.get_component<BoxColliderComponent>();
+
+                transform.sprite_h_offset = sprite.width / 2 * transform.scale.x - collider.width / 2;
+            }
+
             transform.previous_position = transform.position;
 
-            if(rigid_body.is_dynamic) {
+            if (rigid_body.is_dynamic) {
                 rigid_body.acceleration = rigid_body.sum_forces * rigid_body.inverse_mass;
                 rigid_body.velocity += rigid_body.acceleration * static_cast<float>(dt);
                 transform.position += rigid_body.velocity * static_cast<float>(dt);
                 rigid_body.sum_forces = glm::vec2(0, 0);
+            }
+
+            if (rigid_body.father) {
+                std::swap(transform.position, transform.movement_offset.value());
             }
 
             if (rigid_body.default_movement) {
@@ -50,9 +55,14 @@ public:
                 transform.position.y += rigid_body.velocity.y * dt;
                 rigid_body.bufferVelocity();
             }
+
+            if (rigid_body.father) {
+                auto& father_transform = rigid_body.father->get_component<TransformComponent>();
+                transform.movement_offset.value() = transform.position + father_transform.position;
+                std::swap(transform.position, transform.movement_offset.value());
+            }
         }
     }
-
 };
 
 #endif // MOVEMENTSYSTEM_HPP

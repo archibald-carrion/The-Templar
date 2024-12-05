@@ -15,13 +15,18 @@ struct TransformComponent {
 
     int32_t sprite_h_offset { 0 };
 
+    std::optional<glm::vec2> movement_offset;
+
     /**
      * @brief Construct a new Transform Component object
      * @param position The position of the entity
      * @param scale The scale of the entity
      * @param rotation The rotation of the entity
      */
-    TransformComponent(glm::vec2 position = glm::vec2(0.0f, 0.0f), glm::vec2 scale = glm::vec2(1.0f, 1.0f), double rotation = 0.0) {
+    TransformComponent(
+        glm::vec2 position = glm::vec2(0.0f, 0.0f)
+        , glm::vec2 scale = glm::vec2(1.0f, 1.0f)
+        , double rotation = 0.0) {
         this->position = position;
         this->previous_position = position;
         this->scale = scale;

@@ -32,11 +32,6 @@ public:
             animation.current_frame = (SDL_GetTicks() - animation.start_time)
                 * animation.frame_speed_rate / 1000 % animation.num_frames;
             sprite.src_rect.x = sprite.width * animation.current_frame;
-
-            if (entity.get_component<TagComponent>().tag == "player" && sprite.texture_id.find("attack") != std::string::npos)
-            {
-                std::cout << sprite.src_rect.x << ": " << sprite.src_rect.h << ", " << sprite.src_rect.w <<  std::endl;
-            }
         }
     }
 };

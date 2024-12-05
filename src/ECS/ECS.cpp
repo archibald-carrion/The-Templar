@@ -57,6 +57,7 @@ void Registry::update(){
     for (auto& entity : entities_to_be_added){
         add_entity_to_system(entity);
     }
+
     entities_to_be_added.clear();
 
     for(auto& entity: entities_to_be_killed) {
@@ -66,8 +67,8 @@ void Registry::update(){
 
         //add id to free ids deque
     }
-    entities_to_be_killed.clear();
 
+    entities_to_be_killed.clear();
 }
 
 void Registry::clear_all_entities() {
@@ -76,9 +77,8 @@ void Registry::clear_all_entities() {
     }
 
     // Clear the component pools
-    for (auto& pool : componentsPools) {
+    for (auto& pool : componentsPools)
         if (pool) pool->clear();
-    }
 
     // Resize and reset all signatures
     entityComponentSignatures.clear();
@@ -99,3 +99,6 @@ void Entity::kill() {
     registry->kill_entity(*this);
 }
 
+void Registry::hot_add_component_to_ent(Entity& entity) {
+    this->entities_to_be_added.insert(entity);
+}

@@ -14,6 +14,18 @@ player_speed = 3.0 * 64.0 * 1.5
 player_jump_force = -3000.0 * 64.0 *1.5
 player_attacking = false
 
+function attack()
+  movement = -500
+  position = 50
+
+  if looking_right(this) then
+    movement = -1 * movement
+    position = -1 * position
+  end
+
+  create_projectile(this, "sword", position, 0, 0, movement, 0, 50, 60, 0.15, true);
+
+end
 
 function update()
     local vel_x, vel_y = get_velocity(this)
@@ -37,6 +49,7 @@ function update()
       if not player_attacking then
         perform_action(this, "attack")
         player_attacking = true
+        attack()
         change_animation(this, "player_knight_attack")
         player_state = player_states["attack"]
       end
@@ -74,12 +87,6 @@ end
 
 function update_animation_state()
   local x_vel, y_vel = get_velocity(this)
-
-  if player_attacking then
-    print("animation: attack")
-    change_animation(this, "player_knight_attack")
-    return
-  end
   
   -- player does not move (player idle)
   if -0.001 < x_vel and x_vel < 0.001 then
@@ -122,7 +129,15 @@ function update_animation_state()
         change_animation(this, "player_knight_jump")
     end
   end
+end
 
+function on_damage(other)
+  other_class = get_class(other)
+  this_class = get_class(other)
+
+  if this_class == other_class then
+    return
+  end
 
 end
 

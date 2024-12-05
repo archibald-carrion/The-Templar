@@ -66,3 +66,18 @@ function on_collision(other)
         end
     end
 end
+
+function on_damage(other)
+    other_class = get_class(other)
+    this_class = get_class(this)
+
+    if this_class == other_class then
+        return
+    end
+
+    other_tag = get_tag(other)
+    if other_tag == "sword" then
+        kill_entity(this)
+        print("after killing")
+    end
+end

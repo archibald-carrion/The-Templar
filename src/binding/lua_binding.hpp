@@ -13,17 +13,18 @@
 #include "../components/transform_component.hpp"
 #include "../components/tag_component.hpp"
 #include "../components/player_velocity.hpp"
+#include "../components/lifetime_component.hpp"
 #include "../components/player_score_component.hpp"
 #include "../animation_manager/animation_manager.hpp"
 #include "../components/cooldown_component.hpp"
+#include "../components/damage_collider_component.hpp"
 #include "../components/state_component.hpp"
 
 // animation related functions
 
-void change_animation(Entity entity, const std::string &animationId)
-{
-    auto &animation = entity.get_component<AnimationComponent>();
-    auto &sprite = entity.get_component<SpriteComponent>();
+void change_animation(Entity entity, const std::string& animationId) {
+    auto& animation = entity.get_component<AnimationComponent>();
+    auto& sprite = entity.get_component<SpriteComponent>();
 
     const AnimationData animationData = Game::get_instance().animation_manager->get_animation(
         animationId);
@@ -44,9 +45,8 @@ void change_animation(Entity entity, const std::string &animationId)
     animation.start_time = SDL_GetTicks();
 }
 
-int get_animation_frame(Entity entity)
-{
-    auto &animation = entity.get_component<AnimationComponent>();
+int get_animation_frame(Entity entity) {
+    auto& animation = entity.get_component<AnimationComponent>();
     return animation.current_frame;
 }
 
@@ -56,8 +56,7 @@ int get_animation_frame(Entity entity)
  * @brief Play a sound effect.
  * @param sound_id The ID of the sound effect to play.
  */
-void play_sound(const std::string &sound_id)
-{
+void play_sound(const std::string& sound_id) {
     Game::get_instance().audio_manager->play_sound_effect(sound_id);
 }
 
@@ -65,16 +64,14 @@ void play_sound(const std::string &sound_id)
  * @brief Play a music track.
  * @param music_id The ID of the music track to play.
  */
-void play_music(const std::string &music_id)
-{
+void play_music(const std::string& music_id) {
     Game::get_instance().audio_manager->play_music(music_id);
 }
 
 /**
  * @brief Stop all sounds and music.
  */
-void stop_all_sounds()
-{
+void stop_all_sounds() {
     Game::get_instance().audio_manager->stop_all_sounds();
 }
 
@@ -84,8 +81,7 @@ void stop_all_sounds()
  * @brief Kill an entity.
  * @param e The entity to kill.
  */
-void kill_entity(Entity e)
-{
+void kill_entity(Entity e) {
     e.kill();
 }
 
@@ -128,9 +124,8 @@ void add_force(Entity entity, float x, float y)
  * @param e The entity to increment the velocity for.
  * @param increment The amount to increment the velocity by.
  */
-void increment_player_velocity(Entity e, int increment)
-{
-    auto &player_velocity = e.get_component<PlayerVelocity>();
+void increment_player_velocity(Entity e, int increment) {
+    auto& player_velocity = e.get_component<PlayerVelocity>();
     player_velocity.player_velocity += increment;
 }
 
@@ -139,8 +134,7 @@ void increment_player_velocity(Entity e, int increment)
  * @param e The entity to get the velocity from.
  * @return The player velocity.
  */
-int get_player_velocity(Entity e)
-{
+int get_player_velocity(Entity e) {
     return e.get_component<PlayerVelocity>().player_velocity;
 }
 
@@ -149,9 +143,13 @@ int get_player_velocity(Entity e)
  * @param e The entity to get the tag from.
  * @return The tag of the entity.
  */
-std::string get_tag(Entity entity)
-{
+std::string get_tag(Entity entity){
     return entity.get_component<TagComponent>().tag;
+}
+
+std::string get_class(Entity entity)
+{
+    return entity.get_component<TagComponent>().e_class;
 }
 
 // Control related functions
@@ -160,8 +158,7 @@ std::string get_tag(Entity entity)
  * @brief Get the mouse position.
  * @return A tuple containing the x and y coordinates of the mouse.
  */
-std::tuple<int, int> get_mouse_position()
-{
+std::tuple<int, int> get_mouse_position() {
     return Game::get_instance().controller_manager->get_mouse_position();
 }
 
@@ -170,8 +167,7 @@ std::tuple<int, int> get_mouse_position()
  * @param button The button to check.
  * @return True if the button is pressed, false otherwise.
  */
-bool is_mouse_button_pressed(const std::string &button)
-{
+bool is_mouse_button_pressed(const std::string& button) {
     return Game::get_instance().controller_manager->is_mouse_button_pressed(button);
 }
 
@@ -180,18 +176,16 @@ bool is_mouse_button_pressed(const std::string &button)
  * @param action The action to check.
  * @return True if the action is activated, false otherwise.
  */
-bool is_action_activated(const std::string &action)
-{
+bool is_action_activated(const std::string& action) {
     return Game::get_instance().controller_manager->is_key_pressed(action);
 }
 
-void activate_action(const std::string &action)
+void activate_action(const std::string& action)
 {
     Game::get_instance().controller_manager->update_key(action, true);
 }
 
-void increase_score(int score)
-{
+void increase_score(int score) {
     Game::get_instance().player_score += score;
     // print the score to the console
     // std::cout << "Score: " <<  Game::get_instance().player_score << std::endl;
@@ -205,9 +199,8 @@ void increase_score(int score)
  * @param x The x component of the velocity.
  * @param y The y component of the velocity.
  */
-void set_velocity(Entity e, float x, float y)
-{
-    auto &rigid_body = e.get_component<RigidBodyComponent>();
+void set_velocity(Entity e, float x, float y) {
+    auto& rigid_body = e.get_component<RigidBodyComponent>();
     rigid_body.velocity.x = x;
     rigid_body.velocity.y = y;
 }
@@ -217,9 +210,8 @@ void set_velocity(Entity e, float x, float y)
  * @param e The entity to set the rotation for.
  * @param angle The angle to set the rotation to.
  */
-void set_rotation(Entity e, float angle)
-{
-    auto &transform = e.get_component<TransformComponent>();
+void set_rotation(Entity e, float angle) {
+    auto& transform = e.get_component<TransformComponent>();
     transform.rotation = angle;
 }
 
@@ -228,8 +220,7 @@ void set_rotation(Entity e, float angle)
  * @param e The entity to get the rotation from.
  * @return The rotation of the entity.
  */
-float get_rotation(Entity e)
-{
+float get_rotation(Entity e) {
     return e.get_component<TransformComponent>().rotation;
 }
 
@@ -238,9 +229,8 @@ float get_rotation(Entity e)
  * @param e The entity to get the position from.
  * @return A tuple containing the x and y coordinates of the entity.
  */
-std::tuple<int, int> get_position(Entity e)
-{
-    const auto &transform = e.get_component<TransformComponent>();
+std::tuple<int, int> get_position(Entity e) {
+    const auto& transform = e.get_component<TransformComponent>();
     return {static_cast<int>(transform.position.x), static_cast<int>(transform.position.y)};
 }
 
@@ -249,15 +239,14 @@ std::tuple<int, int> get_position(Entity e)
  * @param e The entity to get the velocity from.
  * @return A tuple containing the x and y components of the velocity.
  */
-std::tuple<int, int> get_velocity(Entity e)
-{
-    const auto &rigid_body = e.get_component<RigidBodyComponent>();
+std::tuple<int, int> get_velocity(Entity e) {
+    const auto& rigid_body = e.get_component<RigidBodyComponent>();
     return {static_cast<int>(rigid_body.velocity.x), static_cast<int>(rigid_body.velocity.y)};
 }
 
 std::tuple<int, int> get_buffered_velocity(Entity e)
 {
-    const auto &rigid_body = e.get_component<RigidBodyComponent>();
+    const auto& rigid_body = e.get_component<RigidBodyComponent>();
     auto velocity = rigid_body.velocity_buffer;
     return {static_cast<int>(velocity.x), static_cast<int>(velocity.y)};
 }
@@ -268,9 +257,8 @@ std::tuple<int, int> get_buffered_velocity(Entity e)
  * @param x The x coordinate of the position.
  * @param y The y coordinate of the position.
  */
-void set_position(Entity e, int x, int y)
-{
-    auto &transform = e.get_component<TransformComponent>();
+void set_position(Entity e, int x, int y) {
+    auto& transform = e.get_component<TransformComponent>();
     transform.position.x = static_cast<float>(x);
     transform.position.y = static_cast<float>(y);
 }
@@ -280,11 +268,10 @@ void set_position(Entity e, int x, int y)
  * @param e The entity to get the size from.
  * @return A tuple containing the width and height of the entity.
  */
-std::tuple<int, int> get_size(Entity e)
-{
-    const auto &sprite = e.get_component<SpriteComponent>();
-    const auto &transform = e.get_component<TransformComponent>();
-
+std::tuple<int, int> get_size(Entity e) {
+    const auto& sprite = e.get_component<SpriteComponent>();
+    const auto& transform = e.get_component<TransformComponent>();
+    
     int width = sprite.width * transform.scale.x;
     int height = sprite.height * transform.scale.y;
 
@@ -297,8 +284,7 @@ std::tuple<int, int> get_size(Entity e)
  * @brief Go to a scene.
  * @param scene_name The name of the scene to go to.
  */
-void go_to_scene(const std::string &scene_name)
-{
+void go_to_scene(const std::string& scene_name) {
     Game::get_instance().scene_manager->set_next_scene(scene_name);
     Game::get_instance().scene_manager->stop_scene();
 }
@@ -311,12 +297,11 @@ void go_to_scene(const std::string &scene_name)
  * @param other The second entity.
  * @return True if the entities are colliding from the top, false otherwise.
  */
-bool top_collision(Entity e, Entity other)
-{
-    const auto &e_collider = e.get_component<BoxColliderComponent>();
-    const auto &e_transform = e.get_component<TransformComponent>();
-    const auto &other_collider = other.get_component<BoxColliderComponent>();
-    const auto &other_transform = other.get_component<TransformComponent>();
+bool top_collision(Entity e, Entity other) {
+    const auto& e_collider = e.get_component<BoxColliderComponent>();
+    const auto& e_transform = e.get_component<TransformComponent>();
+    const auto& other_collider = other.get_component<BoxColliderComponent>();
+    const auto& other_transform = other.get_component<TransformComponent>();
 
     float e_x = e_transform.previous_position.x;
     float e_y = e_transform.previous_position.y;
@@ -332,7 +317,8 @@ bool top_collision(Entity e, Entity other)
     return (
         other_x < e_x + e_w &&
         other_x + other_w > e_x &&
-        other_y < e_y);
+        other_y < e_y
+    );
 }
 
 /**
@@ -341,12 +327,11 @@ bool top_collision(Entity e, Entity other)
  * @param other The second entity.
  * @return True if the entities are colliding from the left, false otherwise.
  */
-bool left_collision(Entity e, Entity other)
-{
-    const auto &e_collider = e.get_component<BoxColliderComponent>();
-    const auto &e_transform = e.get_component<TransformComponent>();
-    const auto &other_collider = other.get_component<BoxColliderComponent>();
-    const auto &other_transform = other.get_component<TransformComponent>();
+bool left_collision(Entity e, Entity other) {
+    const auto& e_collider = e.get_component<BoxColliderComponent>();
+    const auto& e_transform = e.get_component<TransformComponent>();
+    const auto& other_collider = other.get_component<BoxColliderComponent>();
+    const auto& other_transform = other.get_component<TransformComponent>();
 
     float e_x = e_transform.previous_position.x;
     float e_y = e_transform.previous_position.y;
@@ -362,7 +347,8 @@ bool left_collision(Entity e, Entity other)
     return (
         other_y < e_y + e_h &&
         other_y + other_h > e_y &&
-        other_x < e_x);
+        other_x < e_x
+    );
 }
 
 /**
@@ -371,12 +357,11 @@ bool left_collision(Entity e, Entity other)
  * @param other The second entity.
  * @return True if the entities are colliding from the bottom, false otherwise.
  */
-bool bottom_collision(Entity e, Entity other)
-{
-    const auto &e_collider = e.get_component<BoxColliderComponent>();
-    const auto &e_transform = e.get_component<TransformComponent>();
-    const auto &other_collider = other.get_component<BoxColliderComponent>();
-    const auto &other_transform = other.get_component<TransformComponent>();
+bool bottom_collision(Entity e, Entity other) {
+    const auto& e_collider = e.get_component<BoxColliderComponent>();
+    const auto& e_transform = e.get_component<TransformComponent>();
+    const auto& other_collider = other.get_component<BoxColliderComponent>();
+    const auto& other_transform = other.get_component<TransformComponent>();
 
     float e_x = e_transform.previous_position.x;
     float e_y = e_transform.previous_position.y;
@@ -392,7 +377,8 @@ bool bottom_collision(Entity e, Entity other)
     return (
         other_x < e_x + e_w &&
         other_x + other_w > e_x &&
-        other_y > e_y);
+        other_y > e_y
+    );
 }
 
 /**
@@ -401,12 +387,11 @@ bool bottom_collision(Entity e, Entity other)
  * @param other The second entity.
  * @return True if the entities are colliding from the right, false otherwise.
  */
-bool right_collision(Entity e, Entity other)
-{
-    const auto &e_collider = e.get_component<BoxColliderComponent>();
-    const auto &e_transform = e.get_component<TransformComponent>();
-    const auto &other_collider = other.get_component<BoxColliderComponent>();
-    const auto &other_transform = other.get_component<TransformComponent>();
+bool right_collision(Entity e, Entity other) {
+    const auto& e_collider = e.get_component<BoxColliderComponent>();
+    const auto& e_transform = e.get_component<TransformComponent>();
+    const auto& other_collider = other.get_component<BoxColliderComponent>();
+    const auto& other_transform = other.get_component<TransformComponent>();
 
     float e_x = e_transform.previous_position.x;
     float e_y = e_transform.previous_position.y;
@@ -422,7 +407,8 @@ bool right_collision(Entity e, Entity other)
     return (
         other_y < e_y + e_h &&
         other_y + other_h > e_y &&
-        other_x > e_x);
+        other_x > e_x
+    );
 }
 
 // void shoot_bullet(Entity player) {
@@ -494,13 +480,13 @@ void flip_sprite(Entity entity, bool flip)
 
 void set_state(Entity entity, const int8_t state)
 {
-    auto &stateComponent = entity.get_component<StateComponent>();
+    auto& stateComponent = entity.get_component<StateComponent>();
     stateComponent.state = state;
 }
 
 int8_t get_state(Entity entity)
 {
-    auto &stateComponent = entity.get_component<StateComponent>();
+    auto& stateComponent = entity.get_component<StateComponent>();
     auto tag = entity.get_component<TagComponent>();
     // std::cout << "tag: " << tag.tag << ": " << (int)stateComponent.state << std::endl;
     return stateComponent.state;
@@ -513,25 +499,68 @@ void reset_camera()
     camera.y = 0;
 }
 
-bool can_perform_action(Entity entity, const std::string &action)
-{
-    if (!entity.has_component<CooldownsComponent>())
-        return false;
 
-    std::cout << "has cooldown" << std::endl;
+bool can_perform_action(Entity entity, const std::string& action)
+{
+    if (!entity.has_component<CooldownsComponent>()) return false;
 
     auto &cooldowns = entity.get_component<CooldownsComponent>();
-    if (!cooldowns.CanPerformAction("") || !cooldowns.CanPerformAction(action))
-        return false;
+    if (!cooldowns.CanPerformAction("") || !cooldowns.CanPerformAction(action)) return false;
 
     return true;
 }
 
-void perform_action(Entity entity, const std::string &action)
+void perform_action(Entity entity, const std::string& action)
 {
-    if (!can_perform_action(entity, action))
-        return;
+    if (!can_perform_action(entity, action)) return;
     entity.get_component<CooldownsComponent>().PerformAction(action);
+}
+
+void create_projectile(Entity father, std::string tag
+    , int32_t x_offset, int32_t y_offset
+    , double rotation
+    , double velocity_x, double velocity_y
+    , int32_t width, int32_t height
+    , double ticks_alive, bool followFather = false) {
+    Entity projectile = father.registry->create_entity();
+    auto fatherTransform = father.get_component<TransformComponent>();
+
+    // transform component : position
+    projectile.add_component<TransformComponent>(
+        followFather?
+            glm::vec2 {0, 0}
+            : glm::vec2 {fatherTransform.position.x + x_offset, fatherTransform.position.y + y_offset},
+        fatherTransform.scale,
+        rotation
+        );
+
+    // rigidbody component : direction
+    projectile.hot_add_component<RigidBodyComponent>();
+    auto& rigidbody = projectile.get_component<RigidBodyComponent>();
+    rigidbody.velocity.x = velocity_x;
+    rigidbody.velocity.y = velocity_y;
+    rigidbody.default_movement = true;
+
+    if (followFather) {
+        rigidbody.father = father;
+        projectile.get_component<TransformComponent>().movement_offset =
+            glm::vec2 {x_offset, y_offset};
+    }
+
+    // damage collider : collision
+    projectile.hot_add_component<DamageColliderComponent>( width, height );
+
+    // lifetime : must die after time
+    projectile.hot_add_component<LifetimeComponent>(ticks_alive);
+
+    // tag: must identify when colliding
+    projectile.hot_add_component<TagComponent>( tag, father.get_component<TagComponent>().e_class );
+}
+
+bool looking_right(Entity entity) {
+    if (!entity.has_component<SpriteComponent>()) return false;
+
+    return entity.get_component<SpriteComponent>().flip;
 }
 
 void set_box_collider(Entity entity, int width, int height, int offset_x, int offset_y)

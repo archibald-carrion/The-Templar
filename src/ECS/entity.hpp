@@ -1,6 +1,8 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
+#include <utility>
+
 #include "component.hpp"
 
 /**
@@ -87,6 +89,9 @@ public:
      */
     template <typename TComponent>
     TComponent& get_component() const;
+
+    template <typename TComponent, typename... TArgs>
+    void hot_add_component(TArgs&&...args);
 
     class Registry* registry;
 };

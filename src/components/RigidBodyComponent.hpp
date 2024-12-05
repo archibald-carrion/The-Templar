@@ -11,6 +11,7 @@ struct RigidBodyComponent {
   bool is_dynamic; // Whether the object is dynamic or not
   bool is_solid; // Whether the object is solid or not
   bool default_movement { false };
+  std::optional<Entity> father;
 
   glm::vec2 sum_forces = glm::vec2(0, 0); // Sum of all forces acting on the object
   glm::vec2 velocity = glm::vec2(0, 0); // Velocity of the object

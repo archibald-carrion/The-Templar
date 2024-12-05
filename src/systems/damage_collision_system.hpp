@@ -64,6 +64,7 @@ public:
 
                 if (b.has_component<ScriptComponent>()) {
                     const auto& script = b.get_component<ScriptComponent>();
+
                     if (script.on_damage != sol::nil) {
                         lua["this"] = b;
                         (void) script.on_damage(a);

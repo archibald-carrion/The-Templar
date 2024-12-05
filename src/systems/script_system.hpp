@@ -11,14 +11,12 @@
  * @brief Script System class
  * The ScriptSystem class is a class for managing scripts.
  */
-class ScriptSystem : public System
-{
+class ScriptSystem : public System {
 public:
     /**
      * @brief Construct a new Script System object
      */
-    ScriptSystem()
-    {
+    ScriptSystem() {
         RequireComponent<ScriptComponent>();
     }
 
@@ -26,8 +24,7 @@ public:
      * @brief Create a lua binding object
      * @param lua sol lua state
      */
-    void create_lua_binding(sol::state &lua)
-    {
+    void create_lua_binding(sol::state& lua) {
         // classes
         lua.new_usertype<Entity>("entity");
 
@@ -55,6 +52,7 @@ public:
 
         // general entity related functions
         lua.set_function("get_tag", get_tag);
+        lua.set_function("get_class", get_class);
         // lua.set_function("reset_bullet", reset_bullet);
         // lua.set_function("update_player_location", update_player_location);
         lua.set_function("kill_entity", kill_entity);
@@ -89,20 +87,21 @@ public:
 
         lua.set_function("set_box_collider", set_box_collider);
         lua.set_function("get_box_collider", get_box_collider);
+
+        lua.set_function("create_projectile", create_projectile);
+
+        lua.set_function("looking_right", looking_right);
     }
 
     /**
      * @brief Update the script system
      * @param lua sol lua state
      */
-    void update(sol::state &lua)
-    {
-        for (auto &entity : get_entities())
-        {
-            const auto &script = entity.get_component<ScriptComponent>();
+    void update(sol::state& lua) {
+        for (auto& entity : get_entities()) {
+            const auto& script = entity.get_component<ScriptComponent>();
 
-            if (script.update != sol::lua_nil)
-            {
+            if (script.update != sol::lua_nil) {
                 lua["this"] = entity;
                 script.update();
             }
@@ -113,15 +112,12 @@ public:
      * @brief init function that calls the on_init function from the script component
      * @param lua sol lua state
      */
-    void init_from_script(sol::state &lua)
-    {
+    void init_from_script(sol::state& lua) {
         // loop through all entities and call the on_init function
-        for (auto &entity : get_entities())
-        {
-            const auto &script = entity.get_component<ScriptComponent>();
+        for (auto& entity : get_entities()) {
+            const auto& script = entity.get_component<ScriptComponent>();
             // check if the on_init function exists
-            if (script.on_init != sol::lua_nil)
-            {
+            if (script.on_init != sol::lua_nil) {
                 lua["this"] = entity;
                 script.on_init();
             }

@@ -136,6 +136,11 @@ public:
      */
     void clear_all_entities();
 
+    /**
+    * @brief Adds a component while being used
+    */
+    void hot_add_component_to_ent(Entity& entity);
+
 };
 
 template <typename TComponent, typename... TArgs>
@@ -281,6 +286,12 @@ bool Entity::has_component(){
 template <typename TComponent>
 TComponent& Entity::get_component() const{
     return registry->get_component<TComponent>(*this);
+}
+
+template <typename TComponent, typename... TArgs>
+void Entity::hot_add_component(TArgs&&...args) {
+    registry->add_component<TComponent>(*this, std::forward<TArgs>(args)...);
+    registry->hot_add_component_to_ent(*this);
 }
 
 #endif // ECS_HPP

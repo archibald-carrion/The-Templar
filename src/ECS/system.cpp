@@ -21,7 +21,11 @@ const Signature& System::get_signature() const {
     return componentSignature;
 }
 
-void System::clear_system()
-{
+void System::clear_system() {
     entities.clear();
+}
+
+bool System::has_entity(const Entity& entity) const {
+    return std::ranges::any_of(entities
+        , [&](const Entity &other) { return entity == other; });
 }

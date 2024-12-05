@@ -17,6 +17,7 @@
 #include "../systems/overlap_system.hpp"
 #include "../systems/cooldowns_system.hpp"
 #include "../systems/damage_collision_system.hpp"
+#include "../systems/lifetime_system.hpp"
 #include "../systems/render_circular_collider_system.hpp"
 
 #include "../events/click_event.hpp"
@@ -57,6 +58,7 @@ void Game::setup() {
     registry->add_system<CooldownsSystem>();
     registry->add_system<DamageCollisionSystem>();
     registry->add_system<RenderDamageColliderSystem>();
+    registry->add_system<LifetimeSystem>();
     registry->add_system<RenderCircularColliderSystem>();
 
     scene_manager->load_scene_from_script("assets/scripts/scenes.lua", lua);
@@ -229,6 +231,7 @@ void Game::update() {
     registry->get_system<CooldownsSystem>().update(deltaTime);
 
     registry->get_system<CameraMovementSystem>().update(this->camera);
+    registry->get_system<LifetimeSystem>().update(deltaTime);
 }
 
 void Game::render() {
