@@ -558,6 +558,9 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
             } else if (name.compare("spawn") == 0)
             {
                 load_enemies(*registry, script_path, objectGroup, lua);
+            } else if (name.compare("enemies_colliders") == 0)
+            {
+                load_circular_collliders(registry, objectGroup);
             }
 
             objectGroup = objectGroup->NextSiblingElement("objectgroup");
@@ -614,6 +617,45 @@ void SceneLoader::LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLEl
             tmpNumber.str("");
         }
         pos++;
+    }
+}
+
+void SceneLoader::load_circular_collliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup)
+{
+    // createa circular collider of constant radius and position
+    tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
+
+    // Define scale factor
+    const float SCALE = 2.0f;
+
+    while (object != nullptr)
+    {
+        // Declarar variables
+        const char *name;
+        std::string tag;
+        int x, y, r;
+
+        // Extraer atributos
+        object->QueryStringAttribute("name", &name);
+        tag = name;
+
+        // Extraer posición
+        object->QueryIntAttribute("x", &x);
+        object->QueryIntAttribute("y", &y);
+
+        // Extraer radio
+        object->QueryIntAttribute("width", &r);
+
+        // Crear entidad con posición y radio escalados
+        Entity collider = registry->create_entity();
+        collider.add_component<TagComponent>(tag);
+        collider.add_component<TransformComponent>(
+            glm::vec2(x * SCALE, y * SCALE), // Scale position
+            glm::vec2(SCALE, SCALE) // Add scale vector
+        );
+        collider.add_component<CircleColliderComponent>(r * SCALE, x*2, y*2);
+
+        object = object->NextSiblingElement("object");
     }
 }
 

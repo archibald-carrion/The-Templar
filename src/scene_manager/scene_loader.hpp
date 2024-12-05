@@ -67,16 +67,69 @@ class SceneLoader {
      */
     void load_entities(sol::state& lua, const sol::table& entities, std::unique_ptr<Registry>& registry);
 
+    /**
+     * @brief Load an entity from the Lua table.
+     * @param lua The Lua state to use for creating the entity.
+     * @param entity The entity to load the components into.
+     * @param entityTable The Lua table containing the entity.
+     */
     void load_entity(sol::state& lua, Entity& entity, sol::table& entityTable);
 
+    /**
+     * @brief Load the animations from the Lua table.
+     * @param animations The Lua table containing the animations.
+     * @param animation_manager The animation manager to load the animations into.
+     */
     void load_animations(const sol::table& animations, std::unique_ptr<AnimationManager>& animation_manager);
 
+    /**
+     * @brief Load the map from the Lua table.
+     * @param map The Lua table containing the map.
+     * @param registry The registry to load the map into.
+     * @param script_path The file path to the Lua script.
+     * @param lua The Lua state to use for creating the map.
+     */
     void LoadMap(const sol::table map, std::unique_ptr<Registry> &registry, const std::string& script_path, sol::state& lua);
+    
+    /**
+     * @brief Load the layer from the XML element.
+     * @param registry The registry to load the layer into.
+     * @param layerElement The XML element containing the layer.
+     * @param tWidth The tile width of the map.
+     * @param tHeight The tile height of the map.
+     * @param mWidth The map width of the map.
+     * @param tileSet The tile set of the map.
+     * @param columns The columns of the map.
+     */
     void LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *layerElement, int tWidth, int tHeight, int mWidth, const std::string &tileSet, int columns);
+    
+    /**
+     * @brief Load the colliders from the XML element.
+     * @param registry The registry to load the colliders into.
+     * @param objectGroup The XML element containing the colliders.
+     */
     void LoadColliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup);
+    
+    /**
+     * @brief Load the circular colliders from the XML element.
+     * @param registry The registry to load the colliders into.
+     * @param objectGroup The XML element containing the colliders.
+     */
+    void load_circular_collliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup);
+    
+    /**
+     * @brief Load the circular colliders from the XML element.
+     * @param registry The registry to load the colliders into.
+     * @param objectGroup The XML element containing the colliders.
+     */
     void load_enemies(Registry& registry, const std::string& path, tinyxml2::XMLElement *objectGroup, sol::state& lua);
 
+    /**
+     * @brief Load the damage colliders from the Lua table.
+     * @param colliders The Lua table containing the damage colliders.
+     */
     void load_damage_colliders(const sol::table& colliders);
+
 public:
     /**
      * @brief Default constructor for the SceneLoader class.
