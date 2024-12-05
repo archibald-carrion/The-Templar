@@ -12,6 +12,7 @@ scene = {
         {asset_id = "frost_t_walk", file_path = "./assets/images/frost_t_walk.png"},
         {asset_id = "shadow_idle", file_path = "./assets/images/shadow_idle.png"},
         {asset_id = "shadow_walk", file_path = "./assets/images/shadow_walk.png"},
+        {asset_id= "bat", file_path = "./assets/images/bat.png"},
     },
     
     animations = {
