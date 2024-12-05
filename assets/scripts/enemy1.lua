@@ -65,6 +65,12 @@ function on_collision(other)
             set_velocity(this, new_vel, this_vel_y)
         end
     end
+
+    if other_tag == "enemy_collider" then
+        print("enemy collided with enemy_collider")
+        this_vel_x, this_vel_y = get_velocity(this)
+        set_velocity(this, this_vel_x * -1, this_vel_y)
+    end
 end
 
 function on_damage(other)

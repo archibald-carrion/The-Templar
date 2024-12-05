@@ -653,7 +653,7 @@ void SceneLoader::load_circular_collliders(std::unique_ptr<Registry> &registry, 
             glm::vec2(x * SCALE, y * SCALE), // Scale position
             glm::vec2(SCALE, SCALE) // Add scale vector
         );
-        collider.add_component<CircleColliderComponent>(r * SCALE, x*2, y*2);
+        collider.add_component<CircleColliderComponent>(r * SCALE, x*SCALE, y*SCALE);
 
         object = object->NextSiblingElement("object");
     }
@@ -748,6 +748,8 @@ void SceneLoader::load_enemies(Registry& registry, const std::string& path, tiny
             glm::vec2(x * SCALE, y * SCALE),
             glm::vec2(SCALE, SCALE)
         );
+        // add circular collider with constant radius so enemy don't fall of the edge
+        collider.add_component<CircleColliderComponent>(1.0f * SCALE, x * SCALE, y * SCALE);
 
         object = object->NextSiblingElement("object");
         enemies.push_back(collider);

@@ -225,7 +225,7 @@ void Game::update() {
     registry->get_system<MovementSystem>().update(deltaTime);
 
     registry->get_system<BoxCollisionSystem>().update(this->events_manager, lua);
-    registry->get_system<CircleCollisionSystem>().update(events_manager);
+    registry->get_system<CircleCollisionSystem>().update(events_manager, lua);
     registry->get_system<DamageCollisionSystem>().update(*events_manager, lua);
 
     registry->get_system<CooldownsSystem>().update(deltaTime);
