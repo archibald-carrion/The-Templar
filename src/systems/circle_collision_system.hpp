@@ -64,9 +64,9 @@ public:
                 if(there_is_collision) {
                     //event_manager->emit_event<CollisionEvent>(a, b);
 
-                    std::cout << "Circular collision detected between: " << std::endl;
-                    std::cout << "Entity A: " << a.get_component<TagComponent>().tag << std::endl;
-                    std::cout << "Entity B: " << b.get_component<TagComponent>().tag << std::endl;
+                    // std::cout << "Circular collision detected between: " << std::endl;
+                    // std::cout << "Entity A: " << a.get_component<TagComponent>().tag << std::endl;
+                    // std::cout << "Entity B: " << b.get_component<TagComponent>().tag << std::endl;
 
                     trigger_collision_script(a, b, lua);
                     trigger_collision_script(b, a, lua);

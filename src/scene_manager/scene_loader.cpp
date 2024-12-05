@@ -650,7 +650,7 @@ void SceneLoader::load_circular_collliders(std::unique_ptr<Registry> &registry, 
         Entity collider = registry->create_entity();
         collider.add_component<TagComponent>(tag);
         collider.add_component<TransformComponent>(
-            glm::vec2(x * SCALE, y * SCALE), // Scale position
+            glm::vec2(x * SCALE, y * SCALE -25), // Scale position
             glm::vec2(SCALE, SCALE) // Add scale vector
         );
         collider.add_component<CircleColliderComponent>(r * SCALE, x*SCALE, y*SCALE);
