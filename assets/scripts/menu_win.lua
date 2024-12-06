@@ -95,7 +95,7 @@ scene = {
                   r = 255, g = 255, b = 255, a = 255  -- White color
               },
               transform = {
-                  position = { x = 470, y = 500},
+                  position = { x = 400, y = 500},
                   scale = { x = 1.2, y = 1.2},
                   rotation = 0.0
               },
