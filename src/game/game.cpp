@@ -22,6 +22,7 @@
 #include "../systems/enemy_attack_system.hpp"
 #include "../systems/enemy_collider_system.hpp"
 #include "../systems/render_enemy_collider_system.hpp"
+#include "../systems/stats_system.hpp"
 
 #include "../events/click_event.hpp"
 
@@ -66,6 +67,7 @@ void Game::setup() {
     registry->add_system<EnemyAttackSystem>();
     registry->add_system<EnemyCollisionSystem>();
     registry->add_system<RenderEnemyColliderSystem>();
+    registry->add_system<StatsSystem>();
 
     scene_manager->load_scene_from_script("assets/scripts/scenes.lua", lua);
 
@@ -308,6 +310,8 @@ void Game::update() {
     registry->get_system<CameraMovementSystem>().update(this->camera);
     registry->get_system<LifetimeSystem>().update(deltaTime);
     registry->get_system<EnemyAttackSystem>().update(lua);
+
+
 }
 
 void Game::render() {
@@ -317,6 +321,8 @@ void Game::render() {
     registry->get_system<RenderSystem>().update(renderer, assets_manager, this->camera);
     registry->get_system<PlayerScoreSystem>().update(renderer, player_score);
     registry->get_system<RenderTextSystem>().update(renderer, assets_manager);
+
+    registry->get_system<StatsSystem>().update(renderer);
 
     if (is_debug_mode_activated){
         registry->get_system<RenderBoxColliderSystem>().update(renderer, this->camera);

@@ -152,16 +152,18 @@ enemies = {
             },
             cooldowns = {
                 [0] =
-                { name = "global", seconds = 1 },
+                { name = "global", seconds = 0.7 },
                 { name = "none", seconds = 0.5 },
                 { name = "melee1", seconds = 0.5 },
-                { name = "melee2", seconds = 3 }
+                { name = "melee2", seconds = 2 }
             },
             attacks = {
                 [0] =
                 { name = "none", awareness_x = 150, awareness_y = 0 },
                 { name = "melee1", awareness_x = 500, awareness_y = 0 },
+                { name = "melee2", awareness_x = 500, awareness_y = 0 },
                 { name = "none", awareness_x = 150, awareness_y = 0 },
+                { name = "melee2", awareness_x = 500, awareness_y = 0 },
                 { name = "melee2", awareness_x = 500, awareness_y = 0 },
             }
         }
