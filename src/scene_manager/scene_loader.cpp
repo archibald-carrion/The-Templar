@@ -589,7 +589,7 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
                 load_enemies(*registry, script_path, objectGroup, lua);
             } else if (name.compare("enemies_colliders") == 0)
             {
-                load_enemy_collliders(registry, objectGroup);
+                load_enemy_colliders(registry, objectGroup);
             }
 
             objectGroup = objectGroup->NextSiblingElement("objectgroup");
@@ -649,7 +649,7 @@ void SceneLoader::LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLEl
     }
 }
 
-void SceneLoader::load_enemy_collliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup)
+void SceneLoader::load_enemy_colliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup)
 {
     // createa circular collider of constant radius and position
     tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
@@ -684,6 +684,8 @@ void SceneLoader::load_enemy_collliders(std::unique_ptr<Registry> &registry, tin
             glm::vec2(SCALE, SCALE) // Add scale vector
         );
         collider.add_component<EnemyColliderComponent>(w * SCALE, h * SCALE); // Scale collider dimensions
+        // add rigid body with infinite mass
+        collider.add_component<RigidBodyComponent>(false, true, 9999999999.0f);
 
         object = object->NextSiblingElement("object");
     }

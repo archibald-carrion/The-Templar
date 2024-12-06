@@ -115,7 +115,7 @@ class SceneLoader {
      * @param registry The registry to load the colliders into.
      * @param objectGroup The XML element containing the colliders.
      */
-    void load_enemy_collliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup);
+    void load_enemy_colliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup);
     
     /**
      * @brief Load the circular colliders from the XML element.
