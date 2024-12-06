@@ -96,6 +96,13 @@ public:
         lua.set_function("looking_right", looking_right);
 
         lua.set_function("shoot_fireball", shoot_fireball);
+
+        // stats related functions
+        lua.set_function("get_health", get_health);
+        lua.set_function("set_health", set_health);
+        lua.set_function("get_damage", get_damage);
+        lua.set_function("get_points", get_points);
+        lua.set_function("set_points", set_points);
     }
 
     /**

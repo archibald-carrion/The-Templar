@@ -25,6 +25,7 @@
 #include "../components/attack_cycle_component.hpp"
 #include "../components/enemy_box_collider_component.hpp"
 #include "../components/father_component.hpp"
+#include "../components/stats_component.hpp"
 
 SceneLoader::SceneLoader() {
     //std::cout << "[SCENELOADER] scene loader constructor" << std::endl;
@@ -83,6 +84,12 @@ void SceneLoader::load_scene(const std::string& scene_path,
     // load the keys
     sol::table keys = scene["keys"];
     load_keys_actions(keys, controller_manager);
+
+    if (const sol::optional<sol::table> hasStats = scene["stats"]) {
+        const sol::table& stats = *hasStats;
+        load_stats(stats);
+    }
+
     // load the map
     std::cout <<"before loading map" << std::endl;
     sol::table map = scene["maps"];
@@ -429,6 +436,8 @@ void SceneLoader::load_entity(sol::state& lua, Entity& entity, sol::table& entit
                 attacks.Attacks.emplace_back(attack_name, std::make_pair( awareness_x, awareness_y ));
             }
         }
+
+        StatsManager::GetInstance().AddStatsToEntity(entity);
     }
 }
 
@@ -820,7 +829,6 @@ void SceneLoader::load_damage_colliders(const sol::table& colliders)
 {
     size_t index = 0;
 
-    // loop through all the music
     while(true) {
         sol::optional<sol::table> has_collider = colliders[index];
         if(has_collider == sol::nullopt) {
@@ -833,3 +841,23 @@ void SceneLoader::load_damage_colliders(const sol::table& colliders)
         index++;
     }
 }
+
+void SceneLoader::load_stats(const sol::table& stats) {
+    uint32_t index = 0;
+
+    while(true) {
+        sol::optional<sol::table> hasStat = stats[index];
+        if (hasStat == sol::nullopt) {
+            return;
+        }
+        sol::table stat = stats[index];
+        StatsComponent buffer {
+            static_cast<int32_t>(stat["points"])
+            , static_cast<int32_t>(stat["health"])
+            , static_cast<int32_t>(stat["damage"])};
+        StatsManager::GetInstance().AddStat(stat["tag"], buffer);
+
+        index++;
+    }
+}
+

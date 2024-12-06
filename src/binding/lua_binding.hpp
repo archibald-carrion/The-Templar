@@ -20,6 +20,7 @@
 #include "../components/damage_collider_component.hpp"
 #include "../components/state_component.hpp"
 #include "../components/father_component.hpp"
+#include "../components/stats_component.hpp"
 
 void shoot_fireball(Entity entity) {
     //std::cout << "[LUABINDING] creating new fireball" << std::endl;
@@ -618,6 +619,8 @@ void create_projectile(Entity father, std::string tag
     if (father.has_component<FatherComponent>()) {
         father.get_component<FatherComponent>().Children.push_back(projectile);
     }
+
+    StatsManager::GetInstance().AddStatsToEntity(projectile);
 }
 
 void create_projectile_w_a(Entity father, std::string tag
@@ -670,6 +673,8 @@ void create_projectile_w_a(Entity father, std::string tag
     if (father.has_component<FatherComponent>()) {
         father.get_component<FatherComponent>().Children.push_back(projectile);
     }
+
+    StatsManager::GetInstance().AddStatsToEntity(projectile);
 }
 
 bool looking_right(Entity entity) {
@@ -688,6 +693,27 @@ std::tuple<int, int> get_box_collider(Entity entity)
 {
     auto &box_collider = entity.get_component<BoxColliderComponent>();
     return {box_collider.width, box_collider.height};
+}
+
+int32_t get_health(Entity entity) {
+    auto& stats = entity.get_component<StatsComponent>();
+    return stats.Health;
+}
+
+void set_health(Entity entity, int32_t health) {
+    entity.get_component<StatsComponent>().Health = health;
+}
+
+int32_t get_damage(Entity entity) {
+    return entity.get_component<StatsComponent>().Damage;
+}
+
+int32_t get_points(Entity entity) {
+    return entity.get_component<StatsComponent>().Points;
+}
+
+void set_points(Entity entity, int32_t points) {
+    entity.get_component<StatsComponent>().Points = points;
 }
 
 #endif // LUA_BINDING_HPP

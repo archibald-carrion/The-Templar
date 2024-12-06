@@ -33,50 +33,49 @@ function update()
     vel_x = 0
   
     if is_action_activated("jump") then
-      if player_can_jump then
+        if player_can_jump then
         add_force(this, 0, player_jump_force)
-      end
+        end
     end
 
     if is_action_activated("left") then
-      vel_x = vel_x - player_speed
+        vel_x = vel_x - player_speed
     end
 
     if is_action_activated("right") then
-      vel_x = vel_x + player_speed
+        vel_x = vel_x + player_speed
     end
     
     if is_action_activated("attack") and can_perform_action(this, "attack") then
-      if not player_attacking then
-        perform_action(this, "attack")
-        player_attacking = true
-        attack()
-        change_animation(this, "player_knight_attack")
-        player_state = player_states["attack"]
-      end
+        if not player_attacking then
+            perform_action(this, "attack")
+            player_attacking = true
+            attack()
+            change_animation(this, "player_knight_attack")
+            player_state = player_states["attack"]
+        end
     end
   
     set_velocity(this, vel_x, vel_y)
 
     if player_state == player_states["attack"] then
-      if get_animation_frame(this) == 5 then
-        player_attacking = false
-        update_animation_state()
-      end
+        if get_animation_frame(this) == 5 then
+            player_attacking = false
+            update_animation_state()
+        end
     else
-      update_animation_state()
+        update_animation_state()
     end
 
     player_can_jump = false
 
-
     -- check if the player is pressing space key to shoot
     if is_shooting  == false then
-      if is_action_activated("shoot") then
-        print("shooting")
-          shoot_fireball(this)
-          is_shooting = true
-      end
+        if is_action_activated("shoot") then
+            print("shooting")
+            shoot_fireball(this)
+            is_shooting = true
+        end
     else 
         if not is_action_activated("shoot") then
             is_shooting = false
@@ -86,76 +85,87 @@ function update()
 
 end
 
-
 function on_collision(other)
-  if get_tag(other) ~= "enemy_wall_1" or get_tag(other) ~= "enemy_wall_2" then
-    if get_tag(other) == "floor" then
-        local vel_x, vel_y = get_velocity(this)
-        if vel_y == 0 then
+    if get_tag(other) ~= "enemy_wall_1" or get_tag(other) ~= "enemy_wall_2" then
+        if get_tag(other) == "floor" then
+            local vel_x, vel_y = get_velocity(this)
+            if vel_y == 0 then
             player_can_jump = true
+            end
+        end
+
+        if get_tag(other) == "trap" then
+            go_to_scene("game_over")
         end
     end
-
-    if get_tag(other) == "trap" then
-        go_to_scene("game_over")
-    end
-  end
 end
 
 function update_animation_state()
-  local x_vel, y_vel = get_velocity(this)
-  
-  -- player does not move (player idle)
-  if -0.001 < x_vel and x_vel < 0.001 then
-      if player_state ~= player_states["idle"] then
-          player_state = player_states["idle"]
-          change_animation(this, "player_knight_idle")
-      end
-  end
-  
-  -- player moving right
-  if x_vel >= 0.001 then
-    flip_sprite(this, false)
-      if player_state ~= player_states["run"] then
-          player_state = player_states["run"]
-          change_animation(this, "player_knight_run")
-      end
-  end
-  
-  -- player moving left
-  if x_vel <= -0.001 then
+    local x_vel, y_vel = get_velocity(this)
+
+    -- player does not move (player idle)
+    if -0.001 < x_vel and x_vel < 0.001 then
+        if player_state ~= player_states["idle"] then
+            player_state = player_states["idle"]
+            change_animation(this, "player_knight_idle")
+        end
+    end
+
+    -- player moving right
+    if x_vel >= 0.001 then
+        flip_sprite(this, false)
+        if player_state ~= player_states["run"] then
+            player_state = player_states["run"]
+            change_animation(this, "player_knight_run")
+        end
+    end
+
+    -- player moving left
+    if x_vel <= -0.001 then
     flip_sprite(this, true)
-      if player_state ~= player_states["run"] then
-          player_state = player_states["run"]
-          change_animation(this, "player_knight_run")
-      end
-  end
-
-  -- player fall
-  if y_vel >= 0.001 then
-    if player_state ~= player_states["fall"] then
-        player_state = player_states["fall"]
-        change_animation(this, "player_knight_fall")
+        if player_state ~= player_states["run"] then
+            player_state = player_states["run"]
+            change_animation(this, "player_knight_run")
+        end
     end
-  end
 
-  -- player jump
-  if y_vel <= -0.001 then
-    if player_state ~= player_states["jump"] then
-        player_state = player_states["jump"]
-        change_animation(this, "player_knight_jump")
+    -- player fall
+    if y_vel >= 0.001 then
+        if player_state ~= player_states["fall"] then
+            player_state = player_states["fall"]
+            change_animation(this, "player_knight_fall")
+        end
     end
-  end
+
+    -- player jump
+    if y_vel <= -0.001 then
+        if player_state ~= player_states["jump"] then
+            player_state = player_states["jump"]
+            change_animation(this, "player_knight_jump")
+        end
+    end
 end
 
 function on_damage(other)
-  other_class = get_class(other)
-  this_class = get_class(other)
+    other_class = get_class(other)
+    this_class = get_class(this)
 
-  if this_class == other_class then
-    return
-  end
+    if this_class == other_class then
+        return
+    end
 
+    damage = get_damage(other)
+    health = get_health(this)
+    health = health - damage
+
+    set_health(this, health)
+
+    other_tag = get_tag(other)
+
+    result = string.find(other_tag, "attack")
+    if result then
+        kill_entity(other)
+    end
 end
 
 function perform()

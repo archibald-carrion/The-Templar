@@ -10,8 +10,10 @@ scene = {
         {asset_id = "terrain", file_path = "./assets/images/dungeon_tileset.png"},
         {asset_id = "frost_t_idle", file_path = "./assets/images/frost_t_idle.png"},
         {asset_id = "frost_t_walk", file_path = "./assets/images/frost_t_walk.png"},
+        {asset_id = "frost_t_attack", file_path = "./assets/images/frost_t_attack.png"},
         {asset_id = "shadow_idle", file_path = "./assets/images/shadow_idle.png"},
         {asset_id = "shadow_walk", file_path = "./assets/images/shadow_walk.png"},
+        {asset_id = "shadow_attack", file_path = "./assets/images/shadow_attack.png"},
         {asset_id= "bat", file_path = "./assets/images/bat.png"},
         {asset_id= "fireball", file_path = "./assets/images/fireball.png"},
     },
@@ -25,8 +27,10 @@ scene = {
         {animation_id = "player_knight_attack", texture_id = "knight_attack", w = 93, h = 38, num_frames = 6, speed_rate = 15, is_loop = false},
         {animation_id = "enemy1_idle", texture_id = "frost_t_idle", w = 52, h = 58, num_frames = 6, speed_rate = 15, is_loop = true},
         {animation_id = "enemy1_walk", texture_id = "frost_t_walk", w = 62, h = 58, num_frames = 10, speed_rate = 12, is_loop = true},
+        {animation_id = "enemy1_attack", texture_id = "frost_t_attack", w = 124, h = 58, num_frames = 14, speed_rate = 12, is_loop = false},
         {animation_id = "enemy2_idle", texture_id = "shadow_idle", w = 24, h = 23, num_frames = 8, speed_rate = 15, is_loop = true},
         {animation_id = "enemy2_walk", texture_id = "shadow_walk", w = 24, h = 23, num_frames = 8, speed_rate = 12, is_loop = true},
+        {animation_id = "enemy2_attack", texture_id = "shadow_attack", w = 64, h = 23, num_frames = 13, speed_rate = 16, is_loop = false},
     },
 
     damage_colliders = {
@@ -79,6 +83,19 @@ scene = {
         map_path = "./assets/maps/first_level.tmx",
         tile_path = "./assets/maps/dungeon_tileset.tsx",
         tile_name = "terrain",
+    },
+
+    stats = {
+        [0] =
+        { tag = "player", health = 5, points = 0, damage = 0 },
+        { tag = "sword", health = 5, points = 0, damage = 1 },
+        { tag = "enemy_1", health = 2, points = 1, damage = 1},
+        { tag = "enemy1_attack", health = 0, points = 0, damage = 1},
+        { tag = "enemy_2", health = 1, points = 1, damage = 1},
+        { tag = "enemy2_attack", health = 0, points = 0, damage = 2},
+        { tag = "enemy_3", health = 1, points = 1, damage = 2},
+        { tag = "boss", health = 20, points = 10, damage = 1},
+        { tag = "boss_attack_p1", health = 0, points = 0, damage = 1},
     },
 
     -- entities table

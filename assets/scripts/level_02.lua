@@ -84,6 +84,19 @@ scene = {
         tile_name = "terrain",
     },
 
+    stats = {
+        [0] =
+        { tag = "player", health = 5, points = 0, damage = 0 },
+        { tag = "sword", health = 5, points = 0, damage = 1 },
+        { tag = "enemy_1", health = 2, points = 1, damage = 1},
+        { tag = "enemy1_attack", health = 0, points = 0, damage = 1},
+        { tag = "enemy_2", health = 1, points = 1, damage = 1},
+        { tag = "enemy2_attack", health = 0, points = 0, damage = 2},
+        { tag = "enemy_3", health = 1, points = 1, damage = 2},
+        { tag = "boss", health = 20, points = 10, damage = 1},
+        { tag = "boss_attack_p1", health = 0, points = 0, damage = 1},
+    },
+
     -- entities table
     entities = {
         [0] =

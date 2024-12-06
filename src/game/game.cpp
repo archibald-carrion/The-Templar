@@ -69,7 +69,7 @@ void Game::setup() {
 
     scene_manager->load_scene_from_script("assets/scripts/scenes.lua", lua);
 
-    lua.open_libraries(sol::lib::base, sol::lib::math);
+    lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::string);
     registry->get_system<ScriptSystem>().create_lua_binding(lua);
 }
 

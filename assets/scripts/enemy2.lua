@@ -99,9 +99,21 @@ function on_damage(other)
     end
 
     other_tag = get_tag(other)
-    if other_tag == "sword" then
+    if other_tag ~= "sword" then
+        return
+    end
+
+    damage = get_damage(other)
+    health = get_health(this)
+    health = health - damage
+
+    set_health(this, health)
+
+    if health <= 0 then
         kill_entity(this)
     end
+
+    kill_entity(other)
 end
 
 function on_perform(attackName, looking_right)
@@ -119,5 +131,5 @@ function on_perform(attackName, looking_right)
 
     set_next_state(this, enemy_state)
 
-    create_projectile(this, attackName, position, 30, 0, movement, 0, 100, 40, 0.7, true)
+    create_projectile(this, "enemy1_attack", position, 30, 0, movement, 0, 100, 40, 0.7, true)
 end
