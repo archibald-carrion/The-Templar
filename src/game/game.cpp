@@ -211,10 +211,59 @@ void Game::processInput() {
 
             case SDL_CONTROLLERBUTTONDOWN:
                 {
-                auto used =  event.cbutton.button;
-                std::cout << "button: " << static_cast<int>(used) << std::endl;
+                    std::cout << "down: " << static_cast<int>(event.cbutton.button) << std::endl;
+                switch (event.cbutton.button)
+                {
+                    case 13: // left
+                        controller_manager->set_key_to_pressed(97);
+                        break;
+                    case 14: // right
+                        controller_manager->set_key_to_pressed(100);
+                        break;
+                    case SDL_CONTROLLER_BUTTON_A:
+                        controller_manager->set_key_to_pressed(SDLK_SPACE);
+                        break;
+                    case SDL_CONTROLLER_BUTTON_B:
+                        controller_manager->set_key_to_pressed(SDLK_e);
+                        break;
+                    case SDL_CONTROLLER_BUTTON_X:
+                        isPaused = !isPaused;
+                        break;
+                    case SDL_CONTROLLER_BUTTON_Y:
+                        controller_manager->set_key_to_pressed(SDLK_q);
+                        break;
+                    default:
+                        break;
+                }
                 break;
                 }
+            case SDL_CONTROLLERBUTTONUP:
+                std::cout << "up: " << static_cast<int>(event.cbutton.button) << std::endl;
+                switch (event.cbutton.button)
+                {
+                    case 13: // left
+                        controller_manager->set_key_to_up(97);
+                        break;
+                    case 14: // right
+                        controller_manager->set_key_to_up(100);
+                        break;
+                    case SDL_CONTROLLER_BUTTON_A:
+                        controller_manager->set_key_to_up(SDLK_SPACE);
+                        break;
+                    case SDL_CONTROLLER_BUTTON_B:
+                        controller_manager->set_key_to_up(SDLK_e);
+                        break;
+                    case SDL_CONTROLLER_BUTTON_X:
+                        break;
+                    case SDL_CONTROLLER_BUTTON_Y:
+                        controller_manager->set_key_to_up(SDLK_q);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case SDL_CONTROLLERAXISMOTION:
+                break;
             default:
                 break;
         }
