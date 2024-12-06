@@ -22,6 +22,7 @@
 #include "../components/state_component.hpp"
 #include "../components/cooldown_component.hpp"
 #include "../components/damage_collider_component.hpp"
+#include "../components/attack_cycle_component.hpp"
 #include "../components/enemy_box_collider_component.hpp"
 
 SceneLoader::SceneLoader() {
@@ -197,6 +198,7 @@ void SceneLoader::load_entity(sol::state& lua, Entity& entity, sol::table& entit
         sol::optional<sol::table> has_camera_follow_component = components["camera_follow"];
         if(has_camera_follow_component != sol::nullopt) {
             entity.add_component<CameraFollowComponent>(); // has not parameters
+            entity.add_component<AttackCycleComponent>();
         }
 
         // Circle collider component
@@ -276,12 +278,19 @@ void SceneLoader::load_entity(sol::state& lua, Entity& entity, sol::table& entit
                 damage = lua["on_damage"].get<sol::protected_function>();
             }
 
+            sol::optional<sol::function> has_perform = lua["on_perform"];
+            sol::function on_perform = sol::nil;
+            if(has_damage != sol::nullopt) {
+                on_perform = lua["on_perform"].get<sol::protected_function>();
+            }
+
             entity.add_component<ScriptComponent>(
                 on_collision
                 , update
                 , on_click
                 , on_init
-                , damage);
+                , damage
+                , on_perform);
         }
 
         // Sprite component
@@ -372,8 +381,7 @@ void SceneLoader::load_entity(sol::state& lua, Entity& entity, sol::table& entit
         }
 
         sol::optional<sol::table> hasCooldowns = components["cooldowns"];
-        if (hasCooldowns != sol::nullopt)
-        {
+        if (hasCooldowns != sol::nullopt) {
             entity.add_component<CooldownsComponent>();
             uint32_t index = 0;
 
@@ -392,12 +400,32 @@ void SceneLoader::load_entity(sol::state& lua, Entity& entity, sol::table& entit
                 } else {
                     component.PlayerActions.insert({
                         name,
-                        TimingTracer{
+                        TimingTracer {
                             cooldown.value()["seconds"]
                             ,cooldown.value()["seconds"]
                         }
                     });
                 }
+            }
+        }
+
+        sol::optional<sol::table> hasAttacks = components["attacks"];
+        if (hasAttacks != sol::nullopt) {
+            entity.add_component<AttackCycleComponent>();
+
+            uint32_t index = 0;
+            auto& attacks = entity.get_component<AttackCycleComponent>();
+
+            while (true) {
+                const sol::optional<sol::table> attack = components["attacks"][index++];
+
+                if (!attack) break;
+
+                const std::string attack_name = attack.value()["name"];
+                const size_t awareness_x = attack.value()["awareness_x"];
+                const size_t awareness_y = attack.value()["awareness_y"];
+
+                attacks.Attacks.emplace_back(attack_name, std::make_pair( awareness_x, awareness_y ));
             }
         }
     }

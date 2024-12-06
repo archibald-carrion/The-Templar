@@ -16,7 +16,7 @@ enemies = {
                 is_dynamic = true,
                 is_solid = true,
                 mass = 10,
-                velocity = { x = 1, y = 0 }
+                velocity = { x = 50, y = 0 }
             },
             box_collider = {
                 width = 40*2,
@@ -26,6 +26,14 @@ enemies = {
             script = {
                 path = "./assets/scripts/enemy1.lua"
             },
+            cooldowns = {
+                [0] =
+                { name = "global", seconds = 0.4 },
+                { name = "melee", seconds = 0.6 }
+            },
+            attacks = {
+                [0] = { name = "melee", awareness_x = 10, awareness_y = 0 },
+            }
         }
     },
 

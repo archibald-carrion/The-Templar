@@ -19,6 +19,7 @@
 #include "../systems/damage_collision_system.hpp"
 #include "../systems/lifetime_system.hpp"
 #include "../systems/render_circular_collider_system.hpp"
+#include "../systems/enemy_attack_system.hpp"
 #include "../systems/enemy_collider_system.hpp"
 #include "../systems/render_enemy_collider_system.hpp"
 
@@ -62,6 +63,7 @@ void Game::setup() {
     registry->add_system<RenderDamageColliderSystem>();
     registry->add_system<LifetimeSystem>();
     registry->add_system<RenderCircularColliderSystem>();
+    registry->add_system<EnemyAttackSystem>();
     registry->add_system<EnemyCollisionSystem>();
     registry->add_system<RenderEnemyColliderSystem>();
 
@@ -237,6 +239,7 @@ void Game::update() {
 
     registry->get_system<CameraMovementSystem>().update(this->camera);
     registry->get_system<LifetimeSystem>().update(deltaTime);
+    registry->get_system<EnemyAttackSystem>().update(lua);
 }
 
 void Game::render() {

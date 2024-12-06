@@ -13,7 +13,7 @@ void System::remove_entity_from_system(Entity entity) {
     entities.erase(it, entities.end());
 }
 
-std::vector<Entity> System::get_entities() const {
+std::vector<Entity>& System::get_entities() {
     return entities;
 }
 

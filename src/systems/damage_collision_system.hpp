@@ -14,17 +14,12 @@
 #include "../components/tag_component.hpp"
 #include "../event_manager/event_manager.hpp"
 
-class DamageCollisionSystem : public System {
-    struct Info {
-        float X;
-        float Y;
-        int32_t Width;
-        int32_t Height;
-    };
+#include "../utils/utilities.hpp"
 
+class DamageCollisionSystem : public System {
 public:
     DamageCollisionSystem() {
-        this->RequireComponent<DamageColliderComponent>();
+        RequireComponent<DamageColliderComponent>();
         RequireComponent<TransformComponent>();
         RequireComponent<TagComponent>();
     }
@@ -43,7 +38,7 @@ public:
                 const auto& bCollider = b.get_component<DamageColliderComponent>();
                 const auto& bTransform = b.get_component<TransformComponent>();
 
-                const bool collision = DamageCollisionSystem::checkAABBCollision(
+                const bool collision = checkAABBCollision(
                     { aTransform.position.x, aTransform.position.y
                         , aCollider.Width, aCollider.Height },
                     { bTransform.position.x, bTransform.position.y
@@ -72,15 +67,6 @@ public:
                 }
             }
         }
-    }
-
-    static bool checkAABBCollision(const Info& a, const Info& b) {
-        return
-            a.X < b.X + b.Width &&
-            a.X + a.Width > b.X &&
-            a.Y < b.Y + b.Height &&
-            a.Y + a.Height > b.Y
-        ;
     }
 };
 

@@ -43,7 +43,7 @@ public:
     /**
      * @brief Update the system
      */
-    std::vector<Entity> get_entities() const;
+    std::vector<Entity>& get_entities();
 
     /**
      * @brief Update the system

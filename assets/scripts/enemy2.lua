@@ -67,7 +67,6 @@ function on_collision(other)
     end
 
     if other_tag == "enemy_collider" then
-        print("enemy collided with enemy_collider")
         this_vel_x, this_vel_y = get_velocity(this)
         set_velocity(this, this_vel_x * -1, this_vel_y)
     end
@@ -84,6 +83,5 @@ function on_damage(other)
     other_tag = get_tag(other)
     if other_tag == "sword" then
         kill_entity(this)
-        print("after killing")
     end
 end

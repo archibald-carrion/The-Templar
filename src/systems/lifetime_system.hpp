@@ -19,7 +19,7 @@ public:
         this->RequireComponent<LifetimeComponent>();
     }
 
-    void update(const float deltaTime) const {
+    void update(const float deltaTime) {
         for (auto& entity : this->get_entities()) {
             auto& lifetimeComponent = entity.get_component<LifetimeComponent>();
 

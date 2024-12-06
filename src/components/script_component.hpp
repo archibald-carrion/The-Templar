@@ -13,6 +13,7 @@ struct ScriptComponent {
     sol::function on_click; // on click function
     sol::function on_init; // on init function
     sol::function on_damage;
+    sol::function on_perform;
 
     /**
      * @brief Construct a new Script Component object
@@ -26,12 +27,14 @@ struct ScriptComponent {
         , const sol::function& update= sol::lua_nil
         , const sol::function& on_click= sol::lua_nil
         , const sol::function& on_init= sol::lua_nil
-        , const sol::function& perform = sol::lua_nil) :
+        , const sol::function& on_damage = sol::lua_nil
+        , const sol::function& on_perform = sol::lua_nil) :
     update(std::move(update))
     , on_collision(std::move(on_collision))
     , on_click(std::move(on_click))
     , on_init(std::move(on_init))
-    , on_damage(std::move(perform)){
+    , on_damage(std::move(on_damage))
+    , on_perform(std::move(on_perform)){
     }
 };
 
