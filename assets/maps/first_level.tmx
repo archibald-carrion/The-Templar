@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="287">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="349">
  <tileset firstgid="1" source="dungeon_tileset.tsx"/>
  <layer id="3" name="lower" width="200" height="60">
   <data encoding="csv">
@@ -275,5 +275,52 @@
   <object id="284" name="wall" x="2576" y="128" width="32" height="64"/>
   <object id="285" name="wall" x="2704" y="176" width="32" height="32"/>
   <object id="286" name="trap" x="2256" y="192" width="448" height="16"/>
+ </objectgroup>
+ <objectgroup id="5" name="spawn">
+  <object id="289" name="enemy_1" x="352" y="736" width="16" height="16"/>
+  <object id="293" name="enemy_2" x="847.333" y="736" width="16" height="16"/>
+  <object id="294" name="enemy_2" x="800" y="736" width="16" height="16"/>
+  <object id="295" name="enemy_3" x="1248" y="736" width="16" height="16"/>
+  <object id="296" name="enemy_3" x="1360" y="736" width="16" height="16"/>
+  <object id="297" name="enemy_3" x="1456" y="736" width="16" height="16"/>
+  <object id="302" name="enemy_2" x="1696" y="640" width="16" height="16"/>
+  <object id="303" name="enemy_1" x="2512" y="800" width="16" height="16"/>
+  <object id="304" name="enemy_2" x="2879.33" y="800" width="16" height="16"/>
+  <object id="305" name="enemy_2" x="2832" y="800" width="16" height="16"/>
+  <object id="319" name="enemy_3" x="1776" y="416" width="16" height="16"/>
+  <object id="320" name="enemy_3" x="1872" y="416" width="16" height="16"/>
+  <object id="321" name="enemy_3" x="1504" y="384" width="16" height="16"/>
+  <object id="322" name="enemy_3" x="1600" y="384" width="16" height="16"/>
+  <object id="323" name="enemy_2" x="2000" y="416" width="16" height="16"/>
+  <object id="324" name="enemy_1" x="2176" y="416" width="16" height="16"/>
+  <object id="327" name="enemy_1" x="1312" y="384" width="16" height="16"/>
+  <object id="328" name="enemy_2" x="799.333" y="352" width="16" height="16"/>
+  <object id="329" name="enemy_2" x="576" y="352" width="16" height="16"/>
+  <object id="330" name="enemy_1" x="272" y="352" width="16" height="16"/>
+  <object id="331" name="enemy_1" x="704" y="144" width="16" height="16"/>
+  <object id="332" name="enemy_1" x="992" y="144" width="16" height="16"/>
+  <object id="333" name="enemy_1" x="1264" y="128" width="16" height="16"/>
+  <object id="334" name="enemy_3" x="1504" y="96" width="16" height="16"/>
+  <object id="337" name="enemy_3" x="2400" y="80" width="16" height="16"/>
+  <object id="338" name="enemy_3" x="2528" y="128" width="16" height="16"/>
+  <object id="339" name="enemy_3" x="2288" y="128" width="16" height="16"/>
+  <object id="344" name="enemy_3" x="2656" y="64" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="6" name="enemies_colliders">
+  <object id="287" name="enemy_collider" x="288" y="784" width="16" height="16"/>
+  <object id="288" name="enemy_collider" x="1056" y="784" width="16" height="16"/>
+  <object id="299" name="enemy_collider" x="1936" y="688" width="16" height="16"/>
+  <object id="300" name="enemy_collider" x="1632" y="688" width="16" height="16"/>
+  <object id="301" name="enemy_1" x="1872" y="640" width="16" height="16"/>
+  <object id="317" name="enemy_collider" x="2384" y="848" width="16" height="16"/>
+  <object id="318" name="enemy_collider" x="2336" y="464" width="16" height="16"/>
+  <object id="325" name="enemy_collider" x="1152" y="432" width="16" height="16"/>
+  <object id="326" name="enemy_collider" x="1056" y="400" width="16" height="16"/>
+  <object id="335" name="enemy_collider" x="1184" y="176" width="16" height="16"/>
+  <object id="336" name="enemy_collider" x="480" y="192" width="16" height="16"/>
+  <object id="345" name="enemy_collider" x="2288" y="-16" width="16" height="16"/>
+  <object id="346" name="enemy_collider" x="2400" y="-16" width="16" height="16"/>
+  <object id="347" name="enemy_collider" x="2528" y="-16" width="16" height="16"/>
+  <object id="348" name="enemy_collider" x="2656" y="-16" width="16" height="16"/>
  </objectgroup>
 </map>

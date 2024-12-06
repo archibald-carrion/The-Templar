@@ -93,7 +93,7 @@ enemies = {
             },
             transform = {
                 position = { x = 0, y = 0},
-                scale = { x = 1.0, y = 1.0},
+                scale = { x = 0.6, y = 0.6},
                 rotation = 0.0
             },
         }
