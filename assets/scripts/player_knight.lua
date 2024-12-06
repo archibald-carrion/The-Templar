@@ -163,20 +163,30 @@ function on_damage(other)
         return
     end
 
+    other_tag = get_tag(other)
+
+    if other_tag == "enemy_3" then
+        if can_perform_action(other, "") then
+            perform_action(other, "")
+        else
+            return
+        end
+    end
+
     damage = get_damage(other)
     health = get_health(this)
     health = health - damage
 
     set_health(this, health)
 
-    other_tag = get_tag(other)
-
     result = string.find(other_tag, "attack")
     if result then
         kill_entity(other)
     end
 
-    if  health <= 0 then
+    print("health: " .. health)
 
+    if  health <= 0 then
+        go_to_scene("game_over")
     end
 end

@@ -211,7 +211,6 @@ void Game::processInput() {
 
             case SDL_CONTROLLERBUTTONDOWN:
                 {
-                    std::cout << "down: " << static_cast<int>(event.cbutton.button) << std::endl;
                 switch (event.cbutton.button)
                 {
                     case 13: // left
@@ -238,7 +237,6 @@ void Game::processInput() {
                 break;
                 }
             case SDL_CONTROLLERBUTTONUP:
-                std::cout << "up: " << static_cast<int>(event.cbutton.button) << std::endl;
                 switch (event.cbutton.button)
                 {
                     case 13: // left

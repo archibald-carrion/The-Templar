@@ -43,11 +43,15 @@ struct CooldownsComponent {
     }
 
     [[nodiscard]] bool CanPerformAction(const std::string& actionName) const {
+        const bool globalCan = Global.Counter < 0 || Global.Counter > Global.TimeLimit;
+
+        if (actionName.empty()) {
+            return globalCan;
+        }
+
         if (!PlayerActions.contains(actionName) && !actionName.empty()) {
             return false;
         }
-
-        const bool globalCan = Global.Counter < 0 || Global.Counter > Global.TimeLimit;
 
         if (actionName.empty()) {
             return globalCan;

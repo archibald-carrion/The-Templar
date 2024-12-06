@@ -90,7 +90,7 @@ scene = {
 
     stats = {
         [0] =
-        { tag = "player", health = 5, points = 0, damage = 0 },
+        { tag = "player", health = 15, points = 0, damage = 0 },
         { tag = "sword", health = 5, points = 0, damage = 1 },
         { tag = "enemy_1", health = 2, points = 1, damage = 1},
         { tag = "enemy1_attack", health = 0, points = 0, damage = 1},
