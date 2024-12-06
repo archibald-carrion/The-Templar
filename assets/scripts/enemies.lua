@@ -112,6 +112,10 @@ enemies = {
                 scale = { x = 0.6, y = 0.6},
                 rotation = 0.0
             },
+            cooldowns = {
+                [0] =
+                { name = "global", seconds = 1 },
+            },
         }
     },
     boss = {
