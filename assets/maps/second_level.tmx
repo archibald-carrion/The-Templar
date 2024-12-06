@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="451">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="455">
  <tileset firstgid="1" source="dungeon_tileset.tsx"/>
  <layer id="8" name="bricks" width="200" height="60">
   <data encoding="csv">
@@ -304,7 +304,6 @@
   <object id="18" name="floor" x="1168" y="128" width="16" height="16"/>
   <object id="19" name="floor" x="1184" y="144" width="16" height="16"/>
   <object id="20" name="floor" x="1200" y="160" width="16" height="16"/>
-  <object id="21" name="floor" x="384" y="384" width="272" height="32"/>
   <object id="22" name="wall" x="656" y="288" width="16" height="96"/>
   <object id="23" name="floor" x="688" y="304" width="144" height="16"/>
   <object id="24" name="wall" x="16" y="272" width="640" height="16"/>
@@ -325,7 +324,6 @@
   <object id="41" name="floor" x="112" y="528" width="16" height="16"/>
   <object id="42" name="trap" x="960" y="480" width="32" height="16"/>
   <object id="43" name="trap" x="1120" y="480" width="32" height="16"/>
-  <object id="44" name="floor" x="896" y="384" width="352" height="32"/>
   <object id="45" name="wall" x="656" y="400" width="240" height="16"/>
   <object id="46" name="floor" x="832" y="320" width="16" height="16"/>
   <object id="47" name="floor" x="848" y="336" width="16" height="16"/>
@@ -560,6 +558,10 @@
   <object id="321" name="wall" x="1440" y="496" width="16" height="16"/>
   <object id="322" name="wall" x="1424" y="512" width="16" height="16"/>
   <object id="325" name="wall" x="80" y="592" width="80" height="16"/>
+  <object id="451" name="floor" x="896" y="384" width="352" height="16"/>
+  <object id="452" name="wall" x="896" y="400" width="352" height="16"/>
+  <object id="453" name="floor" x="384" y="384" width="272" height="16"/>
+  <object id="454" name="wall" x="384" y="400" width="272" height="16"/>
  </objectgroup>
  <objectgroup id="7" name="spawn">
   <object id="327" name="enemy_1" x="335.334" y="175.334" width="16" height="16"/>

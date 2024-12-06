@@ -91,6 +91,8 @@ public:
         lua.set_function("create_projectile", create_projectile);
 
         lua.set_function("looking_right", looking_right);
+
+        lua.set_function("shoot_fireball", shoot_fireball);
     }
 
     /**

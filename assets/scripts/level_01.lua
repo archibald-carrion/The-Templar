@@ -13,6 +13,7 @@ scene = {
         {asset_id = "shadow_idle", file_path = "./assets/images/shadow_idle.png"},
         {asset_id = "shadow_walk", file_path = "./assets/images/shadow_walk.png"},
         {asset_id= "bat", file_path = "./assets/images/bat.png"},
+        {asset_id= "fireball", file_path = "./assets/images/fireball.png"},
     },
     
     animations = {
@@ -62,6 +63,7 @@ scene = {
         {name = "right", key = 100}, 
         {name = "jump", key = 32},
         {name = "attack", key = 101}, -- e
+        {name = "shoot", key = 113}, -- q use for fireball
     },
 
     -- actions and mouse button table

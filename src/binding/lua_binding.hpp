@@ -20,6 +20,56 @@
 #include "../components/damage_collider_component.hpp"
 #include "../components/state_component.hpp"
 
+void shoot_fireball(Entity entity) {
+    //std::cout << "[LUABINDING] creating new fireball" << std::endl;
+    // Get the registry instance to create new entity
+    auto& registry = Game::get_instance().registry;
+    
+    // Create new fireball entity
+    Entity fireball = registry->create_entity();
+    
+    // Get player position, rotation and sprite info
+    const auto& player_transform = entity.get_component<TransformComponent>();
+    const auto& player_sprite = entity.get_component<SpriteComponent>();
+    
+    // Add components to fireball entity
+    fireball.add_component<BoxColliderComponent>(
+        8,  // width
+        8,  // height
+        glm::vec2(0, 0)  // offset
+    );
+    
+
+    
+    fireball.add_component<SpriteComponent>(
+        "fireball",  // asset_id
+        64,  // width
+        64,  // height
+        0,  // src_rect.x
+        0   // src_rect.y
+    );
+    
+    fireball.add_component<TagComponent>("fireball");
+
+    // add rigidbody component to either shoot left or right
+    fireball.add_component<RigidBodyComponent>(
+        true, false, 0 // is_dynamic, is_solid, mass
+    );
+
+    fireball.add_component<TransformComponent>(
+        glm::vec2(player_transform.position.x, player_transform.position.y),  // position (at nose, offset by half bullet size)
+        glm::vec2(1.0f, 1.0f),    // scale
+        0   // rotation (match player rotation)
+    );
+
+    auto& rigidBody = fireball.get_component<RigidBodyComponent>();
+    rigidBody.velocity.x = entity.get_component<RigidBodyComponent>().velocity.x;
+    rigidBody.velocity.y = 0;
+    
+
+}
+
+
 // animation related functions
 
 void change_animation(Entity entity, const std::string& animationId) {

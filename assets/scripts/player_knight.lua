@@ -13,6 +13,8 @@ player_can_jump = false
 player_speed = 3.0 * 64.0 * 1.5
 player_jump_force = -3000.0 * 64.0 *1.5
 player_attacking = false
+player_can_use_fireball = true -- TODO: change to false and only pass to true when the player picks up the fireball powerup or kill X enemies
+is_shooting = false
 
 function attack()
   movement = -500
@@ -67,6 +69,22 @@ function update()
     end
 
     player_can_jump = false
+
+
+    -- check if the player is pressing space key to shoot
+    if is_shooting  == false then
+      if is_action_activated("shoot") then
+        print("shooting")
+          shoot_fireball(this)
+          is_shooting = true
+      end
+    else 
+        if not is_action_activated("shoot") then
+            is_shooting = false
+        end
+    end
+
+
 end
 
 
