@@ -110,6 +110,12 @@ function on_damage(other)
     set_health(this, health)
 
     if health <= 0 then
+        owner = get_father(other)
+        points_earned = get_points(this)
+        points = get_points(owner)
+        points = points + points_earned
+        set_points(owner, points)
+
         kill_entity(this)
     end
 

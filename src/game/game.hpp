@@ -31,6 +31,10 @@ const int FPS = 60;
 /** @brief Number of milliseconds per frame based on the target FPS. */
 const int MILLISECS_PER_FRAME = 1000 / FPS;
 
+inline auto controllerDeleter = [](SDL_GameController* gameController) {
+    SDL_GameControllerClose(gameController);
+};
+
 /**
  * @class Game
  * @brief Main game class that handles initialization, game loop, and cleanup.
@@ -104,6 +108,8 @@ public:
     std::unique_ptr<AudioManager> audio_manager;           /**< Pointer to the audio manager. */
     std::unique_ptr<AnimationManager> animation_manager;   /**< Pointer to the animation manager. */
     sol::state lua;                                        /**< Lua state for scripting. */
+
+    std::vector<std::unique_ptr<SDL_GameController, decltype(controllerDeleter)>> controllers;
 
     /**
      * @brief Initializes the game engine.

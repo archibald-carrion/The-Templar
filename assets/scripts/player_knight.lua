@@ -16,6 +16,8 @@ player_attacking = false
 player_can_use_fireball = true -- TODO: change to false and only pass to true when the player picks up the fireball powerup or kill X enemies
 is_shooting = false
 
+ult_requirement = 3
+
 function attack()
   movement = -500
   position = 50
@@ -71,18 +73,25 @@ function update()
 
     -- check if the player is pressing space key to shoot
     if is_shooting  == false then
-        if is_action_activated("shoot") then
-            print("shooting")
-            shoot_fireball(this)
+        ult_charge = get_ult(this)
+        if is_action_activated("shoot") and ult_charge >= ult_requirement then
+            movement = 500
+            if looking_right(this) then
+                movement = -movement
+            end
+            create_projectile_w_a(this, "fireball", 0, 0, 0, movement, 0, 88, 50, 1, false, "fire_ball", 0.5)
             is_shooting = true
+        end
+        if is_action_activated("shoot") then
+            ult_charge = ult_charge - ult_requirement
+            set_ult(ult_charge)
+            ult_requirement = ult_requirement + 1
         end
     else 
         if not is_action_activated("shoot") then
             is_shooting = false
         end
     end
-
-
 end
 
 function on_collision(other)
@@ -166,11 +175,8 @@ function on_damage(other)
     if result then
         kill_entity(other)
     end
-end
 
-function perform()
-    --player_attacking = true
-    --if player_state ~= player_states["attack"] then
-    --    player_state = player_states["attack"]
-    --end
+    if  health <= 0 then
+
+    end
 end

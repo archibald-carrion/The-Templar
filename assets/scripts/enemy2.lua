@@ -99,7 +99,7 @@ function on_damage(other)
     end
 
     other_tag = get_tag(other)
-    if other_tag ~= "sword" then
+    if other_tag ~= "sword" and other_tag ~= "fireball" then
         return
     end
 
@@ -110,6 +110,12 @@ function on_damage(other)
     set_health(this, health)
 
     if health <= 0 then
+        owner = get_father(other)
+        points_earned = get_points(this)
+        points = get_points(owner)
+        points = points + points_earned
+        set_points(owner, points)
+
         kill_entity(this)
     end
 

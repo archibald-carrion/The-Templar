@@ -15,6 +15,7 @@ scene = {
         {asset_id = "shadow_walk", file_path = "./assets/images/shadow_walk.png"},
         {asset_id = "shadow_attack", file_path = "./assets/images/shadow_attack.png"},
         {asset_id= "bat", file_path = "./assets/images/bat.png"},
+        {asset_id= "fire_ball", file_path = "./assets/images/fire_ball.png"},
     },
     
     animations = {
@@ -30,6 +31,7 @@ scene = {
         {animation_id = "enemy2_idle", texture_id = "shadow_idle", w = 24, h = 23, num_frames = 8, speed_rate = 15, is_loop = true},
         {animation_id = "enemy2_walk", texture_id = "shadow_walk", w = 24, h = 23, num_frames = 8, speed_rate = 12, is_loop = true},
         {animation_id = "enemy2_attack", texture_id = "shadow_attack", w = 64, h = 23, num_frames = 13, speed_rate = 16, is_loop = false},
+        {animation_id = "fire_ball", texture_id = "fire_ball", w = 100, h = 57, num_frames = 35, speed_rate = 30, is_loop = true},
     },
 
     damage_colliders = {
@@ -67,6 +69,7 @@ scene = {
         {name = "right", key = 100}, 
         {name = "jump", key = 32},
         {name = "attack", key = 101 }, -- e
+        {name = "shoot", key = 113}, -- q use for fireball
     },
 
     -- actions and mouse button table
@@ -95,6 +98,7 @@ scene = {
         { tag = "enemy_3", health = 1, points = 1, damage = 2},
         { tag = "boss", health = 20, points = 10, damage = 1},
         { tag = "boss_attack_p1", health = 0, points = 0, damage = 1},
+        { tag = "fireball", health = 0, points = 0, damage = 2},
     },
 
     -- entities table

@@ -106,6 +106,21 @@ void Game::init() {
     camera.h = WINDOW_HEIGHT;
 
     this->isRunning = true;
+
+    std::cout << "Controllers found: " << SDL_NumJoysticks() << std::endl;
+
+    for (int current = 0; current < SDL_NumJoysticks(); current++) {
+        if (SDL_IsGameController(current)) {
+            std::unique_ptr<SDL_GameController, decltype(controllerDeleter)> controller;
+            controller.reset(SDL_GameControllerOpen(current));
+            if (controller) {
+                controllers.push_back(std::move(controller));
+            } else
+            {
+                std::cout << "Controller does not exist" << std::endl;
+            }
+        }
+    }
 }
 
 void Game::run() {
@@ -183,7 +198,7 @@ void Game::processInput() {
                 controller_manager->set_mouse_position(x, y);
                 break;
 
-        case SDL_MOUSEBUTTONDOWN:
+            case SDL_MOUSEBUTTONDOWN:
                 controller_manager->set_mouse_position(event.button.x, event.button.y);
                 controller_manager->set_mouse_button_to_pressed(static_cast<int>(event.button.button));
                 events_manager->emit_event<ClickEvent>(static_cast<int>(event.button.button), event.button.x, event.button.y);
@@ -194,6 +209,12 @@ void Game::processInput() {
                 controller_manager->set_mouse_button_to_up(static_cast<int>(event.button.button));
                 break;
 
+            case SDL_CONTROLLERBUTTONDOWN:
+                {
+                auto used =  event.cbutton.button;
+                std::cout << "button: " << static_cast<int>(used) << std::endl;
+                break;
+                }
             default:
                 break;
         }

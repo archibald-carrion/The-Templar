@@ -16,6 +16,7 @@ scene = {
         {asset_id = "boss_run", file_path = "./assets/images/boss_walk.png"},
         {asset_id = "boss_attack", file_path = "./assets/images/boss_attack.png"},
         {asset_id = "boss_attack_p1", file_path = "./assets/images/boss_attack_p1.png"},
+        {asset_id= "fire_ball", file_path = "./assets/images/fire_ball.png"},
     },
     
     animations = {
@@ -33,6 +34,7 @@ scene = {
         {animation_id = "boss_run", texture_id = "boss_run", w = 80, h = 40, num_frames = 16, speed_rate = 12, is_loop = false},
         {animation_id = "boss_attack", texture_id = "boss_attack", w = 80, h = 40, num_frames = 16, speed_rate = 12, is_loop = false},
         {animation_id = "boss_attack_p1", texture_id = "boss_attack_p1", w = 22, h = 20, num_frames = 15, speed_rate = 12, is_loop = false},
+        {animation_id = "fire_ball", texture_id = "fire_ball", w = 100, h = 57, num_frames = 35, speed_rate = 30, is_loop = true},
     },
 
     damage_colliders = {
@@ -69,6 +71,7 @@ scene = {
         {name = "right", key = 100}, 
         {name = "jump", key = 32},
         {name = "attack", key = 101 }, -- e
+        {name = "shoot", key = 113}, -- q use for fireball
     },
 
     -- actions and mouse button table
@@ -97,6 +100,7 @@ scene = {
         { tag = "enemy_3", health = 1, points = 1, damage = 2},
         { tag = "boss", health = 20, points = 10, damage = 1},
         { tag = "boss_attack_p1", health = 0, points = 0, damage = 1},
+        { tag = "fireball", health = 0, points = 0, damage = 2},
     },
 
     -- entities table

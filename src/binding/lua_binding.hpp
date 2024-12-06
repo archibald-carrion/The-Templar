@@ -20,6 +20,7 @@
 #include "../components/damage_collider_component.hpp"
 #include "../components/state_component.hpp"
 #include "../components/father_component.hpp"
+#include "../components/child_component.hpp"
 #include "../components/stats_component.hpp"
 
 void shoot_fireball(Entity entity) {
@@ -620,6 +621,8 @@ void create_projectile(Entity father, std::string tag
         father.get_component<FatherComponent>().Children.push_back(projectile);
     }
 
+    projectile.hot_add_component<ChildComponent>( father );
+
     StatsManager::GetInstance().AddStatsToEntity(projectile);
 }
 
@@ -674,6 +677,8 @@ void create_projectile_w_a(Entity father, std::string tag
         father.get_component<FatherComponent>().Children.push_back(projectile);
     }
 
+    projectile.hot_add_component<ChildComponent>( father );
+
     StatsManager::GetInstance().AddStatsToEntity(projectile);
 }
 
@@ -713,7 +718,23 @@ int32_t get_points(Entity entity) {
 }
 
 void set_points(Entity entity, int32_t points) {
-    entity.get_component<StatsComponent>().Points = points;
+    auto& stats = entity.get_component<StatsComponent>();
+    auto difference = std::abs(stats.Points - points);
+    stats.Points = points;
+    stats.UltCounter += difference;
+}
+
+int32_t get_ult_counter(Entity entity) {
+    return entity.get_component<StatsComponent>().UltCounter;
+}
+
+void set_ult_counter(Entity entity, int32_t amount) {
+    auto& stats = entity.get_component<StatsComponent>();
+    stats.UltCounter = amount;
+}
+
+Entity get_father_entity(Entity entity) {
+    return entity.get_component<ChildComponent>().Father.value();
 }
 
 #endif // LUA_BINDING_HPP

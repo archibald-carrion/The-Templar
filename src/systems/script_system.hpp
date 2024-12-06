@@ -103,6 +103,9 @@ public:
         lua.set_function("get_damage", get_damage);
         lua.set_function("get_points", get_points);
         lua.set_function("set_points", set_points);
+        lua.set_function("get_father", get_father_entity);
+        lua.set_function("get_ult", get_ult_counter);
+        lua.set_function("set_ult", set_ult_counter);
     }
 
     /**
