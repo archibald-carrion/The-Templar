@@ -586,6 +586,7 @@ bool can_perform_action(Entity entity, const std::string &action)
         return false;
 
     auto &cooldowns = entity.get_component<CooldownsComponent>();
+    if (action == "") return cooldowns.CanPerformAction("");
     if (!cooldowns.CanPerformAction("") || !cooldowns.CanPerformAction(action))
         return false;
 
