@@ -81,6 +81,8 @@ public:
         // state related funcitons
         lua.set_function("get_state", get_state);
         lua.set_function("set_state", set_state);
+        lua.set_function("set_next_state", set_next_state);
+        lua.set_function("get_next_state", get_next_state);
 
         lua.set_function("can_perform_action", can_perform_action);
         lua.set_function("perform_action", perform_action);
@@ -89,6 +91,7 @@ public:
         lua.set_function("get_box_collider", get_box_collider);
 
         lua.set_function("create_projectile", create_projectile);
+        lua.set_function("create_projectile_w_a", create_projectile_w_a);
 
         lua.set_function("looking_right", looking_right);
 

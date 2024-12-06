@@ -1,6 +1,7 @@
 #ifndef MOVEMENTSYSTEM_HPP
 #define MOVEMENTSYSTEM_HPP
 
+#include "../components/damage_collider_component.hpp"
 #include "../ECS/ECS.hpp" // System
 #include "../components/RigidBodyComponent.hpp" // RigidBodyComponent
 #include "../components/transform_component.hpp" // TransformComponent
@@ -30,7 +31,8 @@ public:
             auto& rigid_body = entity.get_component<RigidBodyComponent>();
             auto& transform = entity.get_component<TransformComponent>();
 
-            if (entity.has_component<SpriteComponent>() && entity.has_component<BoxColliderComponent>()) {
+            if (entity.has_component<SpriteComponent>() &&
+                entity.has_component<BoxColliderComponent>() /* || entity.has_component<DamageColliderComponent>())*/) {
                 auto& sprite = entity.get_component<SpriteComponent>();
                 auto& collider = entity.get_component<BoxColliderComponent>();
 

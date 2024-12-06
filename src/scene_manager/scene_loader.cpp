@@ -24,6 +24,7 @@
 #include "../components/damage_collider_component.hpp"
 #include "../components/attack_cycle_component.hpp"
 #include "../components/enemy_box_collider_component.hpp"
+#include "../components/father_component.hpp"
 
 SceneLoader::SceneLoader() {
     //std::cout << "[SCENELOADER] scene loader constructor" << std::endl;
@@ -780,7 +781,7 @@ void SceneLoader::load_enemies(Registry& registry, const std::string& path, tiny
             glm::vec2(x * SCALE, y * SCALE),
             glm::vec2(SCALE, SCALE)
         );
-        // add EnemyColliderComponent so enemies don't falls of the edges
+
         collider.add_component<EnemyColliderComponent>(32* SCALE, 32 * SCALE);
 
         object = object->NextSiblingElement("object");
@@ -811,6 +812,7 @@ void SceneLoader::load_enemies(Registry& registry, const std::string& path, tiny
         auto& transform = enemy.get_component<TransformComponent>();
         transform.position = positionBuffer;
         enemy.add_component<StateComponent>();
+        enemy.add_component<FatherComponent>();
     }
 }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="349">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="350">
  <tileset firstgid="1" source="dungeon_tileset.tsx"/>
- <layer id="3" name="lower" width="200" height="60">
+ <layer id="3" name="lower" width="200" height="60" visible="0">
   <data encoding="csv">
 173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,174,174,174,174,174,174,158,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,174,174,174,174,174,174,158,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,700,699,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,700,699,
@@ -193,6 +193,23 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="6" name="enemies_colliders">
+  <object id="287" name="enemy_collider" x="288" y="784" width="16" height="16"/>
+  <object id="288" name="enemy_collider" x="1056" y="784" width="16" height="16"/>
+  <object id="299" name="enemy_collider" x="1936" y="688" width="16" height="16"/>
+  <object id="300" name="enemy_collider" x="1632" y="688" width="16" height="16"/>
+  <object id="301" name="enemy_1" x="1872" y="640" width="16" height="16"/>
+  <object id="317" name="enemy_collider" x="2384" y="848" width="16" height="16"/>
+  <object id="318" name="enemy_collider" x="2336" y="464" width="16" height="16"/>
+  <object id="325" name="enemy_collider" x="1152" y="432" width="16" height="16"/>
+  <object id="326" name="enemy_collider" x="1056" y="400" width="16" height="16"/>
+  <object id="335" name="enemy_collider" x="1184" y="176" width="16" height="16"/>
+  <object id="336" name="enemy_collider" x="480" y="192" width="16" height="16"/>
+  <object id="345" name="enemy_collider" x="2288" y="-16" width="16" height="16"/>
+  <object id="346" name="enemy_collider" x="2400" y="-16" width="16" height="16"/>
+  <object id="347" name="enemy_collider" x="2528" y="-16" width="16" height="16"/>
+  <object id="348" name="enemy_collider" x="2656" y="-16" width="16" height="16"/>
+ </objectgroup>
  <objectgroup id="4" name="colliders">
   <object id="162" name="floor" x="240" y="832" width="48" height="16"/>
   <object id="163" name="floor" x="0" y="864" width="256" height="16"/>
@@ -204,6 +221,7 @@
   <object id="173" name="wall" x="1056" y="816" width="16" height="144"/>
   <object id="174" name="wall" x="1152" y="816" width="16" height="144"/>
   <object id="176" name="trap" x="1072" y="928" width="80" height="32"/>
+  <object id="349" name="trap" x="1072" y="928" width="80" height="32"/>
   <object id="177" name="wall" x="1568" y="784" width="16" height="16"/>
   <object id="178" name="wall" x="1600" y="752" width="16" height="16"/>
   <object id="179" name="wall" x="1632" y="720" width="16" height="16"/>
@@ -305,22 +323,5 @@
   <object id="338" name="enemy_3" x="2528" y="128" width="16" height="16"/>
   <object id="339" name="enemy_3" x="2288" y="128" width="16" height="16"/>
   <object id="344" name="enemy_3" x="2656" y="64" width="16" height="16"/>
- </objectgroup>
- <objectgroup id="6" name="enemies_colliders">
-  <object id="287" name="enemy_collider" x="288" y="784" width="16" height="16"/>
-  <object id="288" name="enemy_collider" x="1056" y="784" width="16" height="16"/>
-  <object id="299" name="enemy_collider" x="1936" y="688" width="16" height="16"/>
-  <object id="300" name="enemy_collider" x="1632" y="688" width="16" height="16"/>
-  <object id="301" name="enemy_1" x="1872" y="640" width="16" height="16"/>
-  <object id="317" name="enemy_collider" x="2384" y="848" width="16" height="16"/>
-  <object id="318" name="enemy_collider" x="2336" y="464" width="16" height="16"/>
-  <object id="325" name="enemy_collider" x="1152" y="432" width="16" height="16"/>
-  <object id="326" name="enemy_collider" x="1056" y="400" width="16" height="16"/>
-  <object id="335" name="enemy_collider" x="1184" y="176" width="16" height="16"/>
-  <object id="336" name="enemy_collider" x="480" y="192" width="16" height="16"/>
-  <object id="345" name="enemy_collider" x="2288" y="-16" width="16" height="16"/>
-  <object id="346" name="enemy_collider" x="2400" y="-16" width="16" height="16"/>
-  <object id="347" name="enemy_collider" x="2528" y="-16" width="16" height="16"/>
-  <object id="348" name="enemy_collider" x="2656" y="-16" width="16" height="16"/>
  </objectgroup>
 </map>

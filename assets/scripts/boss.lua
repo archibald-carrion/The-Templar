@@ -1,9 +1,9 @@
 enemy_states = {
-    idle = 1,
-    run = 2,
-    attack = 3,
-    damaged = 4,
-    dies = 5,
+  idle = 1,
+  run = 2,
+  attack = 3,
+  damaged = 4,
+  dies = 5,
 }
 
 local function enemy_update_animation_state(state)
@@ -11,8 +11,8 @@ local function enemy_update_animation_state(state)
 
     if -0.001 < x_vel and x_vel < 0.001 then
         if state ~= enemy_states["idle"] then
-            state = enemy_states["idle"]
-            change_animation(this, "enemy2_idle")
+          state = enemy_states["idle"]
+          change_animation(this, "boss_idle")
         end
     end
 
@@ -21,7 +21,7 @@ local function enemy_update_animation_state(state)
         flip_sprite(this, false)
         if state ~= enemy_states["run"] then
             state = enemy_states["run"]
-            change_animation(this, "enemy2_walk")
+            change_animation(this, "boss_run")
         end
     end
 
@@ -30,7 +30,7 @@ local function enemy_update_animation_state(state)
         flip_sprite(this, true)
         if state ~= enemy_states["run"] then
             state = enemy_states["run"]
-            change_animation(this, "enemy2_walk")
+            change_animation(this, "boss_run")
         end
     end
 
@@ -50,7 +50,7 @@ function update()
 
     if enemy_state == enemy_states["attack"] then
         if changed then
-            change_animation(this, "enemy2_attack")
+            change_animation(this, "boss_attack")
             set_state(this, enemy_state)
         end
         if get_animation_frame(this) ~= 12 then
@@ -106,18 +106,29 @@ end
 
 function on_perform(attackName, looking_right)
     local enemy_state = enemy_states["attack"]
-    movement = 200
-    position = -30
+
+    if attackName == "none" then
+        return
+    end
+
+    movement = 0
+    position = -100
 
     if looking_right then
-        flip_sprite(this, false)
-    else
         movement = -1 * movement
         position = -1 * position
+        flip_sprite(this, false)
+    else
         flip_sprite(this, true)
     end
 
     set_next_state(this, enemy_state)
+    if attackName == "melee1" then
+        create_projectile_w_a(this, attackName, position, 240, 0, movement, 0, 88, 80, 0.7, false, "boss_attack_p1", 0.5)
+    elseif attackName == "melee2" then
+        create_projectile_w_a(this, attackName, position, 240, 0, movement, 0, 88, 80, 0.7, false, "boss_attack_p1", 0.5)
+        create_projectile_w_a(this, attackName, position - 108, 280, 0, movement, 0, 44, 40, 0.7, false, "boss_attack_p1", 0.25)
+        create_projectile_w_a(this, attackName, position - 222, 280, 0, movement, 0, 44, 40, 0.7, false, "boss_attack_p1", 0.25)
+    end
 
-    create_projectile(this, attackName, position, 30, 0, movement, 0, 100, 40, 0.7, true)
 end

@@ -70,7 +70,7 @@ public:
             if (!script.on_perform) continue;
 
             lua["this"] = entity;
-            (void) script.on_perform(attackName);
+            (void) script.on_perform(attackName, playerTransform.position.x > entityTransform.position.x);
 
             attacks.PerformAttack();
         }

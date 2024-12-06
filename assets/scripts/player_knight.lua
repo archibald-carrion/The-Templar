@@ -25,8 +25,7 @@ function attack()
     position = -1 * position
   end
 
-  create_projectile(this, "sword", position, 0, 0, movement, 0, 50, 60, 0.15, true);
-
+  create_projectile(this, "sword", position, 0, 0, movement, 0, 50, 80, 0.15, true)
 end
 
 function update()

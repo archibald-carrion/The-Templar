@@ -8,11 +8,11 @@
  * @brief The AnimationComponent struct represents an animation component for an entity.
  */
 struct AnimationComponent {
-    int num_frames; // number of frames in the animation
-    int current_frame; // current frame being displayed
-    int frame_speed_rate; // speed rate of the animation
-    bool is_loop; // flag to indicate if the animation is looping
-    int start_time; // start time of the animation
+    int num_frames { 0 }; // number of frames in the animation
+    int current_frame { 0 }; // current frame being displayed
+    int frame_speed_rate { 0 }; // speed rate of the animation
+    bool is_loop { false }; // flag to indicate if the animation is looping
+    int start_time { 0 }; // start time of the animation
 
     /**
      * @brief Construct a new Animation Component object

@@ -69,6 +69,14 @@ enemies = {
                 scale = { x = 4.0, y = 4.0},
                 rotation = 0.0
             },
+            cooldowns = {
+                [0] =
+                { name = "global", seconds = 1 },
+                { name = "melee", seconds = 1 }
+            },
+            attacks = {
+                [0] = { name = "melee", awareness_x = 50, awareness_y = 0 },
+            }
         }
     },
 
@@ -105,6 +113,53 @@ enemies = {
                 rotation = 0.0
             },
         }
-    }
-
+    },
+    boss = {
+        components = {
+            sprite = {
+                asset_id = "boss_idle",
+                width = 80,
+                height = 40,
+                src_rect = {x = 0, y = 0},
+            },
+            animation = {
+                num_frames = 16,
+                frame_speed_rate = 20,
+                is_loop = true
+            },
+            rigid_body = {
+                is_dynamic = true,
+                is_solid = true,
+                mass = 10,
+                velocity = { x = 10, y = 0 }
+            },
+            box_collider = {
+                width = 40*4,
+                height = 40*8,
+                offset = { x = 0, y= 0 },
+            },
+            script = {
+                path = "./assets/scripts/boss.lua"
+            },
+            transform = {
+                position = { x = 0, y = 0},
+                scale = { x = 8.0, y = 8.0},
+                rotation = 0.0
+            },
+            cooldowns = {
+                [0] =
+                { name = "global", seconds = 1 },
+                { name = "none", seconds = 0.5 },
+                { name = "melee1", seconds = 0.5 },
+                { name = "melee2", seconds = 3 }
+            },
+            attacks = {
+                [0] =
+                { name = "none", awareness_x = 150, awareness_y = 0 },
+                { name = "melee1", awareness_x = 500, awareness_y = 0 },
+                { name = "none", awareness_x = 150, awareness_y = 0 },
+                { name = "melee2", awareness_x = 500, awareness_y = 0 },
+            }
+        }
+    },
 }

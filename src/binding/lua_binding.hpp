@@ -19,6 +19,7 @@
 #include "../components/cooldown_component.hpp"
 #include "../components/damage_collider_component.hpp"
 #include "../components/state_component.hpp"
+#include "../components/father_component.hpp"
 
 void shoot_fireball(Entity entity) {
     //std::cout << "[LUABINDING] creating new fireball" << std::endl;
@@ -528,18 +529,26 @@ void flip_sprite(Entity entity, bool flip)
     sprite.flip = flip;
 }
 
-void set_state(Entity entity, const int8_t state)
-{
+void set_state(Entity entity, const int8_t state) {
     auto& stateComponent = entity.get_component<StateComponent>();
     stateComponent.state = state;
+
+    if (stateComponent.next_state == -1) stateComponent.next_state = state;
 }
 
-int8_t get_state(Entity entity)
-{
+int8_t get_state(Entity entity) {
     auto& stateComponent = entity.get_component<StateComponent>();
-    auto tag = entity.get_component<TagComponent>();
-    // std::cout << "tag: " << tag.tag << ": " << (int)stateComponent.state << std::endl;
+
     return stateComponent.state;
+}
+
+void set_next_state(Entity entity, int8_t state) {
+    entity.get_component<StateComponent>().next_state = state;
+}
+
+int8_t get_next_state(Entity entity)
+{
+    return entity.get_component<StateComponent>().next_state;
 }
 
 void reset_camera()
@@ -605,6 +614,62 @@ void create_projectile(Entity father, std::string tag
 
     // tag: must identify when colliding
     projectile.hot_add_component<TagComponent>( tag, father.get_component<TagComponent>().e_class );
+
+    if (father.has_component<FatherComponent>()) {
+        father.get_component<FatherComponent>().Children.push_back(projectile);
+    }
+}
+
+void create_projectile_w_a(Entity father, std::string tag
+    , int32_t x_offset, int32_t y_offset
+    , double rotation
+    , double velocity_x, double velocity_y
+    , int32_t width, int32_t height
+    , double ticks_alive, bool followFather = false
+    , std::string animation = ""
+    , float scale = 1) {
+    Entity projectile = father.registry->create_entity();
+    auto fatherTransform = father.get_component<TransformComponent>();
+
+    // transform component : position
+    projectile.add_component<TransformComponent>(
+        followFather?
+            glm::vec2 {0, 0}
+            : glm::vec2 {fatherTransform.position.x + x_offset, fatherTransform.position.y + y_offset},
+        fatherTransform.scale * scale,
+        rotation
+        );
+
+    // rigidbody component : direction
+    projectile.hot_add_component<RigidBodyComponent>();
+    auto& rigidbody = projectile.get_component<RigidBodyComponent>();
+    rigidbody.velocity.x = velocity_x;
+    rigidbody.velocity.y = velocity_y;
+    rigidbody.default_movement = true;
+
+    if (followFather) {
+        rigidbody.father = father;
+        projectile.get_component<TransformComponent>().movement_offset =
+            glm::vec2 {x_offset, y_offset};
+    }
+
+    // damage collider : collision
+    projectile.hot_add_component<DamageColliderComponent>( width, height );
+
+    // lifetime : must die after time
+    projectile.hot_add_component<LifetimeComponent>(ticks_alive);
+
+    // tag: must identify when colliding
+    projectile.hot_add_component<TagComponent>( tag, father.get_component<TagComponent>().e_class );
+
+    projectile.hot_add_component<AnimationComponent>();
+    projectile.hot_add_component<SpriteComponent>();
+
+    change_animation(projectile, animation);
+
+    if (father.has_component<FatherComponent>()) {
+        father.get_component<FatherComponent>().Children.push_back(projectile);
+    }
 }
 
 bool looking_right(Entity entity) {

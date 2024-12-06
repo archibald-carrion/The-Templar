@@ -1,5 +1,8 @@
 #include "ECS.hpp"
 
+#include "../components/father_component.hpp"
+#include "../components/tag_component.hpp"
+
 Registry::Registry() {
     //std::cout<<"[REGISTRY] Constructor" << std::endl;
 }
@@ -96,6 +99,11 @@ void Registry::clear_all_entities() {
 }
 
 void Entity::kill() {
+    if (has_component<FatherComponent>()) {
+        for (auto entity : get_component<FatherComponent>().Children) {
+            entity.kill();
+        }
+    }
     registry->kill_entity(*this);
 }
 

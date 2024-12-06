@@ -9,6 +9,9 @@
 
 struct StateComponent {
     int8_t state { 1 };
+    int8_t next_state { -1 };
+    explicit StateComponent(const int8_t state) : state(state), next_state(state) {}
+    StateComponent() = default;
 };
 
 #endif //STATE_COMPONENT_HPP

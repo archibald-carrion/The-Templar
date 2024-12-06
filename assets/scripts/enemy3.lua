@@ -49,7 +49,6 @@ function on_collision(other)
     -- check for top_collision and bottom_collision
 
     if other_tag == "wall" or other_tag == "floor" or other_tag == "trap" or other_tag == "enemy_collider" then
-        print("bat collided with collider")
         this_vel_x, this_vel_y = get_velocity(this)
         set_velocity(this, this_vel_x, this_vel_y* -1)
     end
@@ -66,6 +65,5 @@ function on_damage(other)
     other_tag = get_tag(other)
     if other_tag == "sword" then
         kill_entity(this)
-        print("after killing")
     end
 end

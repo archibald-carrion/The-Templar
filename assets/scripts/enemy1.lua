@@ -6,9 +6,8 @@ enemy_states = {
     dies = 5,
 }
 
-local function enemy_update_animation_state()
+local function enemy_update_animation_state(enemy_state)
     local x_vel, y_vel = get_velocity(this)
-    local enemy_state = get_state(this)
 
     if -0.001 < x_vel and x_vel < 0.001 then
         if enemy_state ~= enemy_states["idle"] then
@@ -35,11 +34,31 @@ local function enemy_update_animation_state()
         end
     end
 
+    set_next_state(this, enemy_state)
     set_state(this, enemy_state)
 end
 
 function update()
-    enemy_update_animation_state()
+    local enemy_state = get_state(this)
+    local next_state = get_next_state(this)
+    local changed = false
+
+    if enemy_state ~= next_state then
+        enemy_state = next_state
+        changed = true
+    end
+
+    if enemy_state == enemy_states["attack"] then
+        if changed then
+            change_animation(this, "enemy1_attack")
+            set_state(this, enemy_state)
+        end
+        if get_animation_frame(this) ~= 13 then
+            return
+        end
+    end
+
+    enemy_update_animation_state(enemy_state)
 end
 
 function on_collision(other)
@@ -86,6 +105,20 @@ function on_damage(other)
     end
 end
 
-function on_perform()
-    print("attacking")
+function on_perform(attackName, looking_right)
+    local enemy_state = enemy_states["attack"]
+    movement = 200
+    position = -60
+
+    if looking_right then
+        flip_sprite(this, true)
+    else
+        flip_sprite(this, false)
+        movement = -1 * movement
+        position = -1 * position
+    end
+
+    set_next_state(this, enemy_state)
+
+    create_projectile(this, attackName, position, 30, 0, movement, 0, 100, 40, 0.6, true)
 end

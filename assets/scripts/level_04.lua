@@ -12,6 +12,10 @@ scene = {
         {asset_id = "frost_t_walk", file_path = "./assets/images/frost_t_walk.png"},
         {asset_id = "shadow_idle", file_path = "./assets/images/shadow_idle.png"},
         {asset_id = "shadow_walk", file_path = "./assets/images/shadow_walk.png"},
+        {asset_id = "boss_idle", file_path = "./assets/images/boss_idle.png"},
+        {asset_id = "boss_run", file_path = "./assets/images/boss_walk.png"},
+        {asset_id = "boss_attack", file_path = "./assets/images/boss_attack.png"},
+        {asset_id = "boss_attack_p1", file_path = "./assets/images/boss_attack_p1.png"},
     },
     
     animations = {
@@ -25,6 +29,10 @@ scene = {
         {animation_id = "enemy1_walk", texture_id = "frost_t_walk", w = 62, h = 58, num_frames = 10, speed_rate = 12, is_loop = true},
         {animation_id = "enemy2_idle", texture_id = "shadow_idle", w = 24, h = 23, num_frames = 8, speed_rate = 15, is_loop = true},
         {animation_id = "enemy2_walk", texture_id = "shadow_walk", w = 24, h = 23, num_frames = 8, speed_rate = 12, is_loop = true},
+        {animation_id = "boss_idle", texture_id = "boss_idle", w = 80, h = 40, num_frames = 16, speed_rate = 20, is_loop = true},
+        {animation_id = "boss_run", texture_id = "boss_run", w = 80, h = 40, num_frames = 16, speed_rate = 12, is_loop = false},
+        {animation_id = "boss_attack", texture_id = "boss_attack", w = 80, h = 40, num_frames = 16, speed_rate = 12, is_loop = false},
+        {animation_id = "boss_attack_p1", texture_id = "boss_attack_p1", w = 22, h = 20, num_frames = 15, speed_rate = 12, is_loop = false},
     },
 
     damage_colliders = {
