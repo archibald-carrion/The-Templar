@@ -117,6 +117,8 @@ function on_damage(other)
         set_points(owner, points)
 
         kill_entity(this)
+
+        go_to_scene("win")
     end
 
     kill_entity(other)
