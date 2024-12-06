@@ -22,6 +22,7 @@
 #include "../components/state_component.hpp"
 #include "../components/cooldown_component.hpp"
 #include "../components/damage_collider_component.hpp"
+#include "../components/enemy_box_collider_component.hpp"
 
 SceneLoader::SceneLoader() {
     //std::cout << "[SCENELOADER] scene loader constructor" << std::endl;
@@ -560,7 +561,7 @@ void SceneLoader::LoadMap(const sol::table map, std::unique_ptr<Registry> &regis
                 load_enemies(*registry, script_path, objectGroup, lua);
             } else if (name.compare("enemies_colliders") == 0)
             {
-                load_circular_collliders(registry, objectGroup);
+                load_enemy_collliders(registry, objectGroup);
             }
 
             objectGroup = objectGroup->NextSiblingElement("objectgroup");
@@ -620,7 +621,7 @@ void SceneLoader::LoadLayer(std::unique_ptr<Registry> &registry, tinyxml2::XMLEl
     }
 }
 
-void SceneLoader::load_circular_collliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup)
+void SceneLoader::load_enemy_collliders(std::unique_ptr<Registry> &registry, tinyxml2::XMLElement *objectGroup)
 {
     // createa circular collider of constant radius and position
     tinyxml2::XMLElement *object = objectGroup->FirstChildElement("object");
@@ -633,7 +634,7 @@ void SceneLoader::load_circular_collliders(std::unique_ptr<Registry> &registry, 
         // Declarar variables
         const char *name;
         std::string tag;
-        int x, y, r;
+        int x, y, w, h;
 
         // Extraer atributos
         object->QueryStringAttribute("name", &name);
@@ -643,8 +644,9 @@ void SceneLoader::load_circular_collliders(std::unique_ptr<Registry> &registry, 
         object->QueryIntAttribute("x", &x);
         object->QueryIntAttribute("y", &y);
 
-        // Extraer radio
-        object->QueryIntAttribute("width", &r);
+        // Extraer width and height
+        object->QueryIntAttribute("width", &w);
+        object->QueryIntAttribute("height", &h);
 
         // Crear entidad con posición y radio escalados
         Entity collider = registry->create_entity();
@@ -653,7 +655,7 @@ void SceneLoader::load_circular_collliders(std::unique_ptr<Registry> &registry, 
             glm::vec2(x * SCALE, y * SCALE -25), // Scale position
             glm::vec2(SCALE, SCALE) // Add scale vector
         );
-        collider.add_component<CircleColliderComponent>(r * SCALE, x*SCALE, y*SCALE);
+        collider.add_component<EnemyColliderComponent>(w * SCALE, h * SCALE); // Scale collider dimensions
 
         object = object->NextSiblingElement("object");
     }
@@ -748,8 +750,8 @@ void SceneLoader::load_enemies(Registry& registry, const std::string& path, tiny
             glm::vec2(x * SCALE, y * SCALE),
             glm::vec2(SCALE, SCALE)
         );
-        // add circular collider with constant radius so enemy don't fall of the edge
-        collider.add_component<CircleColliderComponent>(1.0f * SCALE, x * SCALE, y * SCALE);
+        // add EnemyColliderComponent so enemies don't falls of the edges
+        collider.add_component<EnemyColliderComponent>(32* SCALE, 32 * SCALE);
 
         object = object->NextSiblingElement("object");
         enemies.push_back(collider);

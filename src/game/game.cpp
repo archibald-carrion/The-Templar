@@ -19,6 +19,8 @@
 #include "../systems/damage_collision_system.hpp"
 #include "../systems/lifetime_system.hpp"
 #include "../systems/render_circular_collider_system.hpp"
+#include "../systems/enemy_collider_system.hpp"
+#include "../systems/render_enemy_collider_system.hpp"
 
 #include "../events/click_event.hpp"
 
@@ -60,6 +62,8 @@ void Game::setup() {
     registry->add_system<RenderDamageColliderSystem>();
     registry->add_system<LifetimeSystem>();
     registry->add_system<RenderCircularColliderSystem>();
+    registry->add_system<EnemyCollisionSystem>();
+    registry->add_system<RenderEnemyColliderSystem>();
 
     scene_manager->load_scene_from_script("assets/scripts/scenes.lua", lua);
 
@@ -227,6 +231,7 @@ void Game::update() {
     registry->get_system<BoxCollisionSystem>().update(this->events_manager, lua);
     registry->get_system<CircleCollisionSystem>().update(events_manager, lua);
     registry->get_system<DamageCollisionSystem>().update(*events_manager, lua);
+    registry->get_system<EnemyCollisionSystem>().update(events_manager, lua);
 
     registry->get_system<CooldownsSystem>().update(deltaTime);
 
@@ -246,6 +251,7 @@ void Game::render() {
         registry->get_system<RenderBoxColliderSystem>().update(renderer, this->camera);
         registry->get_system<RenderDamageColliderSystem>().update(renderer, this->camera);
         registry->get_system<RenderCircularColliderSystem>().update(renderer, this->camera);
+        registry->get_system<RenderEnemyColliderSystem>().update(renderer, this->camera);
     }
 
     SDL_RenderPresent(this->renderer);
