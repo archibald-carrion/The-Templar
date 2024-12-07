@@ -12,7 +12,7 @@ Fecha de entrega: 27 de octubre de 2024
 
 ## Descripción del juego
 
-Es un juego de ciencia ficción en el que el jugador controla una nave espacial que debe esquivar asteroides y naves enemigas, mientras dispara a enemigos.
+Es un juego de ciencia ficción en el que el jugador controla a un caballero que debe enfrentarse a enemigos en un mundo de invierno eterno.
 El juego cuenta con :
 
 - un menú principal
@@ -33,28 +33,20 @@ El juego cuenta con :
 
 ## Historia del juego
 
-El portador del invierno
+El Portador del Invierno
+Un mundo desolado y cubierto por un invierno eterno, donde una fuerza oscura ha transformado un castillo ancestral en la fuente de la maldición que consume la tierra. Sir Fort, el último caballero de los Guardianes del Invierno, emprende una misión desesperada para enfrentar el origen del hielo eterno y restaurar la esperanza.
 
-Un mundo sombrío y en ruinas envuelto en un eterno hielo, devastado por la hechicería y la desesperación. La última esperanza de la tierra yace dentro del calabozo congelado del Señor Oscuro, donde una magia prohibida encierra al mundo en un invierno eterno.
+Nivel 1: Las Afueras del Castillo
+Sir Fort atraviesa las gélidas tierras que rodean el castillo, enfrentándose a sombras pequeñas y bandadas de murciélagos que atacan desde el aire. Entre ruinas cubiertas de nieve, descubre que las criaturas parecen emanar del interior del castillo. Este nivel introduce mecánicas básicas de combate y exploración, como el manejo de su espada y el uso estratégico de su escudo para repeler ataques.
 
-Juegas como Sir Fort, un caballero de los moribundos guardianes del invierno, y desentrañas la verdad del Portador del Invierno, un poderoso hechicero cuyos una vez nobles esfuerzos por salvar el mundo se torcieron en su ruina eterna.
+Nivel 2: Los Pasillos del Castillo
+Dentro del castillo, Sir Fort recorre oscuros y fríos pasillos llenos de trampas y enemigos más desafiantes, como sombras más ágiles y murciélagos que atacan en oleadas coordinadas. También encuentra gigantes de hielo, criaturas imponentes que requieren precisión y estrategia para derrotar. Este nivel prueba las habilidades avanzadas del jugador y presenta objetos ocultos que ofrecen pistas sobre la maldición.
 
-A través de niveles alternos como el caballero la historia se desarrolla.
+Nivel 3: El Calabozo Profundo
+En lo más profundo del castillo, Fort explora un lúgubre calabozo lleno de ecos de sufrimiento. Los gigantes de hielo se vuelven más frecuentes, y las sombras pequeñas atacan en grupos, haciendo del combate una prueba de resistencia. Aquí, Sir Fort encuentra fragmentos de escritos antiguos que revelan que una sombra gigantesca surgió tras un antiguo ritual que salió mal, transformando al castillo y a sus habitantes en instrumentos de la oscuridad.
 
-Nivel 1: El Fuerte Helado
-
-Sir Fort lucha a través de los bordes exteriores del calabozo, aprendiendo mecánicas básicas como el combate y la exploración. Enemigos corrompidos por la escarcha obstruyen el camino, insinuando la verdadera naturaleza de la maldición.
-
-Nivel 2: El Salón de las Sombras Congeladas
-Sir Fort explora más profundamente en el calabozo, descubriendo pistas de que el Portador podría no ser un verdadero villano. Trampas y enemigos más duros aparecen, poniendo a prueba la habilidad del jugador. Para ayudarlo en su búsqueda, ahora puede usar el ataque básico del hechicero.
-
-Nivel 3: El Santuario Helado
-
-Sir Fort llega al santuario, enfrentando a enemigos poderosos que parecen proteger al Portador del Invierno. El calabozo revela sus secretos finales: el portador del Invierno no fue la fuente de la escarcha sino su prisión, usando su poder para evitar que una tormenta catastrófica consumiera el mundo.
-
-Final: La Última Habitación
-
-En la habitación final, Sir Fort descubre al Portador del Invierno, débil y prisionero de entidades corrompidas por la escarcha. Los enemigos han convertido al hechicero en la fuente interminable de su poder. Fort debe derrotar a estos enemigos para liberar al portador.
+Nivel 4: El Corazón del Invierno
+En la sala central del castillo, Fort finalmente se enfrenta a la sombra titánica, una colosal manifestación del poder oscuro que trajo el invierno eterno. La batalla final es feroz, con la sombra utilizando ataques devastadores y el entorno helado en su favor. Con ingenio y valentía, Fort logra derrotarla, rompiendo la maldición y permitiendo que el sol vuelva a brillar en el mundo.
 
 ## Objetivos del juego
 
@@ -119,7 +111,7 @@ sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
 Para obtener puntos extras, implemente las siguientes características:
 
 - [x] Se implemento el audio manager para reproducir música de fondo y efectos de sonido, ademas se usaron audios hechos propios por [Namlin] (https://github.com/namlin)
-- [x] Todos los assets graficos, salvo las fuentes y el background fueron hechos por mi usando el programa [GIMP](https://www.gimp.org/)
+- [x] Se implementó el uso de mandos para controlar al jugador
 
 ## UML del motor de videojuegos
 
@@ -380,5 +372,6 @@ classDiagram
 - [asset de las sombras](https://zneeke.itch.io/dark-fantasy-monster-pack-1)
 - [asset del gigante de hielo](https://chierit.itch.io/boss-frost-guardian)
 - [asset de los murciélagos](https://zneeke.itch.io/dark-fantasy-monster-pack-1)
+- [asset del power up shoot](https://gamedeveloperstudio.itch.io/snowball)
 - Music made by game developer [Namlin](https://github.com/namlin)
 - [dungeon tileset](https://raou.itch.io/dark-dun)
