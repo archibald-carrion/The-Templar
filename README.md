@@ -304,6 +304,24 @@ classDiagram
         -load_entities(sol::state&, sol::table&, std::unique_ptr<Registry>&)
     }
 
+    class AnimationData {
+        +string texture_id
+        +int width
+        +int height
+        +int num_frames
+        +int frame_speed_rate
+        +bool is_loop
+        +AnimationData(string texture_id, int width, int height, int num_frames, int frame_speed_rate, bool is_loop)
+    }
+
+    class AnimationManager {
+        -map<string, AnimationData> animations
+        +AnimationManager()
+        +~AnimationManager()
+        +void add_animation(string animation_id, string texture_id, int width, int height, int num_frames, int frame_speed_rate, bool is_loop)
+        +AnimationData get_animation(string animation_id)
+    }
+
 
     SceneLoader "1" -- "1" SceneManager
     Game "1" -- "1" Registry
@@ -312,6 +330,7 @@ classDiagram
     Game "1" -- "1" EventManager
     Game "1" -- "1" ControllerManager
     Game "1" -- "1" AudioManager
+    Game "1" -- "1" AnimationManager
     Game "1" -- "1" Registry
     Registry "1" -- "*" Entity
     Registry "1" -- "*" System
