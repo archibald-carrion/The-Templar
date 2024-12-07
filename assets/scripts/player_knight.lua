@@ -79,7 +79,7 @@ function update()
             if looking_right(this) then
                 movement = -movement
             end
-            create_projectile_w_a(this, "fireball", 0, 0, 0, movement, 0, 88, 50, 1, false, "fire_ball", 0.5)
+            create_projectile_with_animation(this, "fireball", 0, 0, 0, movement, 0, 88, 50, 1, false, "fire_ball", 0.5)
             is_shooting = true
         end
         if is_shooting and ult_charge >= ult_requirement then

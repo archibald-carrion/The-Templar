@@ -91,7 +91,7 @@ public:
         lua.set_function("get_box_collider", get_box_collider);
 
         lua.set_function("create_projectile", create_projectile);
-        lua.set_function("create_projectile_w_a", create_projectile_w_a);
+        lua.set_function("create_projectile_with_animation", create_projectile_with_animation);
 
         lua.set_function("looking_right", looking_right);
 

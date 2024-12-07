@@ -9,7 +9,7 @@
  */
 struct TagComponent {
     std::string tag; /**< The tag for the entity. */
-    std::string e_class;
+    std::string e_class; /**< The class for the entity. */
 
    /**
     * @brief Construct a new TagComponent object

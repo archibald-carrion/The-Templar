@@ -6,7 +6,8 @@
 
 #include <map> // std::map used to store music and sound effects
 #include <string> // std::string used for music_id and sound_id
-#include <memory>
+#include <memory> // std::shared_ptr used for music and sound effects
+
 
 inline auto sdlMusicDeleter = [](Mix_Music* music) {
     if (music == nullptr) return;
@@ -21,6 +22,9 @@ inline auto sdlMixDeleter = [](Mix_Chunk* music) {
 using Music = std::shared_ptr<Mix_Music>;
 using Mix = std::shared_ptr<Mix_Chunk>;
 
+/**
+ * @brief The AudioManager class is responsible for managing audio.
+ */
 class AudioManager {
 private:
     std::map<std::string, Music> music_tracks;   // For long music tracks (streamed)
