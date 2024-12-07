@@ -165,6 +165,9 @@ classDiagram
         -bool is_scene_running
         -std::unique_ptr<SceneLoader> scene_loader
 
+        +SceneManager()
+        +~SceneManager()
+
         +get_next_scene()
         +load_scene_from_script()
         +load_scene()
@@ -173,6 +176,7 @@ classDiagram
         +start_scene()
         +stop_scene()
     }
+
     class AssetsManager {
         -textures: std::map<std::string, SDL_Texture*>
         -fonts: std::map<std::string, TTF_Font*>
@@ -337,6 +341,17 @@ classDiagram
         +AnimationData get_animation(string animation_id)
     }
 
+    class StatsManager {
+        -std::unordered_map<string, StatsComponent> _tagToStat
+        -StatsManager()
+
+        +static StatsManager& GetInstance()
+        +void AddStat(string, StatsComponent)
+        +void AddStatsToEntity(Entity&)
+        +void Clear()
+        +std::optional<StatsComponent> operator[](string)
+    }
+
     SceneLoader "1" -- "1" SceneManager
     AnimationManager "1" -- "1" AnimationData
     Game "1" -- "1" Registry
@@ -348,6 +363,7 @@ classDiagram
     Game "1" -- "1" AnimationManager
     Game "1" -- "1" Registry
     Game "1" -- "1" SceneManager
+    Game "1" -- "1" StatsManager
     Registry "1" -- "*" Entity
     Registry "1" -- "*" System
     Entity "1" -- "0..*" Component
