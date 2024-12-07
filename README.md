@@ -329,7 +329,7 @@ classDiagram
     }
 
     class SceneLoader {
-        -std::set~string~ tags_with_damage_colliders
+        -std::set<string> tags_with_damage_colliders
 
         +SceneLoader()
         +~SceneLoader()
