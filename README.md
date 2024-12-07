@@ -1,5 +1,12 @@
 # Creación de Videojuegos - De Astra Ad Terra
 
+![C++20](https://img.shields.io/badge/C%2B%2B-20-blue?style=flat-square)
+![Lua](https://img.shields.io/badge/Scripting-Lua-2C2D72?style=flat-square)
+![ASAN](https://img.shields.io/badge/Memory%20Cleaned-ASAN-success?style=flat-square)
+![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=flat-square)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/archibald-carrion/The-Templar?style=flat-square)
+
+
 ## Entrega
 
 Fecha de entrega: 27 de octubre de 2024
