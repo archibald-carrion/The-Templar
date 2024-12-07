@@ -7,12 +7,15 @@
 #include <map> // used for storing textures, fonts
 #include <string> // used for storing texture, font
 
+/**
+ * @brief The AssetsManager class is responsible for managing assets.
+ */
 class AssetsManager {
-private:
+ private:
     std::map<std::string, SDL_Texture*> textures; /**< Map of textures. */
     std::map<std::string, TTF_Font*> fonts; /**< Map of fonts. */
 
-public: 
+ public: 
     /**
      * @brief Constructor for the AssetsManager class.
      */

@@ -13,7 +13,7 @@
 #include "../controller_manager/controller_manager.hpp" // Controller manager for handling user input
 #include "../ECS/ECS.hpp" // ECS library for entity-component-system
 
-#include "../stats_manager/stats_manager.hpp"
+#include "../stats_manager/stats_manager.hpp" // Stats manager for handling stats
 
 class SceneLoader {
     std::set<std::string> tags_with_damage_colliders;
@@ -132,6 +132,10 @@ class SceneLoader {
      */
     void load_damage_colliders(const sol::table& colliders);
 
+    /**
+     * @brief Load the stats from the Lua table.
+     * @param stats The Lua table containing the stats.
+     */
     void load_stats(const sol::table& stats);
 
 public:
