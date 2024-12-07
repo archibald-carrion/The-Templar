@@ -329,32 +329,37 @@ classDiagram
     }
 
     class SceneLoader {
-        -std::set<string> tags_with_damage_colliders
+    - std::set~string~ tags_with_damage_colliders
 
-        +SceneLoader()
-        +~SceneLoader()
+    + SceneLoader()
+    + ~SceneLoader()
 
-        -void load_sounds(sol::table sounds, std::unique_ptr<AudioManager> audio_manager)
-        -void load_music(sol::table music, std::unique_ptr<AudioManager> audio_manager)
-        -void load_sprites(SDL_Renderer* renderer, sol::table sprites, std::unique_ptr<AssetsManager> asset_manager)
-        -void load_fonts(sol::table fonts, std::unique_ptr<AssetsManager> asset_manager)
-        -void load_buttons(sol::table buttons, std::unique_ptr<ControllerManager> controller_manager)
-        -void load_keys_actions(sol::table keys, std::unique_ptr<ControllerManager> controller_manager)
-        -void load_entities(sol::state lua, sol::table entities, std::unique_ptr<Registry>registry)
-        -void load_entity(sol::state lua, Entity entity, sol::table entityTable)
-        -void load_animations(sol::table animations, std::unique_ptr<AnimationManager> animation_manager)
-        -void LoadMap(sol::table map, std::unique_ptr<Registry> registry, string script_path, sol::state lua)
-        -void LoadLayer(std::unique_ptr<Registry> registry, tinyxml2::XMLElement* layerElement, int tWidth, int tHeight, int mWidth, string tileSet, int columns)
-        -void LoadColliders(std::unique_ptr<Registry> registry, tinyxml2::XMLElement* objectGroup)
-        -void load_enemy_colliders(std::unique_ptr<Registry> registry, tinyxml2::XMLElement* objectGroup)
-        -void load_enemies(Registry registry, string path, tinyxml2::XMLElement* objectGroup, sol::state lua)
-        -void load_damage_colliders(sol::table colliders)
-        -void load_stats(sol::table stats)
+    - void load_sounds(sol::table sounds, std::unique_ptr~AudioManager~ audio_manager)
+    - void load_music(sol::table music, std::unique_ptr~AudioManager~ audio_manager)
+    - void load_sprites(SDL_Renderer* renderer, sol::table sprites, std::unique_ptr~AssetsManager~ asset_manager)
+    - void load_fonts(sol::table fonts, std::unique_ptr~AssetsManager~ asset_manager)
+    - void load_buttons(sol::table buttons, std::unique_ptr~ControllerManager~ controller_manager)
+    - void load_keys_actions(sol::table keys, std::unique_ptr~ControllerManager~ controller_manager)
+    - void load_entities(sol::state lua, sol::table entities, std::unique_ptr~Registry~ registry)
+    - void load_entity(sol::state lua, Entity entity, sol::table entityTable)
+    - void load_animations(sol::table animations, std::unique_ptr~AnimationManager~ animation_manager)
+    - void LoadMap(sol::table map, std::unique_ptr~Registry~ registry, string script_path, sol::state lua)
+    - void LoadLayer(std::unique_ptr~Registry~ registry, tinyxml2::XMLElement* layerElement, \
+                     int tWidth, int tHeight, int mWidth, string tileSet, int columns)
+    - void LoadColliders(std::unique_ptr~Registry~ registry, tinyxml2::XMLElement* objectGroup)
+    - void load_enemy_colliders(std::unique_ptr~Registry~ registry, tinyxml2::XMLElement* objectGroup)
+    - void load_enemies(Registry registry, string path, tinyxml2::XMLElement* objectGroup, sol::state lua)
+    - void load_damage_colliders(sol::table colliders)
+    - void load_stats(sol::table stats)
 
-        +void load_scene(string scene_path, sol::state lua, std::unique_ptr<AssetsManager> asset_manager,
-            std::unique_ptr<ControllerManager> controller_manager, std::unique_ptr<AudioManager> audio_manager,
-            std::unique_ptr<Registry> registry, std::unique_ptr<AnimationManager> animation_manager, SDL_Renderer* renderer)
-    }
+    + void load_scene(string scene_path, sol::state lua, \
+                      std::unique_ptr~AssetsManager~ asset_manager, \
+                      std::unique_ptr~ControllerManager~ controller_manager, \
+                      std::unique_ptr~AudioManager~ audio_manager, \
+                      std::unique_ptr~Registry~ registry, \
+                      std::unique_ptr~AnimationManager~ animation_manager, SDL_Renderer* renderer)
+}
+
 
 
     SceneLoader "1" -- "1" SceneManager
