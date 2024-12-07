@@ -32,7 +32,7 @@ scene = {
         {animation_id = "enemy2_idle", texture_id = "shadow_idle", w = 24, h = 23, num_frames = 8, speed_rate = 15, is_loop = true},
         {animation_id = "enemy2_walk", texture_id = "shadow_walk", w = 24, h = 23, num_frames = 8, speed_rate = 12, is_loop = true},
         {animation_id = "enemy2_attack", texture_id = "shadow_attack", w = 64, h = 23, num_frames = 13, speed_rate = 16, is_loop = false},
-        {animation_id = "fire_ball", texture_id = "fire_ball", w = 100, h = 57, num_frames = 35, speed_rate = 30, is_loop = true},
+        {animation_id = "fire_ball", texture_id = "fire_ball", w = 32, h = 32, num_frames = 3, speed_rate = 30, is_loop = true},
     },
 
     damage_colliders = {

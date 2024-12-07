@@ -34,7 +34,7 @@ scene = {
         {animation_id = "boss_run", texture_id = "boss_run", w = 80, h = 40, num_frames = 16, speed_rate = 12, is_loop = false},
         {animation_id = "boss_attack", texture_id = "boss_attack", w = 80, h = 40, num_frames = 16, speed_rate = 12, is_loop = false},
         {animation_id = "boss_attack_p1", texture_id = "boss_attack_p1", w = 22, h = 20, num_frames = 15, speed_rate = 12, is_loop = false},
-        {animation_id = "fire_ball", texture_id = "fire_ball", w = 100, h = 57, num_frames = 35, speed_rate = 30, is_loop = true},
+        {animation_id = "fire_ball", texture_id = "fire_ball", w = 32, h = 32, num_frames = 3, speed_rate = 30, is_loop = true},
     },
 
     damage_colliders = {
