@@ -82,9 +82,9 @@ function update()
             create_projectile_w_a(this, "fireball", 0, 0, 0, movement, 0, 88, 50, 1, false, "fire_ball", 0.5)
             is_shooting = true
         end
-        if is_action_activated("shoot") then
+        if is_shooting and ult_charge >= ult_requirement then
             ult_charge = ult_charge - ult_requirement
-            set_ult(ult_charge)
+            set_ult(this, ult_charge)
             ult_requirement = ult_requirement + 1
         end
     else 
@@ -183,8 +183,6 @@ function on_damage(other)
     if result then
         kill_entity(other)
     end
-
-    print("health: " .. health)
 
     if  health <= 0 then
         go_to_scene("game_over")

@@ -133,10 +133,12 @@ function on_perform(attackName, looking_right)
 
     movement = 0
     position = -100
+    multiplier = 1
 
     if looking_right then
         movement = -1 * movement
         position = -1 * position
+        multiplier = -1
         flip_sprite(this, false)
     else
         flip_sprite(this, true)
@@ -144,11 +146,11 @@ function on_perform(attackName, looking_right)
 
     set_next_state(this, enemy_state)
     if attackName == "melee1" then
-        create_projectile_w_a(this, "boss_attack_p1", position, 240, 0, movement, 0, 88, 80, 0.7, false, "boss_attack_p1", 0.5)
+        create_projectile_w_a(this, "boss_attack_p1", position , 240, 0, movement, 0, 88, 80, 0.7, false, "boss_attack_p1", 0.5)
     elseif attackName == "melee2" then
-        create_projectile_w_a(this, "boss_attack_p1", position, 240, 0, movement, 0, 88, 80, 0.7, false, "boss_attack_p1", 0.5)
-        create_projectile_w_a(this, "boss_attack_p1", position - 108, 280, 0, movement, 0, 44, 40, 0.7, false, "boss_attack_p1", 0.25)
-        create_projectile_w_a(this, "boss_attack_p1", position - 222, 280, 0, movement, 0, 44, 40, 0.7, false, "boss_attack_p1", 0.25)
+        create_projectile_w_a(this, "boss_attack_p1", position * multiplier, 240, 0, movement, 0, 88, 80, 0.7, false, "boss_attack_p1", 0.5)
+        create_projectile_w_a(this, "boss_attack_p1", position - 108 * multiplier, 280, 0, movement, 0, 44, 40, 0.7, false, "boss_attack_p1", 0.25)
+        create_projectile_w_a(this, "boss_attack_p1", position - 222 * multiplier, 280, 0, movement, 0, 44, 40, 0.7, false, "boss_attack_p1", 0.25)
     end
 
 end
