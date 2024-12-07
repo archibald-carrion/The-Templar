@@ -1,19 +1,23 @@
 # Creación de Videojuegos - De Astra Ad Terra
+
 ## Entrega
+
 Fecha de entrega: 27 de octubre de 2024
 
-
 ## Descripción del juego
+
 Es un juego de ciencia ficción en el que el jugador controla una nave espacial que debe esquivar asteroides y naves enemigas, mientras dispara a enemigos.
 El juego cuenta con :
+
 - un menú principal
 - una pantalla de introducción para tener mas contexto sobre la historia
 - tres niveles
 - una pantalla de "muerte" donde llega el jugador si se muere que permite redirrecionar a los tres niveles
 - una pantalla de "congratulation" que permite redirrecionar al menu principal
-El juego cuenta con música de fondo y assets propios. 
+  El juego cuenta con música de fondo y assets propios.
 
 ## Controles
+
 - W: Mover la nave hacia arriba
 - S: Mover la nave hacia abajo
 - A: Mover la nave hacia la izquierda
@@ -22,43 +26,48 @@ El juego cuenta con música de fondo y assets propios.
 - P: Pausar el juego
 
 ## Historia del juego
+
 El juego se desarrolla en un futuro muy lejano donde la humanidad ha colonizado otros sistemas solares y otras galaxias, tras milenios la humanidad se ha ido olvidando de su origen y de la tierra o "Terra" como se refiere en el juego.
 Al pasar tanto tiempo los humanos olvidaron de donde venian, muchos creen que siempre han vivido en el espacio, pero hay una leyenda que habla de un pequeño planeta perdido en la inmensidad del espacio, un planeta que fue el origen de la humanidad, un planeta que se llama "Terra".
 El/la jugador/a interpreta al Capitan Castellum, al encontrar un antiguo artefacto en una de las colonias, el capitan descubre que el artefacto es una especie de mapa que lo lleva a un portal que lo llevara a "Terra", el capitan decide seguir el mapa y descubrir la verdad sobre el origen de la humanidad.
 Tras recolectar los artefactos necesarios, el capitan llega a "Terra", el juego termina con una pantalla de "congratulation", dejando al jugador con la duda de que descubrio el capitan en "Terra".
 
 ## Objetivos del juego
+
 Para ir avanzando en el juego, el jugador debe:
+
 - recolectar power ups que le permiten moverse mas rapido, a nivel de narrativa, estos items representan antiguas tecnologias que permite a la nave pasar a traves de los portales para llegar al siguiente nivel
 - disparar a los enemigos para ganar tener el mayor score posible
 - esquivar los asteroides y naves enemigas para no morir
 - el jugador no puede pasar al siguiente nivel si no ha recolectado todos los artefactos necesarios
 
 ## 4 enemigos
+
 En mi juego hay 4 enemigos:
+
 - asteroides, no se pueden destruir, pero si se pueden esquivar
 - enemigos arrañas, se pueden destruir con un disparo y dan 10 puntos, usualmente no se mueve muy rapido
 - enemigos circulares azules, se pueden destruir con un disparo y dan 15 puntos, usualmente se mueve mas rapido que los enemigos arrañas y "rodan"
 - enemigos circulares rojos, son muy grandes y no se pueden destruir
 
-
-
-
 ## Guía de uso
+
 Para compilar el programa, ejecute el siguiente comando:
+
 ```bash
 make clean; make; make run
 ```
+
 El proyecto fue desarrollado en Ubuntu 24.04 en WSL2, utilizando el compilador g++ 13.2.0
 
 El makefile para funcionar con mi arquitectura de carpeta fue modificado.
 
-
-
 ## Proceso de desarrollo
+
 Para desarrollar el juego se uso el motor hecho en clase, el desarrollo se llevo a cabo siguiendo los videos disponibles en la plataforma, y agregando poco a poco las funcionalidades requeridas por la tarea.
 
 Los principales cambios realizados en el motor fueron los siguientes:
+
 - Se agrego un audio manager para reproducir música de fondo y efectos de sonido
 - Se agregaron nuevos lua bindings para poder cargar y reproducir música y efectos de sonido
 - Se arreglaron varios bugs en el motor, como el bug que no borraba los entities y components al cambiar de escena, lo cual llevaba a tener nuevos entities con componentes de la escena anterior
@@ -71,22 +80,27 @@ Adjunto se agrego una serie de screenshots del juego ejecutandose:
 ![screenshot del primer nivel](documentation/level_01.PNG)
 ![screenshot del segundo nivel](documentation/level_02.PNG)
 ![screenshot del tercer nivel](documentation/level_03.PNG)
+![screenshot del cuarto nivel](documentation/level_04.PNG)
 ![screenshot de la pantalla de "muerte"](documentation/fail_screen.PNG)
 ![screenshot de la pantalla de "congratulation"](documentation/win_screen.PNG)
 
-
 ## Instalación de las bibliotecas necesarias
+
 Para instalar las bibliotecas necesarias en linux, ejecute el siguiente comando:
+
 ```bash
 sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev lua5.3 liblua5.3-dev
 ```
 
 ## Puntos extras
+
 Para obtener puntos extras, implemente las siguientes características:
+
 - [x] Se implemento el audio manager para reproducir música de fondo y efectos de sonido, ademas se usaron audios hechos propios por [Namlin] (https://github.com/namlin)
 - [x] Todos los assets graficos, salvo las fuentes y el background fueron hechos por mi usando el programa [GIMP](https://www.gimp.org/)
 
 ## UML del motor de videojuegos
+
 ```mermaid
 classDiagram
 
@@ -236,7 +250,7 @@ classDiagram
         +operator==(const Entity& other) const: bool
         +operator!=(const Entity& other) const: bool
         +operator>(const Entity& other) const: bool
-        +operator<(const Entity& other) const: bool   
+        +operator<(const Entity& other) const: bool  
 
         +add_component<TComponent, TArgs>(TArgs...)
         +remove_component<TComponent>()
@@ -291,12 +305,13 @@ classDiagram
 ```
 
 ## Ressources used for the game
+
 - [arcade classic font](https://www.1001fonts.com/arcadeclassic-font.html)
 - [tileset de ruinas](https://bdragon1727.itch.io/platform-asset-part-4)
 - [asset del knight](https://aamatniekss.itch.io/fantasy-knight-free-pixelart-animated-character)
 - Music made by game developer [Namlin](https://github.com/namlin)
 - [dungeon tileset](https://raou.itch.io/dark-dun)
 
-
 ## TODO
+
 - [ ] Implement new scene introducing the characters after intro scene in some sort of "cinematic"
