@@ -445,7 +445,7 @@ void SceneLoader::load_entities(sol::state& lua, const sol::table& entities, std
     int index = 0;
 
     while(true) {
-        std::cout << "loading entity" << std::endl;
+        // std::cout << "loading entity" << std::endl;
         sol::optional<sol::table> has_entity = entities[index];
 
         if(has_entity == sol::nullopt) {
