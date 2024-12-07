@@ -10,45 +10,62 @@ Es un juego de ciencia ficción en el que el jugador controla una nave espacial 
 El juego cuenta con :
 
 - un menú principal
-- una pantalla de introducción para tener mas contexto sobre la historia
-- tres niveles
-- una pantalla de "muerte" donde llega el jugador si se muere que permite redirrecionar a los tres niveles
+- cuatro niveles
+- una pantalla de "muerte" donde llega el jugador si se muere que permite redirrecionar a los cuatro niveles
 - una pantalla de "congratulation" que permite redirrecionar al menu principal
-  El juego cuenta con música de fondo y assets propios.
+  El juego cuenta con música de fondo y assets de itch.io.
 
 ## Controles
 
-- W: Mover la nave hacia arriba
-- S: Mover la nave hacia abajo
-- A: Mover la nave hacia la izquierda
-- D: Mover la nave hacia la derecha
-- Espacio: Disparar
+- A: Mueve al jugador a la izquierda
+- D: Mueve al jugador a la derecha
+- Espacio: Saltar
+- Esc: Salir del juego
+- E: Disparar
+- Q: Disparar el power up shoot
 - P: Pausar el juego
 
 ## Historia del juego
 
-El juego se desarrolla en un futuro muy lejano donde la humanidad ha colonizado otros sistemas solares y otras galaxias, tras milenios la humanidad se ha ido olvidando de su origen y de la tierra o "Terra" como se refiere en el juego.
-Al pasar tanto tiempo los humanos olvidaron de donde venian, muchos creen que siempre han vivido en el espacio, pero hay una leyenda que habla de un pequeño planeta perdido en la inmensidad del espacio, un planeta que fue el origen de la humanidad, un planeta que se llama "Terra".
-El/la jugador/a interpreta al Capitan Castellum, al encontrar un antiguo artefacto en una de las colonias, el capitan descubre que el artefacto es una especie de mapa que lo lleva a un portal que lo llevara a "Terra", el capitan decide seguir el mapa y descubrir la verdad sobre el origen de la humanidad.
-Tras recolectar los artefactos necesarios, el capitan llega a "Terra", el juego termina con una pantalla de "congratulation", dejando al jugador con la duda de que descubrio el capitan en "Terra".
+El portador del invierno
+
+Un mundo sombrío y en ruinas envuelto en un eterno hielo, devastado por la hechicería y la desesperación. La última esperanza de la tierra yace dentro del calabozo congelado del Señor Oscuro, donde una magia prohibida encierra al mundo en un invierno eterno.
+
+Juegas como Sir Fort, un caballero de los moribundos guardianes del invierno, y desentrañas la verdad del Portador del Invierno, un poderoso hechicero cuyos una vez nobles esfuerzos por salvar el mundo se torcieron en su ruina eterna.
+
+A través de niveles alternos como el caballero la historia se desarrolla.
+
+Nivel 1: El Fuerte Helado
+
+Sir Fort lucha a través de los bordes exteriores del calabozo, aprendiendo mecánicas básicas como el combate y la exploración. Enemigos corrompidos por la escarcha obstruyen el camino, insinuando la verdadera naturaleza de la maldición.
+
+Nivel 2: El Salón de las Sombras Congeladas
+Sir Fort explora más profundamente en el calabozo, descubriendo pistas de que el Portador podría no ser un verdadero villano. Trampas y enemigos más duros aparecen, poniendo a prueba la habilidad del jugador. Para ayudarlo en su búsqueda, ahora puede usar el ataque básico del hechicero.
+
+Nivel 3: El Santuario Helado
+
+Sir Fort llega al santuario, enfrentando a enemigos poderosos que parecen proteger al Portador del Invierno. El calabozo revela sus secretos finales: el portador del Invierno no fue la fuente de la escarcha sino su prisión, usando su poder para evitar que una tormenta catastrófica consumiera el mundo.
+
+Final: La Última Habitación
+
+En la habitación final, Sir Fort descubre al Portador del Invierno, débil y prisionero de entidades corrompidas por la escarcha. Los enemigos han convertido al hechicero en la fuente interminable de su poder. Fort debe derrotar a estos enemigos para liberar al portador.
 
 ## Objetivos del juego
 
 Para ir avanzando en el juego, el jugador debe:
 
-- recolectar power ups que le permiten moverse mas rapido, a nivel de narrativa, estos items representan antiguas tecnologias que permite a la nave pasar a traves de los portales para llegar al siguiente nivel
-- disparar a los enemigos para ganar tener el mayor score posible
-- esquivar los asteroides y naves enemigas para no morir
-- el jugador no puede pasar al siguiente nivel si no ha recolectado todos los artefactos necesarios
+- Buscar la puerta de salida en cada nivel sin morir para avanzar al siguiente nivel
+- Destruir a los enemigos para obtener puntos y poder obtener el power up shoot
+- Matar al final boss para ganar el juego
 
 ## 4 enemigos
 
 En mi juego hay 4 enemigos:
 
-- asteroides, no se pueden destruir, pero si se pueden esquivar
-- enemigos arrañas, se pueden destruir con un disparo y dan 10 puntos, usualmente no se mueve muy rapido
-- enemigos circulares azules, se pueden destruir con un disparo y dan 15 puntos, usualmente se mueve mas rapido que los enemigos arrañas y "rodan"
-- enemigos circulares rojos, son muy grandes y no se pueden destruir
+- Murciélagos: Son enemigos voladores que se mueven de arriba a bajo, tienen 1 de vida y 1 de daño
+- Sombras: Son enemigos que se mueven de izquierda a derecha, tienen 1 de vida y 1 de daño
+- Gigante de Hielo: Es un enemigo que se mueve de izquierda a derecha, tiene 3 de vida y 1 de daño
+- Boss: Es un enemigo que se mueve de izquierda a derecha, tiene 20 de vida y 1 de daño
 
 ## Guía de uso
 
@@ -71,9 +88,8 @@ Los principales cambios realizados en el motor fueron los siguientes:
 - Se agrego un audio manager para reproducir música de fondo y efectos de sonido
 - Se agregaron nuevos lua bindings para poder cargar y reproducir música y efectos de sonido
 - Se arreglaron varios bugs en el motor, como el bug que no borraba los entities y components al cambiar de escena, lo cual llevaba a tener nuevos entities con componentes de la escena anterior
-- Se agrego el score sytem que permite llevar la cuenta del score del jugador y mostrarlo en pantalla
-- Se agrego el sistema de disparo, que permite al jugador disparar a los enemigos de manera "infinita" ya que el unico limite es la frecuencia con el cual el/la jugador/a puede darle click a la tecla de espacio
-- Una considerable modificación fue la creación de varios archivos para el ECS, ya que el archivo ECS.h estaba muy grande y dificultaba la lectura del código. Para esto se crearon los archivos component.hpp, entity.hpp, entity.cpp, system.hpp y system.cpp, el archivo ECS.hpp se modifico para incluir los nuevos archivos, esa modificación no genera cambios en el funcionamiento del motor ni tampoco tiene impacto en runtime performance.
+- Los niveles fueron creados utilizando Tiled, y se crearon scripts en lua para cargar los niveles y los assets necesarios
+- Se agregaron nuevos componentes y sistemas para manejar la lógica de los enemigos y del jugador
 
 Adjunto se agrego una serie de screenshots del juego ejecutandose:
 ![screenshot del menu del juego](documentation/main_menu.PNG)
@@ -89,7 +105,7 @@ Adjunto se agrego una serie de screenshots del juego ejecutandose:
 Para instalar las bibliotecas necesarias en linux, ejecute el siguiente comando:
 
 ```bash
-sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev lua5.3 liblua5.3-dev
+sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev lua5.3 liblua5.3-dev libtinyxml2-dev
 ```
 
 ## Puntos extras
@@ -309,9 +325,9 @@ classDiagram
 - [arcade classic font](https://www.1001fonts.com/arcadeclassic-font.html)
 - [tileset de ruinas](https://bdragon1727.itch.io/platform-asset-part-4)
 - [asset del knight](https://aamatniekss.itch.io/fantasy-knight-free-pixelart-animated-character)
+- [asset del boss](https://zneeke.itch.io/dark-fantasy-big-boss-1)
+- [asset de las sombras](https://zneeke.itch.io/dark-fantasy-monster-pack-1)
+- [asset del gigante de hielo](https://chierit.itch.io/boss-frost-guardian)
+- [asset de los murciélagos](https://zneeke.itch.io/dark-fantasy-monster-pack-1)
 - Music made by game developer [Namlin](https://github.com/namlin)
 - [dungeon tileset](https://raou.itch.io/dark-dun)
-
-## TODO
-
-- [ ] Implement new scene introducing the characters after intro scene in some sort of "cinematic"
