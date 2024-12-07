@@ -128,58 +128,51 @@ Para obtener puntos extras, implemente las siguientes características:
 classDiagram
 
     class Game {
-        -SDL_Window* window
-        -bool isRunning
-        -uint32_t mPreviousFrame
-        -bool isPaused
-        -bool is_debug_mode_activated
-        -SDLManager& sdl_manager
-        +SDL_Rect camera
-        +int map_height
-        +int map_width
-        +int player_score
-        +const int WINDOW_WIDTH
-        +const int WINDOW_HEIGHT
-        +SDL_Renderer* renderer
-        +std::unique_ptr<Registry>registry
-        +std::unique_ptr<SceneManager>scene_manager
-        +std::unique_ptr<AssetsManager>assets_manager
-        +std::unique_ptr<EventManager>events_manager
-        +std::unique_ptr<ControllerManager>controller_manager
-        +std::unique_ptr<AudioManager>audio_manager
-        +std::unique_ptr<AnimationManager>animation_manager
-        +sol::state lua
-        +std::vector<std::unique_ptr<SDL_GameController, decltype(controllerDeleter)>> controllers
-        -Game()
-        -~Game()
-        -void processInput()
-        -void update()
-        -void render()
-        -void setup()
-        -void run_scene()
-
-        +void init()
-        +void run()
-        +void destroy()
-        +void print_game_data()
-        +static Game& get_instance()
+        -window: SDL_Window*
+        -camera: SDL_Rect
+        -isRunning: bool
+        -mPreviousFrame: int
+        -isPaused: bool
+        -map_height: int
+        -map_width: int
+        -player_location: std::tuple<int, int>
+        -player_score: int
+        -WINDOW_WIDTH: int
+        -WINDOW_HEIGHT: int
+        -renderer: SDL_Renderer*
+        -registry: std::unique_ptr<Registry>
+        -scene_manager: std::unique_ptr<SceneManager>
+        -assets_manager: std::unique_ptr<AssetsManager>
+        -events_manager: std::unique_ptr<EventManager>
+        -controller_manager: std::unique_ptr<ControllerManager>
+        -audio_manager: std::unique_ptr<AudioManager>
+        -lua: sol::state
+        +Game()
+        +~Game()
+        +processInput()
+        +update()
+        +render()
+        +setup()
+        +run_scene()
+        +init()
+        +run()
+        +destroy()
+        +print_game_data()
+        +get_instance(): Game&
     }
-    class SceneManager {
-        -std::map<string, string> scenes
-        -string next_scene
-        -bool is_scene_running = false
+    class SceneManager{
+        -std::map<std::string, std::string> scenes
+        -std::string next_scene
+        -bool is_scene_running
         -std::unique_ptr<SceneLoader> scene_loader
 
-        +SceneManager()
-        +~SceneManager()
-
-        +void load_scene_from_script(string scene_path, sol::state lua)
-        +void load_scene()
-        +string get_next_scene() const
-        +void set_next_scene(string next_scene)
-        +bool is_current_scene_running() const
-        +void start_scene()
-        +void stop_scene()
+        +get_next_scene()
+        +load_scene_from_script()
+        +load_scene()
+        +set_next_scene()
+        +is_current_scene_running()
+        +start_scene()
+        +stop_scene()
     }
     class AssetsManager {
         -textures: std::map<std::string, SDL_Texture*>
@@ -200,6 +193,7 @@ classDiagram
         +subscribe_to_event<TEvent, TOwner>(TOwner*, void (TOwner::*)(TEvent&))
         +emit_event<TEvent, TArgs>(TArgs...)
     }
+
     class ControllerManager {
         -action_key_name: std::map<std::string, int>
         -key_state: std::map<int, bool>
@@ -226,22 +220,7 @@ classDiagram
         +set_mouse_button_to_pressed(int)
         +set_mouse_button_to_up(int)
     }
-    class StatsManager {
-        -std::unordered_map<string, StatsComponent> _tagToStat
-        -StatsManager()
-        +static StatsManager& GetInstance()
-        +void AddStat(string tag, StatsComponent stat)
-        +void AddStatsToEntity(Entity &entity)
-        +void Clear()
-        +std::optional<StatsComponent> operator[](string tag) const
-    }
-    class AnimationManager {
-        -map<string, AnimationData> animations
-        +AnimationManager()
-        +~AnimationManager()
-        +void add_animation(string animation_id, string texture_id, int width, int height, int num_frames, int frame_speed_rate, bool is_loop)
-        +AnimationData get_animation(string animation_id)
-    }
+
     class AudioManager {
         -music_tracks: std::map<std::string, Mix_Music*>
         -sound_effects: std::map<std::string, Mix_Chunk*>
@@ -258,6 +237,7 @@ classDiagram
         +stop_all_sounds()
         +clear_audio()
     }
+
     class Registry {
         -componentsPools: std::vector<std::shared_ptr<IPool>>
         -entityComponentSignatures: std::vector<Signature>
@@ -294,6 +274,7 @@ classDiagram
         +operator!=(const Entity& other) const: bool
         +operator>(const Entity& other) const: bool
         +operator<(const Entity& other) const: bool  
+
         +add_component<TComponent, TArgs>(TArgs...)
         +remove_component<TComponent>()
         +has_component<TComponent>(): bool
@@ -318,29 +299,16 @@ classDiagram
     }
 
     class SceneLoader {
-        -std::set<string> tags_with_damage_colliders
         +SceneLoader()
         +~SceneLoader()
-        -void load_sounds(sol::table sounds, std::unique_ptr<AudioManager> audio_manager)
-        -void load_music(sol::table music, std::unique_ptr<AudioManager> audio_manager)
-        -void load_sprites(SDL_Renderer* renderer, sol::table sprites, std::unique_ptr<AssetsManager> asset_manager)
-        -void load_fonts(sol::table fonts, std::unique_ptr<AssetsManager> asset_manager)
-        -void load_buttons(sol::table buttons, std::unique_ptr<ControllerManager> controller_manager)
-        -void load_keys_actions(sol::table keys, std::unique_ptr<ControllerManager> controller_manager)
-        -void load_entities(sol::state lua, sol::table entities, std::unique_ptr<Registry> registry)
-        -void load_entity(sol::state lua, Entity entity, sol::table entityTable)
-        -void load_animations(sol::table animations, std::unique_ptr<AnimationManager> animation_manager)
-        -void LoadMap(sol::table map, std::unique_ptr<Registry> registry, string script_path, sol::state lua)
-        -void LoadLayer(std::unique_ptr<Registry> registry, tinyxml2::XMLElement* layerElement, int tWidth, int tHeight, int mWidth, string tileSet, int columns)
-        -void LoadColliders(std::unique_ptr<Registry> registry, tinyxml2::XMLElement* objectGroup)
-        -void load_enemy_colliders(std::unique_ptr<Registry> registry, tinyxml2::XMLElement* objectGroup)
-        -void load_enemies(Registry registry, string path, tinyxml2::XMLElement* objectGroup, sol::state lua)
-        -void load_damage_colliders(sol::table colliders)
-        -void load_stats(sol::table stats)
-
-        +void load_scene(string scene_path, sol::state lua, std::unique_ptr<AssetsManager> asset_manager,
-            std::unique_ptr<ControllerManager> controller_manager, std::unique_ptr<AudioManager> audio_manager,
-            std::unique_ptr<Registry> registry, std::unique_ptr<AnimationManager> animation_manager, SDL_Renderer* renderer)
+        +load_scene(std::string, sol::state&, std::unique_ptr<AssetsManager>&, std::unique_ptr<ControllerManager>&, std::unique_ptr<AudioManager>&, std::unique_ptr<Registry>&, SDL_Renderer*)
+        -load_sounds(sol::table&, std::unique_ptr<AudioManager>&)
+        -load_music(sol::table&, std::unique_ptr<AudioManager>&)
+        -load_sprites(SDL_Renderer*, sol::table&, std::unique_ptr<AssetsManager>&)
+        -load_fonts(sol::table&, std::unique_ptr<AssetsManager>&)
+        -load_buttons(sol::table&, std::unique_ptr<ControllerManager>&)
+        -load_keys_actions(sol::table&, std::unique_ptr<ControllerManager>&)
+        -load_entities(sol::state&, sol::table&, std::unique_ptr<Registry>&)
     }
 
 
@@ -351,9 +319,7 @@ classDiagram
     Game "1" -- "1" EventManager
     Game "1" -- "1" ControllerManager
     Game "1" -- "1" AudioManager
-    Game "1" -- "1" AnimationManager
     Game "1" -- "1" Registry
-    Game "1" -- "1" StatsManager
     Registry "1" -- "*" Entity
     Registry "1" -- "*" System
     Entity "1" -- "0..*" Component
