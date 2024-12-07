@@ -25,15 +25,15 @@ public:
      * @param lua sol lua state
      */
     void create_lua_binding(sol::state& lua) {
-        // classes
+        // Classes
         lua.new_usertype<Entity>("entity");
 
-        // key and mouse related functions
+        // Controller and Input Functions
         lua.set_function("is_action_activated", is_action_activated);
         lua.set_function("is_mouse_button_pressed", is_mouse_button_pressed);
         lua.set_function("get_mouse_position", get_mouse_position);
 
-        // movement, rotation and position related functions
+        // Rigid Body and Movement Functions
         lua.set_function("set_velocity", set_velocity);
         lua.set_function("get_velocity", get_velocity);
         lua.set_function("get_buffered_velocity", get_buffered_velocity);
@@ -42,61 +42,54 @@ public:
         lua.set_function("set_position", set_position);
         lua.set_function("get_position", get_position);
         lua.set_function("get_size", get_size);
-
         lua.set_function("add_force", add_force);
-        lua.set_function("flip_sprite", flip_sprite);
 
-        // animation related functions
+        // Animation and Sprite Functions
         lua.set_function("change_animation", change_animation);
         lua.set_function("get_animation_frame", get_animation_frame);
+        lua.set_function("flip_sprite", flip_sprite);
+        lua.set_function("looking_right", looking_right);
 
-        // general entity related functions
+        // Entity Management Functions
         lua.set_function("get_tag", get_tag);
         lua.set_function("get_class", get_class);
-        // lua.set_function("reset_bullet", reset_bullet);
-        // lua.set_function("update_player_location", update_player_location);
         lua.set_function("kill_entity", kill_entity);
         lua.set_function("increment_player_velocity", increment_player_velocity);
         lua.set_function("get_player_velocity", get_player_velocity);
-        // lua.set_function("shoot_bullet", shoot_bullet);
 
-        // scene related functions
+        // Scene Management Functions
         lua.set_function("go_to_scene", go_to_scene);
+        lua.set_function("reset_camera", reset_camera);
 
-        // collision related functions
+        // Collision and Physics Functions
         lua.set_function("top_collision", top_collision);
         lua.set_function("left_collision", left_collision);
         lua.set_function("bottom_collision", bottom_collision);
         lua.set_function("right_collision", right_collision);
+        lua.set_function("set_box_collider", set_box_collider);
+        lua.set_function("get_box_collider", get_box_collider);
 
-        // sound and music related functions
+        // Audio Functions
         lua.set_function("play_sound", play_sound);
         lua.set_function("play_music", play_music);
         lua.set_function("stop_all_sounds", stop_all_sounds);
 
-        // camera
-        lua.set_function("reset_camera", reset_camera);
-
-        // state related funcitons
+        // State Management Functions
         lua.set_function("get_state", get_state);
         lua.set_function("set_state", set_state);
         lua.set_function("set_next_state", set_next_state);
         lua.set_function("get_next_state", get_next_state);
 
+        // Action and Cooldown Functions
         lua.set_function("can_perform_action", can_perform_action);
         lua.set_function("perform_action", perform_action);
 
-        lua.set_function("set_box_collider", set_box_collider);
-        lua.set_function("get_box_collider", get_box_collider);
-
+        // Projectile Functions
         lua.set_function("create_projectile", create_projectile);
         lua.set_function("create_projectile_with_animation", create_projectile_with_animation);
-
-        lua.set_function("looking_right", looking_right);
-
         lua.set_function("shoot_fireball", shoot_fireball);
 
-        // stats related functions
+        // Stats and Player Functions
         lua.set_function("get_health", get_health);
         lua.set_function("set_health", set_health);
         lua.set_function("get_damage", get_damage);
