@@ -10,7 +10,15 @@
 #include "../components/tag_component.hpp"
 #include "../event_manager/event_manager.hpp"
 
+/**
+ * @brief The EnemyCollisionSystem class
+ * The EnemyCollisionSystem class is a class for managing enemy collisions.
+ */
 class EnemyCollisionSystem : public System {
+    /**
+     * @brief The Info struct
+     * The Info struct represents the information of an entity.
+     */
     struct Info {
         float X;
         float Y;
@@ -19,12 +27,21 @@ class EnemyCollisionSystem : public System {
     };
 
 public:
+
+    /**
+     * @brief Construct a new Enemy Collision System object
+     */
     EnemyCollisionSystem() {
         this->RequireComponent<EnemyColliderComponent>();
         RequireComponent<TransformComponent>();
         RequireComponent<TagComponent>();
     }
 
+    /**
+     * @brief Update the enemy collision system
+     * @param eventManager The event manager
+     * @param lua The lua state
+     */
     void update(const std::unique_ptr<EventManager> &eventManager, sol::state& lua) {
         auto entities = get_entities();
 
@@ -70,6 +87,12 @@ public:
         }
     }
 
+    /**
+     * @brief Check if there is a collision between two entities
+     * @param a The first entity
+     * @param b The second entity
+     * @return True if there is a collision, false otherwise
+     */
     static bool checkAABBCollision(const Info& a, const Info& b) {
         return
             a.X < b.X + b.Width &&

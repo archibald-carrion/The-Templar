@@ -7,13 +7,26 @@
 #include "../ECS/ECS.hpp"
 #include <cmath>
 
+/**
+ * @brief The RenderCircularColliderSystem class
+ * The RenderCircularColliderSystem class is a class for rendering circular colliders.
+ */
 class RenderCircularColliderSystem : public System {
 public:
+
+    /**
+     * @brief Construct a new Render Circular Collider System object
+     */
     RenderCircularColliderSystem() {
         RequireComponent<CircleColliderComponent>();
         RequireComponent<TransformComponent>();
     }
 
+    /**
+     * @brief Update the render circular collider system
+     * @param renderer The SDL renderer
+     * @param camera The camera
+     */
     void update(SDL_Renderer* renderer, SDL_Rect& camera) {
         for (auto entity : get_entities()) {
             const auto& collider = entity.get_component<CircleColliderComponent>();

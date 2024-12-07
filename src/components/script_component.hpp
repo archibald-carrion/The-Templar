@@ -12,8 +12,8 @@ struct ScriptComponent {
     sol::function on_collision; // on collision function
     sol::function on_click; // on click function
     sol::function on_init; // on init function
-    sol::function on_damage;
-    sol::function on_perform;
+    sol::function on_damage; // on damage function
+    sol::function on_perform; // on perform function
 
     /**
      * @brief Construct a new Script Component object

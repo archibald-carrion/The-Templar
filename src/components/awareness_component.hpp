@@ -7,11 +7,10 @@
 
 /**
  * @brief Component for the awareness of an entity
- *
  */
 struct AwarenessComponent {
-    double Radius;
-    double PursuitSpeed;
+    double Radius; // Radius of awareness of the entity
+    double PursuitSpeed; // Pursuit speed of the entity
 };
 
 #endif //AWARENESS_COMPONENT_HPP

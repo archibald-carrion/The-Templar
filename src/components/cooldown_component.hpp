@@ -23,9 +23,9 @@ struct TimingTracer {
  *
  */
 struct CooldownsComponent {
-    TimingTracer Global;
-    std::map<std::string, TimingTracer> PlayerActions;
-    std::string LastPerformed;
+    TimingTracer Global; // Global timing tracer
+    std::map<std::string, TimingTracer> PlayerActions; // Player actions
+    std::string LastPerformed; // Last performed action
 
     std::optional<TimingTracer> GlobalBuffer;
 

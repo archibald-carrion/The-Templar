@@ -8,21 +8,34 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+/**
+ * @brief The SDLManager class
+ * The SDLManager class is a class for managing SDL.
+ */
 class SDLManager {
-	bool _validState = true;
+	bool _validState = true; // Valid state of SDL
 
 public:
+
+	/**
+	 * @brief Get the instance of the SDLManager
+	 * @return The instance of the SDLManager
+	 */
 	static SDLManager& getInstance() {
 		static SDLManager instance;
 		return instance;
 	}
 
-	SDLManager(const SDLManager&) = delete;
-	SDLManager& operator=(const SDLManager&) = delete;
+	SDLManager(const SDLManager&) = delete; // Delete copy constructor
+	SDLManager& operator=(const SDLManager&) = delete; // Delete copy assignment
 
-	[[nodiscard]] bool isValid() const { return _validState; }
+	[[nodiscard]] bool isValid() const { return _validState; } // Check if SDL is valid
 
 private:
+
+	/**
+	 * @brief Construct a new SDLManager object
+	 */
 	SDLManager() {
 		if (SDL_Init(SDL_INIT_EVERYTHING) != 0
 			|| IMG_Init(SDL_INIT_VIDEO) != 0
@@ -33,6 +46,9 @@ private:
 		}
 	}
 
+    /**
+	 * @brief Destroy the SDLManager object
+	 */
 	~SDLManager() {
 		SDL_Quit();
 		IMG_Quit();

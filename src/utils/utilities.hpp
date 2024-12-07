@@ -7,6 +7,10 @@
 
 #include <cstdint>
 
+/**
+ * @brief The Info struct
+ * The Info struct represents the information of an entity.
+ */
 struct Info {
     float X;
     float Y;
@@ -14,6 +18,12 @@ struct Info {
     int32_t Height;
 };
 
+/**
+ * @brief Check if two entities are colliding.
+ * @param a The first entity.
+ * @param b The second entity.
+ * @return True if the entities are colliding, false otherwise.
+ */
 static bool checkAABBCollision(const Info& a, const Info& b) {
     return
         a.X < b.X + b.Width &&

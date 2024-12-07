@@ -4,12 +4,23 @@
 #include "../components/RigidBodyComponent.hpp"
 #include "../ECS/ECS.hpp"
 
+/**
+ * @brief The PhysicsSystem class
+ * The PhysicsSystem class is a class for managing physics.
+ */
 class PhysicsSystem : public System {
 public:
+
+    /**
+     * @brief Construct a new Physics System object
+     */
     PhysicsSystem() {
         RequireComponent<RigidBodyComponent>();
     }
 
+    /**
+     * @brief Update the physics system
+     */
     void update() {
         for (auto entity : get_entities()) {
             auto& rigidbody = entity.get_component<RigidBodyComponent>();

@@ -6,13 +6,26 @@
 #include "../components/transform_component.hpp"
 #include "../ECS/ECS.hpp"
 
+/**
+ * @brief The RenderEnemyColliderSystem class
+ * The RenderEnemyColliderSystem class is a class for rendering enemy colliders.
+ */
 class RenderEnemyColliderSystem : public System {
 public:
-   RenderEnemyColliderSystem() {
+
+    /**
+     * @brief Construct a new Render Enemy Collider System object
+     */
+    RenderEnemyColliderSystem() {
        RequireComponent<EnemyColliderComponent>();
        RequireComponent<TransformComponent>();
-   }
+    }
 
+    /**
+     * @brief Update the render enemy collider system
+     * @param renderer The SDL renderer
+     * @param camera The camera
+     */
     void update(SDL_Renderer* renderer, SDL_Rect& camera) {
         for (auto entity : get_entities()) {
             const auto& collider = entity.get_component<EnemyColliderComponent>();

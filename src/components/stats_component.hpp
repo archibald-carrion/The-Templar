@@ -8,7 +8,6 @@
 #include <cstdint>
 /**
  * @brief Component for the stats of an entity
- *
  */
 struct StatsComponent {
     int32_t Points { 0 };

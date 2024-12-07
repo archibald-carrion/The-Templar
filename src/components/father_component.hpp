@@ -7,6 +7,9 @@
 
 #include "../ECS/ECS.hpp"
 
+/**
+ * @brief Component for father entities
+ */
 struct FatherComponent {
     std::vector<Entity> Children;
 };

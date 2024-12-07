@@ -28,19 +28,31 @@ inline auto fontDeleter = [](TTF_Font* font) {
     TTF_CloseFont(font);
 };
 
+/**
+ * @brief The StatsSystem class
+ * The StatsSystem class is a class for managing stats.
+ */
 class StatsSystem : public System {
-    std::unique_ptr<TTF_Font, decltype(fontDeleter)> font;
-    const int FONT_SIZE = 38;
-    const char* FONT_PATH = "./assets/fonts/ARCADECLASSIC.TTF";
-    const int MARGIN = 20;
+    std::unique_ptr<TTF_Font, decltype(fontDeleter)> font; // Font for rendering text
+    const int FONT_SIZE = 38; // Font size
+    const char* FONT_PATH = "./assets/fonts/ARCADECLASSIC.TTF"; // Font path
+    const int MARGIN = 20; // Margin
 
 public:
+
+    /**
+     * @brief Construct a new Stats System object
+     */
     StatsSystem() {
         RequireComponent<TagComponent>();
         RequireComponent<StatsComponent>();
         font.reset(TTF_OpenFont(FONT_PATH, FONT_SIZE));
     }
 
+    /**
+     * @brief Update the stats system
+     * @param renderer The SDL renderer
+     */
     void update(SDL_Renderer* renderer) {
         std::vector<Entity>& entities = get_entities();
 

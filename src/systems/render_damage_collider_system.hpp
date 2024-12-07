@@ -10,13 +10,26 @@
 #include "../components/transform_component.hpp"
 #include "../ECS/ECS.hpp"
 
+/**
+ * @brief The RenderDamageColliderSystem class
+ * The RenderDamageColliderSystem class is a class for rendering damage colliders.
+ */
 class RenderDamageColliderSystem : public System {
 public:
+
+    /**
+     * @brief Construct a new Render Damage Collider System object
+     */
     RenderDamageColliderSystem() {
         RequireComponent<DamageColliderComponent>();
         RequireComponent<TransformComponent>();
     }
 
+    /**
+     * @brief Update the render damage collider system
+     * @param renderer The SDL renderer
+     * @param camera The camera
+     */
     void update(SDL_Renderer* renderer, SDL_Rect& camera) {
         for (auto entity : get_entities()) {
             const auto& collider = entity.get_component<DamageColliderComponent>();

@@ -10,28 +10,32 @@
 
 /**
  * @brief Represents an attack
- *
  */
 struct Attack {
-    std::string Name;
-    std::pair<size_t, size_t> AwarenessX;
+    std::string Name; // Name of the attack
+    std::pair<size_t, size_t> AwarenessX; // Awareness X
 };
 
 /**
  * @brief Component for cycle of different attacks
- *
  */
 struct AttackCycleComponent {
-    std::string ProjectileScriptPath;
-    double RangeDistance = 0;
-    std::vector<Attack> Attacks {};
+    std::string ProjectileScriptPath; // Projectile script path
+    double RangeDistance = 0; // Range distance
+    std::vector<Attack> Attacks {}; // List of attacks
+    size_t CurrentAttack = 0; // Current attack
 
-    size_t CurrentAttack = 0;
-
+    /**
+     * @brief Get the next attack
+     * @return Attack
+     */
     Attack GetNextAttack() {
         return Attacks[CurrentAttack];
     }
 
+    /**
+     * @brief Perform the next attack
+     */
     void PerformAttack() {
         CurrentAttack++;
         if (CurrentAttack >= Attacks.size())

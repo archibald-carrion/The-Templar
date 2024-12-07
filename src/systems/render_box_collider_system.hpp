@@ -6,13 +6,26 @@
 #include "../components/transform_component.hpp"
 #include "../ECS/ECS.hpp"
 
+/**
+ * @brief The RenderBoxColliderSystem class
+ * The RenderBoxColliderSystem class is a class for rendering box colliders.
+ */
 class RenderBoxColliderSystem : public System {
 public:
-   RenderBoxColliderSystem() {
+
+    /**
+     * @brief Construct a new Render Box Collider System object
+     */
+    RenderBoxColliderSystem() {
        RequireComponent<BoxColliderComponent>();
        RequireComponent<TransformComponent>();
-   }
+    }
 
+    /**
+     * @brief Update the render box collider system
+     * @param renderer The SDL renderer
+     * @param camera The camera
+     */
     void update(SDL_Renderer* renderer, SDL_Rect& camera) {
         for (auto entity : get_entities()) {
             const auto& collider = entity.get_component<BoxColliderComponent>();

@@ -7,6 +7,10 @@
 
 #include <cstdint>
 
+/**
+ * @struct StateComponent
+ * @brief The StateComponent struct represents a state component for an entity.
+ */
 struct StateComponent {
     int8_t state { 1 };
     int8_t next_state { -1 };

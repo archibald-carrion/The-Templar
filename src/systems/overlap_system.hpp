@@ -18,7 +18,19 @@ enum Direction
   RIGHT
 };
 
+/**
+ * @brief The OverlapSystem class
+ * The OverlapSystem class is a class for managing overlap collisions.
+ */
 class OverlapSystem : public System {
+
+    /**
+     * @brief Check if two entities are colliding.
+     * @param a The first entity.
+     * @param b The second entity.
+     * @param dir The direction of the collision.
+     * @return True if the entities are colliding, false otherwise.
+     */
     bool check_collision(Entity a, Entity b, Direction dir) {
        auto &aCollider = a.get_component<BoxColliderComponent>();
         auto &bCollider = b.get_component<BoxColliderComponent>();
@@ -66,6 +78,11 @@ class OverlapSystem : public System {
         return false;
     }
 
+    /**
+     * @brief Avoid overlap between two entities.
+     * @param a The first entity.
+     * @param b The second entity.
+     */
     void avoid_overlap(Entity a, Entity b) {
         auto &aCollider = a.get_component<BoxColliderComponent>();
         auto &aTransform = a.get_component<TransformComponent>();
@@ -98,6 +115,9 @@ class OverlapSystem : public System {
     }
 
 public:
+    /**
+     * @brief Construct a new OverlapSystem object
+     */
     OverlapSystem() {
         RequireComponent<BoxColliderComponent>();
         RequireComponent<RigidBodyComponent>();
@@ -105,10 +125,18 @@ public:
         RequireComponent<TagComponent>();
     }
 
+    /**
+     * @brief Update the overlap system
+     * @param event_manager The event manager
+     */
     void SubscribeToCollisionEvent(const std::unique_ptr<EventManager>& event_manager) {
         event_manager->subscribe_to_event<CollisionEvent, OverlapSystem>(this, &OverlapSystem::OnCollisionEvent);
     }
 
+    /**
+     * @brief Update the overlap system
+     * @param event_manager The event manager
+     */
     void OnCollisionEvent(CollisionEvent& e) {
         auto& a_rigidbody = e.a.get_component<RigidBodyComponent>();
         auto& b_rigidbody = e.b.get_component<RigidBodyComponent>();
