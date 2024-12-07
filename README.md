@@ -347,6 +347,8 @@ classDiagram
     Game "1" -- "1" AnimationManager
     Game "1" -- "1" Registry
     Game "1" -- "1" StatsManager
+    Game "1" -- "1" AnimationManager
+    Game "1" -- "1" StatsManager
     Registry "1" -- "*" Entity
     Registry "1" -- "*" System
     Entity "1" -- "0..*" Component
