@@ -127,7 +127,6 @@ classDiagram
         -bool isPaused
         -bool is_debug_mode_activated
         -SDLManager& sdl_manager
-
         +SDL_Rect camera
         +int map_height
         +int map_width
@@ -144,7 +143,6 @@ classDiagram
         +std::unique_ptr~AnimationManager~ animation_manager
         +sol::state lua
         +std::vector~std::unique_ptr<SDL_GameController, decltype(controllerDeleter)>~ controllers
-
         -Game()
         -~Game()
         -void processInput()
@@ -195,7 +193,6 @@ classDiagram
         +subscribe_to_event<TEvent, TOwner>(TOwner*, void (TOwner::*)(TEvent&))
         +emit_event<TEvent, TArgs>(TArgs...)
     }
-
     class ControllerManager {
         -action_key_name: std::map<std::string, int>
         -key_state: std::map<int, bool>
@@ -222,19 +219,15 @@ classDiagram
         +set_mouse_button_to_pressed(int)
         +set_mouse_button_to_up(int)
     }
-
     class StatsManager {
         -std::unordered_map~string, StatsComponent~ _tagToStat
-
         -StatsManager()
         +static StatsManager& GetInstance()
-
         +void AddStat(string tag, StatsComponent stat)
         +void AddStatsToEntity(Entity &entity)
         +void Clear()
         +std::optional~StatsComponent~ operator[](string tag) const
     }
-
     class AnimationManager {
         -map~string, AnimationData~ animations
         +AnimationManager()
@@ -242,7 +235,6 @@ classDiagram
         +void add_animation(string animation_id, string texture_id, int width, int height, int num_frames, int frame_speed_rate, bool is_loop)
         +AnimationData get_animation(string animation_id)
     }
-
     class AudioManager {
         -music_tracks: std::map<std::string, Mix_Music*>
         -sound_effects: std::map<std::string, Mix_Chunk*>
@@ -259,7 +251,6 @@ classDiagram
         +stop_all_sounds()
         +clear_audio()
     }
-
     class Registry {
         -componentsPools: std::vector<std::shared_ptr<IPool>>
         -entityComponentSignatures: std::vector<Signature>
@@ -296,7 +287,6 @@ classDiagram
         +operator!=(const Entity& other) const: bool
         +operator>(const Entity& other) const: bool
         +operator<(const Entity& other) const: bool  
-
         +add_component<TComponent, TArgs>(TArgs...)
         +remove_component<TComponent>()
         +has_component<TComponent>(): bool
@@ -322,10 +312,8 @@ classDiagram
 
     class SceneLoader {
         -std::set~string~ tags_with_damage_colliders
-
         +SceneLoader()
         +~SceneLoader()
-
         -void load_sounds(sol::table sounds, std::unique_ptr~AudioManager~ audio_manager)
         -void load_music(sol::table music, std::unique_ptr~AudioManager~ audio_manager)
         -void load_sprites(SDL_Renderer* renderer, sol::table sprites, std::unique_ptr~AssetsManager~ asset_manager)
