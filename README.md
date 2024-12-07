@@ -145,9 +145,8 @@ classDiagram
         -controller_manager: std::unique_ptr<ControllerManager>
         -audio_manager: std::unique_ptr<AudioManager>
         -animation_manager: std::unique_ptr<AnimationManager>
+        -stats_manager: std::unique_ptr<StatsManager>
         -lua: sol::state
-        -controllers: std::vector<std::unique_ptr<SDL_GameController, decltype(controllerDeleter)>>
-
         +Game()
         +~Game()
         +processInput()
