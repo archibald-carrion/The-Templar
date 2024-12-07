@@ -134,15 +134,15 @@ classDiagram
         +const int WINDOW_WIDTH
         +const int WINDOW_HEIGHT
         +SDL_Renderer* renderer
-        +std::unique_ptr~Registry~ registry
-        +std::unique_ptr~SceneManager~ scene_manager
-        +std::unique_ptr~AssetsManager~ assets_manager
-        +std::unique_ptr~EventManager~ events_manager
-        +std::unique_ptr~ControllerManager~ controller_manager
-        +std::unique_ptr~AudioManager~ audio_manager
-        +std::unique_ptr~AnimationManager~ animation_manager
+        +std::unique_ptr<Registry>registry
+        +std::unique_ptr<SceneManager>scene_manager
+        +std::unique_ptr<AssetsManager>assets_manager
+        +std::unique_ptr<EventManager>events_manager
+        +std::unique_ptr<ControllerManager>controller_manager
+        +std::unique_ptr<AudioManager>audio_manager
+        +std::unique_ptr<AnimationManager>animation_manager
         +sol::state lua
-        +std::vector~std::unique_ptr<SDL_GameController, decltype(controllerDeleter)>~ controllers
+        +std::vector<std::unique_ptr<SDL_GameController, decltype(controllerDeleter)>> controllers
         -Game()
         -~Game()
         -void processInput()
@@ -158,10 +158,10 @@ classDiagram
         +static Game& get_instance()
     }
     class SceneManager {
-        -std::map~string, string~ scenes
+        -std::map<string, string> scenes
         -string next_scene
         -bool is_scene_running = false
-        -std::unique_ptr~SceneLoader~ scene_loader
+        -std::unique_ptr<SceneLoader> scene_loader
 
         +SceneManager()
         +~SceneManager()
@@ -220,16 +220,16 @@ classDiagram
         +set_mouse_button_to_up(int)
     }
     class StatsManager {
-        -std::unordered_map~string, StatsComponent~ _tagToStat
+        -std::unordered_map<string, StatsComponent> _tagToStat
         -StatsManager()
         +static StatsManager& GetInstance()
         +void AddStat(string tag, StatsComponent stat)
         +void AddStatsToEntity(Entity &entity)
         +void Clear()
-        +std::optional~StatsComponent~ operator[](string tag) const
+        +std::optional<StatsComponent> operator[](string tag) const
     }
     class AnimationManager {
-        -map~string, AnimationData~ animations
+        -map<string, AnimationData> animations
         +AnimationManager()
         +~AnimationManager()
         +void add_animation(string animation_id, string texture_id, int width, int height, int num_frames, int frame_speed_rate, bool is_loop)
@@ -311,29 +311,29 @@ classDiagram
     }
 
     class SceneLoader {
-        -std::set~string~ tags_with_damage_colliders
+        -std::set<string> tags_with_damage_colliders
         +SceneLoader()
         +~SceneLoader()
-        -void load_sounds(sol::table sounds, std::unique_ptr~AudioManager~ audio_manager)
-        -void load_music(sol::table music, std::unique_ptr~AudioManager~ audio_manager)
-        -void load_sprites(SDL_Renderer* renderer, sol::table sprites, std::unique_ptr~AssetsManager~ asset_manager)
-        -void load_fonts(sol::table fonts, std::unique_ptr~AssetsManager~ asset_manager)
-        -void load_buttons(sol::table buttons, std::unique_ptr~ControllerManager~ controller_manager)
-        -void load_keys_actions(sol::table keys, std::unique_ptr~ControllerManager~ controller_manager)
-        -void load_entities(sol::state lua, sol::table entities, std::unique_ptr~Registry~ registry)
+        -void load_sounds(sol::table sounds, std::unique_ptr<AudioManager> audio_manager)
+        -void load_music(sol::table music, std::unique_ptr<AudioManager> audio_manager)
+        -void load_sprites(SDL_Renderer* renderer, sol::table sprites, std::unique_ptr<AssetsManager> asset_manager)
+        -void load_fonts(sol::table fonts, std::unique_ptr<AssetsManager> asset_manager)
+        -void load_buttons(sol::table buttons, std::unique_ptr<ControllerManager> controller_manager)
+        -void load_keys_actions(sol::table keys, std::unique_ptr<ControllerManager> controller_manager)
+        -void load_entities(sol::state lua, sol::table entities, std::unique_ptr<Registry> registry)
         -void load_entity(sol::state lua, Entity entity, sol::table entityTable)
-        -void load_animations(sol::table animations, std::unique_ptr~AnimationManager~ animation_manager)
-        -void LoadMap(sol::table map, std::unique_ptr~Registry~ registry, string script_path, sol::state lua)
-        -void LoadLayer(std::unique_ptr~Registry~ registry, tinyxml2::XMLElement* layerElement, int tWidth, int tHeight, int mWidth, string tileSet, int columns)
-        -void LoadColliders(std::unique_ptr~Registry~ registry, tinyxml2::XMLElement* objectGroup)
-        -void load_enemy_colliders(std::unique_ptr~Registry~ registry, tinyxml2::XMLElement* objectGroup)
+        -void load_animations(sol::table animations, std::unique_ptr<AnimationManager> animation_manager)
+        -void LoadMap(sol::table map, std::unique_ptr<Registry> registry, string script_path, sol::state lua)
+        -void LoadLayer(std::unique_ptr<Registry> registry, tinyxml2::XMLElement* layerElement, int tWidth, int tHeight, int mWidth, string tileSet, int columns)
+        -void LoadColliders(std::unique_ptr<Registry> registry, tinyxml2::XMLElement* objectGroup)
+        -void load_enemy_colliders(std::unique_ptr<Registry> registry, tinyxml2::XMLElement* objectGroup)
         -void load_enemies(Registry registry, string path, tinyxml2::XMLElement* objectGroup, sol::state lua)
         -void load_damage_colliders(sol::table colliders)
         -void load_stats(sol::table stats)
 
-        +void load_scene(string scene_path, sol::state lua, std::unique_ptr~AssetsManager~ asset_manager,
-            std::unique_ptr~ControllerManager~ controller_manager, std::unique_ptr~AudioManager~ audio_manager,
-            std::unique_ptr~Registry~ registry, std::unique_ptr~AnimationManager~ animation_manager, SDL_Renderer* renderer)
+        +void load_scene(string scene_path, sol::state lua, std::unique_ptr<AssetsManager> asset_manager,
+            std::unique_ptr<ControllerManager> controller_manager, std::unique_ptr<AudioManager> audio_manager,
+            std::unique_ptr<Registry> registry, std::unique_ptr<AnimationManager> animation_manager, SDL_Renderer* renderer)
     }
 
 
