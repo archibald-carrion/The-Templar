@@ -121,210 +121,189 @@ Para obtener puntos extras, implemente las siguientes características:
 classDiagram
 
     class Game {
-        - SDL_Window* window
-        - bool isRunning
-        - uint32_t mPreviousFrame
-        - bool isPaused
-        - bool is_debug_mode_activated
-        - SDLManager& sdl_manager
-        + SDL_Rect camera
-        + int map_height
-        + int map_width
-        + int player_score
-        + const int WINDOW_WIDTH
-        + const int WINDOW_HEIGHT
-        + SDL_Renderer* renderer
-        + std::unique_ptr~Registry~ registry
-        + std::unique_ptr~SceneManager~ scene_manager
-        + std::unique_ptr~AssetsManager~ assets_manager
-        + std::unique_ptr~EventManager~ events_manager
-        + std::unique_ptr~ControllerManager~ controller_manager
-        + std::unique_ptr~AudioManager~ audio_manager
-        + std::unique_ptr~AnimationManager~ animation_manager
-        + sol::state lua
-        + std::vector~std::unique_ptr<SDL_GameController, decltype(controllerDeleter)>~ controllers
-        - Game()
-        - ~Game()
-        - void processInput()
-        - void update()
-        - void render()
-        - void setup()
-        - void run_scene()
-
-        + void init()
-        + void run()
-        + void destroy()
-        + void print_game_data()
-        + static Game& get_instance()
+        -window: SDL_Window*
+        -camera: SDL_Rect
+        -isRunning: bool
+        -mPreviousFrame: int
+        -isPaused: bool
+        -map_height: int
+        -map_width: int
+        -player_location: std::tuple<int, int>
+        -player_score: int
+        -WINDOW_WIDTH: int
+        -WINDOW_HEIGHT: int
+        -renderer: SDL_Renderer*
+        -registry: std::unique_ptr<Registry>
+        -scene_manager: std::unique_ptr<SceneManager>
+        -assets_manager: std::unique_ptr<AssetsManager>
+        -events_manager: std::unique_ptr<EventManager>
+        -controller_manager: std::unique_ptr<ControllerManager>
+        -audio_manager: std::unique_ptr<AudioManager>
+        -lua: sol::state
+        +Game()
+        +~Game()
+        +processInput()
+        +update()
+        +render()
+        +setup()
+        +run_scene()
+        +init()
+        +run()
+        +destroy()
+        +print_game_data()
+        +get_instance(): Game&
     }
+    class SceneManager{
+        -std::map<std::string, std::string> scenes
+        -std::string next_scene
+        -bool is_scene_running
+        -std::unique_ptr<SceneLoader> scene_loader
 
-    class SceneManager {
-        - std::map~string, string~ scenes
-        - string next_scene
-        - bool is_scene_running = false
-        - std::unique_ptr~SceneLoader~ scene_loader
-
-        + SceneManager()
-        + ~SceneManager()
-
-        + void load_scene_from_script(string scene_path, sol::state lua)
-        + void load_scene()
-        + string get_next_scene() const
-        + void set_next_scene(string next_scene)
-        + bool is_current_scene_running() const
-        + void start_scene()
-        + void stop_scene()
+        +get_next_scene()
+        +load_scene_from_script()
+        +load_scene()
+        +set_next_scene()
+        +is_current_scene_running()
+        +start_scene()
+        +stop_scene()
     }
-
     class AssetsManager {
-        - std::map~std::string, SDL_Texture*~ textures
-        - std::map~std::string, TTF_Font*~ fonts
-        + AssetsManager()
-        + ~AssetsManager()
-        + void clear_assets()
-        + void add_texture(SDL_Renderer*, std::string, std::string)
-        + SDL_Texture* get_texture(std::string)
-        + void add_font(std::string, std::string, int)
-        + TTF_Font* get_font(std::string)
+        -textures: std::map<std::string, SDL_Texture*>
+        -fonts: std::map<std::string, TTF_Font*>
+        +AssetsManager()
+        +~AssetsManager()
+        +clear_assets()
+        +add_texture(SDL_Renderer*, std::string, std::string)
+        +get_texture(std::string): SDL_Texture*
+        +add_font(std::string, std::string, int)
+        +get_font(std::string): TTF_Font*
     }
-
     class EventManager {
-        - std::map~std::type_index, std::unique_ptr<handler_list>~ subscribers
-        + EventManager()
-        + ~EventManager()
-        + void reset()
-        + void subscribe_to_event<TEvent, TOwner>(TOwner*, void (TOwner::*)(TEvent&))
-        + void emit_event<TEvent, TArgs>(TArgs...)
+        -subscribers: std::map<std::type_index, std::unique_ptr<handler_list>>
+        +EventManager()
+        +~EventManager()
+        +reset()
+        +subscribe_to_event<TEvent, TOwner>(TOwner*, void (TOwner::*)(TEvent&))
+        +emit_event<TEvent, TArgs>(TArgs...)
     }
 
     class ControllerManager {
-        - std::map~std::string, int~ action_key_name
-        - std::map~int, bool~ key_state
-        - std::map~std::string, int~ mouse_buttons_name
-        - std::map~int, bool~ mouse_button_state
-        - int mouse_position_x
-        - int mouse_position_y
-        + ControllerManager()
-        + ~ControllerManager()
-        + void clear()
-        + void add_key(std::string, int)
-        + bool is_key_pressed(std::string)
-        + void update_key(std::string, bool)
-        + void update_key(int, bool)
-        + void set_key_to_pressed(int)
-        + void set_key_to_pressed(std::string)
-        + void set_key_to_up(int)
-        + void set_key_to_up(std::string)
-        + void add_mouse_button(std::string, int)
-        + bool is_mouse_button_pressed(std::string)
-        + void update_mouse_button(int, bool)
-        + void set_mouse_position(int, int)
-        + std::tuple~int, int~ get_mouse_position()
-        + void set_mouse_button_to_pressed(int)
-        + void set_mouse_button_to_up(int)
-    }
-
-    class StatsManager {
-        - std::unordered_map~string, StatsComponent~ _tagToStat
-        + static StatsManager& GetInstance()
-        + void AddStat(string tag, StatsComponent stat)
-        + void AddStatsToEntity(Entity& entity)
-        + void Clear()
-        + std::optional~StatsComponent~ operator[](string tag) const
-    }
-
-    class AnimationManager {
-        - std::map~string, AnimationData~ animations
-        + AnimationManager()
-        + ~AnimationManager()
-        + void add_animation(string animation_id, string texture_id, int width, int height, int num_frames, int frame_speed_rate, bool is_loop)
-        + AnimationData get_animation(string animation_id)
+        -action_key_name: std::map<std::string, int>
+        -key_state: std::map<int, bool>
+        -mouse_buttons_name: std::map<std::string, int>
+        -mouse_button_state: std::map<int, bool>
+        -mouse_position_x: int
+        -mouse_position_y: int
+        +ControllerManager()
+        +~ControllerManager()
+        +clear()
+        +add_key(std::string, int)
+        +is_key_pressed(std::string): bool
+        +update_key(std::string, bool)
+        +update_key(int, bool)
+        +set_key_to_pressed(int)
+        +set_key_to_pressed(std::string)
+        +set_key_to_up(int)
+        +set_key_to_up(std::string)
+        +add_mouse_button(std::string, int)
+        +is_mouse_button_pressed(std::string): bool
+        +update_mouse_button(int, bool)
+        +set_mouse_position(int, int)
+        +get_mouse_position(): std::tuple<int, int>
+        +set_mouse_button_to_pressed(int)
+        +set_mouse_button_to_up(int)
     }
 
     class AudioManager {
-        - std::map~std::string, Mix_Music*~ music_tracks
-        - std::map~std::string, Mix_Chunk*~ sound_effects
-        + AudioManager()
-        + ~AudioManager()
-        + void add_music(std::string, std::string)
-        + Mix_Music* get_music(std::string)
-        + void add_sound_effect(std::string, std::string)
-        + Mix_Chunk* get_sound_effect(std::string)
-        + void play_music(std::string, int)
-        + void play_sound_effect(std::string, int)
-        + void stop_music(std::string)
-        + void stop_sound_effect(std::string)
-        + void stop_all_sounds()
-        + void clear_audio()
+        -music_tracks: std::map<std::string, Mix_Music*>
+        -sound_effects: std::map<std::string, Mix_Chunk*>
+        +AudioManager()
+        +~AudioManager()
+        +add_music(std::string, std::string)
+        +get_music(std::string): Mix_Music*
+        +add_sound_effect(std::string, std::string)
+        +get_sound_effect(std::string): Mix_Chunk*
+        +play_music(std::string, int)
+        +play_sound_effect(std::string, int)
+        +stop_music(std::string)
+        +stop_sound_effect(std::string)
+        +stop_all_sounds()
+        +clear_audio()
     }
 
     class Registry {
-        - std::vector~std::shared_ptr<IPool>~ componentsPools
-        - std::vector~Signature~ entityComponentSignatures
-        - std::unordered_map~std::type_index, std::shared_ptr<System>~ systems
-        - std::set~Entity~ entities_to_be_added
-        - std::set~Entity~ entities_to_be_killed
-        - std::deque~int~ free_ids
-        + int num_entities
-        + Registry()
-        + ~Registry()
-        + void update()
-        + Entity create_entity()
-        + void kill_entity(Entity)
-        + void add_component<TComponent, TArgs>(Entity, TArgs...)
-        + void remove_component<TComponent>(Entity)
-        + bool has_component<TComponent>(Entity)
-        + TComponent& get_component<TComponent>(Entity)
-        + void add_system<TSystem, TArgs>(TArgs...)
-        + void remove_system<TSystem>(Entity)
-        + bool has_system<TSystem>(Entity)
-        + TSystem& get_system<TSystem>()
-        + void add_entity_to_system(Entity)
-        + void remove_entity_from_system(Entity)
-        + void clear_all_entities()
+        -componentsPools: std::vector<std::shared_ptr<IPool>>
+        -entityComponentSignatures: std::vector<Signature>
+        -systems: std::unordered_map<std::type_index, std::shared_ptr<System>>
+        -entities_to_be_added: std::set<Entity>
+        -entities_to_be_killed: std::set<Entity>
+        -free_ids: std::deque<int>
+        +num_entities: int
+        +Registry()
+        +~Registry()
+        +update()
+        +create_entity(): Entity
+        +kill_entity(Entity)
+        +add_component<TComponent, TArgs>(Entity, TArgs...)
+        +remove_component<TComponent>(Entity)
+        +has_component<TComponent>(Entity): bool
+        +get_component<TComponent>(Entity): TComponent&
+        +add_system<TSystem, TArgs>(TArgs...)
+        +remove_system<TSystem>(Entity)
+        +has_system<TSystem>(Entity): bool
+        +get_system<TSystem>(): TSystem&
+        +add_entity_to_system(Entity)
+        +remove_entity_from_system(Entity)
+        +clear_all_entities()
     }
+     class Entity {
+        -id: int
+        -registry: Registry*
+        +Entity(int)
+        +~Entity()
+        +get_id(): int
+        +kill()
+        +operator==(const Entity& other) const: bool
+        +operator!=(const Entity& other) const: bool
+        +operator>(const Entity& other) const: bool
+        +operator<(const Entity& other) const: bool  
 
-    class Entity {
-        - int id
-        - Registry* registry
-        + Entity(int)
-        + ~Entity()
-        + int get_id()
-        + void kill()
-        + bool operator==(const Entity& other) const
-        + bool operator!=(const Entity& other) const
-        + bool operator>(const Entity& other) const
-        + bool operator<(const Entity& other) const
-        + void add_component<TComponent, TArgs>(TArgs...)
-        + void remove_component<TComponent>()
-        + bool has_component<TComponent>()
-        + TComponent& get_component<TComponent>()
+        +add_component<TComponent, TArgs>(TArgs...)
+        +remove_component<TComponent>()
+        +has_component<TComponent>(): bool
+        +get_component<TComponent>(): TComponent&
     }
 
     class System {
-        - Signature componentSignature
-        - std::vector~Entity~ entities
-        + System()
-        + ~System()
-        + void add_entity_to_system(Entity)
-        + void remove_entity_from_system(Entity)
-        + std::vector~Entity~ get_entities()
-        + const Signature& get_signature()
-        + void RequireComponent<TComponent>()
+        -componentSignature: Signature
+        -entities: std::vector<Entity>
+        +System()
+        +~System()
+        +add_entity_to_system(Entity)
+        +remove_entity_from_system(Entity)
+        +get_entities(): std::vector<Entity>
+        +get_signature(): const Signature&
+        +RequireComponent<TComponent>()
     }
 
+
     class Component {
-        + int get_id()
+        +get_id() int
     }
 
     class SceneLoader {
-        - std::set~string~ tags_with_damage_colliders
-        + SceneLoader()
-        + ~SceneLoader()
-        + void load_scene(string scene_path, sol::state lua, std::unique_ptr~AssetsManager~ asset_manager,
-            std::unique_ptr~ControllerManager~ controller_manager, std::unique_ptr~AudioManager~ audio_manager,
-            std::unique_ptr~Registry~ registry, std::unique_ptr~AnimationManager~ animation_manager, SDL_Renderer* renderer)
+        +SceneLoader()
+        +~SceneLoader()
+        +load_scene(std::string, sol::state&, std::unique_ptr<AssetsManager>&, std::unique_ptr<ControllerManager>&, std::unique_ptr<AudioManager>&, std::unique_ptr<Registry>&, SDL_Renderer*)
+        -load_sounds(sol::table&, std::unique_ptr<AudioManager>&)
+        -load_music(sol::table&, std::unique_ptr<AudioManager>&)
+        -load_sprites(SDL_Renderer*, sol::table&, std::unique_ptr<AssetsManager>&)
+        -load_fonts(sol::table&, std::unique_ptr<AssetsManager>&)
+        -load_buttons(sol::table&, std::unique_ptr<ControllerManager>&)
+        -load_keys_actions(sol::table&, std::unique_ptr<ControllerManager>&)
+        -load_entities(sol::state&, sol::table&, std::unique_ptr<Registry>&)
     }
+
 
     SceneLoader "1" -- "1" SceneManager
     Game "1" -- "1" Registry
@@ -333,8 +312,7 @@ classDiagram
     Game "1" -- "1" EventManager
     Game "1" -- "1" ControllerManager
     Game "1" -- "1" AudioManager
-    Game "1" -- "1" AnimationManager
-    Game "1" -- "1" StatsManager
+    Game "1" -- "1" Registry
     Registry "1" -- "*" Entity
     Registry "1" -- "*" System
     Entity "1" -- "0..*" Component
