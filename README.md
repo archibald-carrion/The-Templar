@@ -125,7 +125,6 @@ Para obtener puntos extras, implemente las siguientes características:
 
 ```mermaid
 classDiagram
-
     class Game {
         -window: SDL_Window*
         -camera: SDL_Rect
@@ -145,7 +144,10 @@ classDiagram
         -events_manager: std::unique_ptr<EventManager>
         -controller_manager: std::unique_ptr<ControllerManager>
         -audio_manager: std::unique_ptr<AudioManager>
+        -animation_manager: std::unique_ptr<AnimationManager>
         -lua: sol::state
+        -controllers: std::vector<std::unique_ptr<SDL_GameController, decltype(controllerDeleter)>>
+
         +Game()
         +~Game()
         +processInput()
@@ -362,7 +364,6 @@ classDiagram
     Game "1" -- "1" AudioManager
     Game "1" -- "1" AnimationManager
     Game "1" -- "1" Registry
-    Game "1" -- "1" SceneManager
     Game "1" -- "1" StatsManager
     Registry "1" -- "*" Entity
     Registry "1" -- "*" System
