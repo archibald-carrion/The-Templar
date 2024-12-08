@@ -8,7 +8,7 @@
 
 ## Entrega
 
-Fecha de entrega: 27 de octubre de 2024
+Fecha de entrega: 8 de diciembre de 2024
 
 ## Descripción del juego
 
