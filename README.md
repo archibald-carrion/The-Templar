@@ -94,7 +94,7 @@ Adjunto se agrego una serie de screenshots del juego ejecutandose:
 ![screenshot del primer nivel](documentation/level_01.PNG)
 ![screenshot del segundo nivel](documentation/level_02.PNG)
 ![screenshot del tercer nivel](documentation/level_03.PNG)
-![screenshot del cuarto nivel](documentation/level_04.PNG)
+![screenshot del cuarto nivel](documentation/level_04.png)
 ![screenshot de la pantalla de "muerte"](documentation/fail_screen.PNG)
 ![screenshot de la pantalla de "congratulation"](documentation/win_screen.PNG)
 
